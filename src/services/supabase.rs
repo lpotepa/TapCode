@@ -15,19 +15,11 @@ use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 
 // ── Configuration ──
-// Real keys live in .env (gitignored). Injected at compile time via option_env!().
-// Fallbacks are dummy values so the app compiles without .env — Supabase calls
-// will fail at runtime until real keys are provided.
-// To build with real keys: source .env && dx serve --platform web
+// Real keys live in src/config.rs (gitignored). See src/config.rs.example.
+// dx serve compiles WASM in a subprocess that doesn't inherit shell env vars,
+// so we use a source file instead of env!() / option_env!().
 
-pub const SUPABASE_URL: &str = match option_env!("SUPABASE_URL") {
-    Some(v) => v,
-    None => "https://placeholder.supabase.co",
-};
-pub const SUPABASE_ANON_KEY: &str = match option_env!("SUPABASE_ANON_KEY") {
-    Some(v) => v,
-    None => "placeholder_anon_key",
-};
+pub use crate::config::{SUPABASE_URL, SUPABASE_ANON_KEY};
 const JWT_STORAGE_KEY: &str = "supabase_jwt";
 const REFRESH_TOKEN_STORAGE_KEY: &str = "supabase_refresh_token";
 

@@ -1,0 +1,7 @@
+// ══════════════════════════════════════════════════════════════
+// Runtime configuration — NOT committed to git.
+// Copy this file to config.rs and fill in your values.
+// ══════════════════════════════════════════════════════════════
+
+pub const SUPABASE_URL: &str = "https://your-project-ref.supabase.co";
+pub const SUPABASE_ANON_KEY: &str = "your-anon-key-here";
