@@ -1304,8 +1304,8 @@
       "module": 3,
       "position": 2,
       "title": "Function with parameters",
-      "prompt": "Define a function called add that accepts two 32-bit integer parameters a and b, and returns a 32-bit integer — leave the body empty for now",
-      "hint_concept": "After the function name, list parameters inside parentheses as name: type pairs separated by commas. Use -> after the closing parenthesis to declare the return type.",
+      "prompt": "Define a function called add that takes two i32 parameters (a and b) and returns an i32, with a placeholder return value of 0",
+      "hint_concept": "A function with a return type must return a value. Use 0 as a temporary placeholder — the last expression without a semicolon is the return value.",
       "hint_structural": "_ _ ( _ : _ , _ : _ ) -> _ { }",
       "fragment_type": "fn_def",
       "answer": [
@@ -1382,7 +1382,7 @@
         }
       ],
       "xp": 20,
-      "explanation": "Each parameter is declared as name: type. The -> i32 after the parameter list declares the return type. This function signature says: give me two i32 values, and I'll give you back an i32.",
+      "explanation": "The function signature fn add(a: i32, b: i32) -> i32 declares the parameter types and return type. The 0 is a placeholder return value — in the next challenge you'll replace it with the real logic.",
       "scaffold": ""
     },
     {
