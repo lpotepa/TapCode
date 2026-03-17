@@ -10,9 +10,11 @@ mod screens;
 mod services;
 
 use dioxus::prelude::*;
-use state::AppState;
+use state::{AppState, STATE_STORAGE_KEY};
 use route::Route;
 use services::platform::{HapticEngine, NoOpHaptics, SecureStorage, MemoryStorage};
+#[cfg(target_arch = "wasm32")]
+use services::platform::WebLocalStorage;
 use services::supabase::{ReqwestHttpClient, SupabaseClient, SUPABASE_URL, SUPABASE_ANON_KEY};
 use services::sync::{SyncService, ProdSyncService};
 use std::sync::Arc;
@@ -29,8 +31,22 @@ fn App() -> Element {
     // Platform abstraction — inject trait-object providers so components
     // never need #[cfg()] for platform differences.
     use_context_provider(|| Arc::new(NoOpHaptics) as Arc<dyn HapticEngine>);
-    let storage = Arc::new(MemoryStorage::new());
-    use_context_provider(|| storage.clone() as Arc<dyn SecureStorage>);
+
+    // App-state storage: real localStorage on web, MemoryStorage elsewhere
+    #[cfg(target_arch = "wasm32")]
+    let app_storage = Arc::new(WebLocalStorage::new()) as Arc<dyn SecureStorage>;
+    #[cfg(not(target_arch = "wasm32"))]
+    let app_storage = Arc::new(MemoryStorage::new()) as Arc<dyn SecureStorage>;
+
+    // Restore persisted progress from localStorage (if any)
+    if let Ok(Some(saved)) = app_storage.get(STATE_STORAGE_KEY) {
+        state.write().load_progress_json(&saved);
+    }
+
+    use_context_provider(|| app_storage.clone());
+
+    // Separate MemoryStorage for Supabase JWT persistence
+    let supabase_storage = Arc::new(MemoryStorage::new());
 
     // SyncService — initialized asynchronously, provided as context.
     // Components read this signal; None means init is still in progress.
@@ -39,7 +55,7 @@ fn App() -> Element {
 
     // Initialize SyncService on first render
     use_future(move || {
-        let storage = storage.clone();
+        let storage = supabase_storage.clone();
         async move {
             let http = ReqwestHttpClient::new();
             let client = Arc::new(SupabaseClient::new(
@@ -54,6 +70,12 @@ fn App() -> Element {
 
             if !authed {
                 state.write().is_offline = true;
+            } else {
+                // Fetch server state and merge (max-value wins)
+                let mut state_snap = state.read().clone();
+                svc.fetch_and_merge(&mut state_snap).await;
+                // Write merged state back
+                *state.write() = state_snap;
             }
 
             // After init, is_authenticated is set. Wrap in Arc for shared access.

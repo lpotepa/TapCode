@@ -1,6 +1,7 @@
 use dioxus::prelude::*;
-use crate::state::AppState;
+use crate::state::{AppState, save_to_storage};
 use crate::route::Route;
+use crate::services::platform::SecureStorage;
 use crate::services::sync::ProdSyncService;
 use std::sync::Arc;
 
@@ -8,9 +9,12 @@ use std::sync::Arc;
 pub fn PaywallScreen() -> Element {
     let mut state = use_context::<Signal<AppState>>();
     let sync_ctx = use_context::<Signal<Option<Arc<ProdSyncService>>>>();
+    let storage_ctx = use_context::<Arc<dyn SecureStorage>>();
     let nav = navigator();
 
-    // TAP-30: Helper to unlock modules and fire sync in background
+    // TAP-30: Helper to unlock modules and fire sync in background.
+    // Does NOT capture storage_ctx (Arc is not Copy) — save_to_storage
+    // is called inline in each onclick with a cloned Arc.
     let mut handle_purchase = move || {
         state.write().unlock_all_modules();
 
@@ -24,6 +28,10 @@ pub fn PaywallScreen() -> Element {
 
         let _ = nav.push(Route::Home {});
     };
+
+    let storage1 = storage_ctx.clone();
+    let storage2 = storage_ctx.clone();
+    let storage3 = storage_ctx;
 
     rsx! {
         div {
@@ -108,6 +116,7 @@ pub fn PaywallScreen() -> Element {
                         class: "pricing-card pricing-card-featured",
                         onclick: move |_| {
                             handle_purchase();
+                            save_to_storage(&state.read(), &*storage1);
                         },
                         div { class: "pricing-badge", "Best Value" }
                         div { class: "pricing-amount", "€4.99" }
@@ -119,6 +128,7 @@ pub fn PaywallScreen() -> Element {
                         class: "pricing-card",
                         onclick: move |_| {
                             handle_purchase();
+                            save_to_storage(&state.read(), &*storage2);
                         },
                         div { class: "pricing-amount", "€9.99" }
                         div { class: "pricing-period", "lifetime · one-time" }
@@ -129,6 +139,7 @@ pub fn PaywallScreen() -> Element {
                         class: "pricing-card",
                         onclick: move |_| {
                             handle_purchase();
+                            save_to_storage(&state.read(), &*storage3);
                         },
                         div { class: "pricing-amount", "€1.99" }
                         div { class: "pricing-period", "per month" }

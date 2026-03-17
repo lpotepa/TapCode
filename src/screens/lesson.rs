@@ -6,7 +6,9 @@ use crate::engine::{self, validate_answer, get_challenge_by_id, get_token_catego
 use crate::components::*;
 use crate::components::picker::ChipGroupDisplay;
 use crate::component_logic::keyboard::{KeyAction, resolve_key_action};
+use crate::services::platform::SecureStorage;
 use crate::services::sync::ProdSyncService;
+use crate::state::save_to_storage;
 use std::sync::Arc;
 
 #[derive(Props, Clone, PartialEq)]
@@ -18,6 +20,7 @@ pub struct LessonProps {
 pub fn LessonScreen(props: LessonProps) -> Element {
     let mut state = use_context::<Signal<AppState>>();
     let sync_ctx = use_context::<Signal<Option<Arc<ProdSyncService>>>>();
+    let storage_ctx = use_context::<Arc<dyn SecureStorage>>();
     let nav = navigator();
 
     // Lesson-local state
@@ -122,6 +125,7 @@ pub fn LessonScreen(props: LessonProps) -> Element {
                 state.write().complete_challenge(&challenge_for_check.id);
                 state.write().fill_streak_today();
                 state.write().record_attempt(true);
+                save_to_storage(&state.read(), &*storage_ctx);
 
                 feedback.set(FeedbackKind::Correct {
                     xp_awarded: xp,
@@ -142,6 +146,7 @@ pub fn LessonScreen(props: LessonProps) -> Element {
             ValidationResult::Wrong(diff) => {
                 let anum = *attempt_num.read();
                 state.write().record_attempt(false);
+                save_to_storage(&state.read(), &*storage_ctx);
                 show_diff.set(true);
                 diff_data.set(Some(diff.clone()));
                 feedback.set(FeedbackKind::Wrong {

@@ -1,11 +1,14 @@
 use dioxus::prelude::*;
-use crate::state::AppState;
+use crate::state::{AppState, save_to_storage};
 use crate::route::Route;
 use crate::models::OnboardingStep;
+use crate::services::platform::SecureStorage;
+use std::sync::Arc;
 
 #[component]
 pub fn OnboardingScreen() -> Element {
     let mut state = use_context::<Signal<AppState>>();
+    let storage_ctx = use_context::<Arc<dyn SecureStorage>>();
     let nav = navigator();
     let mut step: Signal<OnboardingStep> = use_signal(|| OnboardingStep::Splash);
     // Store the target lesson ID chosen during SkillCheck
@@ -114,6 +117,7 @@ pub fn OnboardingScreen() -> Element {
                             style: "animation: fadeIn 0.3s ease-out 0.5s both;",
                             onclick: move |_| {
                                 state.write().is_onboarded = true;
+                                save_to_storage(&state.read(), &*storage_ctx);
                                 let _ = nav.replace(Route::Lesson { id: "rust-m1-c1".into() });
                             },
                             "Skip \u{2192}"
@@ -143,6 +147,7 @@ pub fn OnboardingScreen() -> Element {
                             class: "btn btn-ghost",
                             onclick: move |_| {
                                 state.write().is_onboarded = true;
+                                save_to_storage(&state.read(), &*storage_ctx);
                                 let id = target_lesson.read().clone();
                                 let _ = nav.replace(Route::Lesson { id });
                             },
@@ -159,6 +164,7 @@ pub fn OnboardingScreen() -> Element {
         }
 
         OnboardingStep::IntroCards(2) => {
+            let storage_for_start = storage_ctx.clone();
             rsx! {
                 div {
                     class: "onboarding-screen",
@@ -178,6 +184,7 @@ pub fn OnboardingScreen() -> Element {
                             class: "btn btn-ghost",
                             onclick: move |_| {
                                 state.write().is_onboarded = true;
+                                save_to_storage(&state.read(), &*storage_ctx);
                                 let id = target_lesson.read().clone();
                                 let _ = nav.replace(Route::Lesson { id });
                             },
@@ -187,6 +194,7 @@ pub fn OnboardingScreen() -> Element {
                             class: "btn btn-primary",
                             onclick: move |_| {
                                 state.write().is_onboarded = true;
+                                save_to_storage(&state.read(), &*storage_for_start);
                                 let id = target_lesson.read().clone();
                                 let _ = nav.replace(Route::Lesson { id });
                             },

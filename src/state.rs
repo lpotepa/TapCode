@@ -1,6 +1,16 @@
 use dioxus::prelude::*;
 use crate::models::*;
 use crate::engine;
+use crate::services::platform::SecureStorage;
+
+/// Storage key for persisted app state.
+pub const STATE_STORAGE_KEY: &str = "tapcode_app_state";
+
+/// Persist current AppState to storage (fire-and-forget).
+pub fn save_to_storage(state: &AppState, storage: &dyn SecureStorage) {
+    let json = state.save_progress_json();
+    let _ = storage.set(STATE_STORAGE_KEY, &json);
+}
 
 // ── Global App State ──
 
@@ -219,6 +229,85 @@ impl AppState {
     /// Returns the number of skipped challenges that need revisiting.
     pub fn revisit_count(&self) -> usize {
         self.progress.skipped_challenges.len()
+    }
+
+    // ── Session persistence ──
+
+    /// Serialize progress to JSON for localStorage persistence.
+    pub fn save_progress_json(&self) -> String {
+        let data = serde_json::json!({
+            "total_xp": self.user.total_xp,
+            "current_streak": self.user.current_streak,
+            "longest_streak": self.user.longest_streak,
+            "streak_days": self.user.streak_days,
+            "has_freeze": self.user.has_freeze,
+            "language_id": self.progress.language_id,
+            "xp": self.progress.xp,
+            "active_module": self.progress.active_module,
+            "unlocked_modules": self.progress.unlocked_modules,
+            "completed_challenges": self.progress.completed_challenges,
+            "skipped_challenges": self.progress.skipped_challenges,
+            "is_onboarded": self.is_onboarded,
+            "is_purchased": self.is_purchased,
+            "total_attempts": self.total_attempts,
+            "correct_attempts": self.correct_attempts,
+        });
+        serde_json::to_string(&data).unwrap_or_default()
+    }
+
+    /// Restore progress from JSON (localStorage or Supabase).
+    /// Returns true if JSON was valid, false otherwise.
+    pub fn load_progress_json(&mut self, json: &str) -> bool {
+        let Ok(data) = serde_json::from_str::<serde_json::Value>(json) else {
+            return false;
+        };
+
+        if let Some(v) = data.get("total_xp").and_then(|v| v.as_u64()) {
+            self.user.total_xp = v as u32;
+        }
+        if let Some(v) = data.get("current_streak").and_then(|v| v.as_u64()) {
+            self.user.current_streak = v as u32;
+        }
+        if let Some(v) = data.get("longest_streak").and_then(|v| v.as_u64()) {
+            self.user.longest_streak = v as u32;
+        }
+        if let Some(v) = data.get("streak_days").and_then(|v| v.as_array()) {
+            self.user.streak_days = v.iter().filter_map(|b| b.as_bool()).collect();
+        }
+        if let Some(v) = data.get("has_freeze").and_then(|v| v.as_bool()) {
+            self.user.has_freeze = v;
+        }
+        if let Some(v) = data.get("xp").and_then(|v| v.as_u64()) {
+            self.progress.xp = v as u32;
+        }
+        if let Some(v) = data.get("active_module").and_then(|v| v.as_u64()) {
+            self.progress.active_module = v as u32;
+        }
+        if let Some(v) = data.get("unlocked_modules").and_then(|v| v.as_array()) {
+            self.progress.unlocked_modules =
+                v.iter().filter_map(|n| n.as_u64().map(|n| n as u32)).collect();
+        }
+        if let Some(v) = data.get("completed_challenges").and_then(|v| v.as_array()) {
+            self.progress.completed_challenges =
+                v.iter().filter_map(|s| s.as_str().map(String::from)).collect();
+        }
+        if let Some(v) = data.get("skipped_challenges").and_then(|v| v.as_array()) {
+            self.progress.skipped_challenges =
+                v.iter().filter_map(|s| s.as_str().map(String::from)).collect();
+        }
+        if let Some(v) = data.get("is_onboarded").and_then(|v| v.as_bool()) {
+            self.is_onboarded = v;
+        }
+        if let Some(v) = data.get("is_purchased").and_then(|v| v.as_bool()) {
+            self.is_purchased = v;
+        }
+        if let Some(v) = data.get("total_attempts").and_then(|v| v.as_u64()) {
+            self.total_attempts = v as u32;
+        }
+        if let Some(v) = data.get("correct_attempts").and_then(|v| v.as_u64()) {
+            self.correct_attempts = v as u32;
+        }
+        true
     }
 }
 
@@ -480,6 +569,123 @@ mod tests {
         s.skipped_challenges_mut("rust-m1-c3");
         s.skipped_challenges_mut("rust-m1-c3");
         assert_eq!(s.revisit_count(), 1, "Duplicate skips should not inflate count");
+    }
+
+    // ── Session persistence (save/load progress JSON) ──
+
+    #[test]
+    fn test_save_progress_json_roundtrip() {
+        let mut s = fresh_state();
+        s.user.total_xp = 240;
+        s.user.current_streak = 5;
+        s.user.longest_streak = 8;
+        s.user.streak_days = vec![true, true, false, true, true, true, false];
+        s.user.has_freeze = false;
+        s.progress.xp = 180;
+        s.progress.active_module = 3;
+        s.progress.unlocked_modules = vec![1, 2, 3];
+        s.progress.completed_challenges = vec!["rust-m1-c1".into(), "rust-m1-c2".into()];
+        s.progress.skipped_challenges = vec!["rust-m1-c5".into()];
+        s.is_onboarded = true;
+        s.is_purchased = true;
+        s.total_attempts = 20;
+        s.correct_attempts = 15;
+
+        let json = s.save_progress_json();
+        let mut loaded = fresh_state();
+        assert!(loaded.load_progress_json(&json));
+
+        assert_eq!(loaded.user.total_xp, 240);
+        assert_eq!(loaded.user.current_streak, 5);
+        assert_eq!(loaded.user.longest_streak, 8);
+        assert_eq!(loaded.user.streak_days, vec![true, true, false, true, true, true, false]);
+        assert_eq!(loaded.user.has_freeze, false);
+        assert_eq!(loaded.progress.xp, 180);
+        assert_eq!(loaded.progress.active_module, 3);
+        assert_eq!(loaded.progress.unlocked_modules, vec![1, 2, 3]);
+        assert_eq!(loaded.progress.completed_challenges, vec!["rust-m1-c1".to_string(), "rust-m1-c2".to_string()]);
+        assert_eq!(loaded.progress.skipped_challenges, vec!["rust-m1-c5".to_string()]);
+        assert!(loaded.is_onboarded);
+        assert!(loaded.is_purchased);
+        assert_eq!(loaded.total_attempts, 20);
+        assert_eq!(loaded.correct_attempts, 15);
+    }
+
+    #[test]
+    fn test_load_progress_restores_completed_challenges() {
+        let mut s = fresh_state();
+        s.progress.completed_challenges = vec![
+            "rust-m1-c1".into(),
+            "rust-m1-c2".into(),
+            "rust-m1-c3".into(),
+        ];
+        let json = s.save_progress_json();
+        let mut loaded = fresh_state();
+        loaded.load_progress_json(&json);
+        assert_eq!(loaded.progress.completed_challenges.len(), 3);
+        assert!(loaded.progress.completed_challenges.contains(&"rust-m1-c1".to_string()));
+        assert!(loaded.progress.completed_challenges.contains(&"rust-m1-c2".to_string()));
+        assert!(loaded.progress.completed_challenges.contains(&"rust-m1-c3".to_string()));
+    }
+
+    #[test]
+    fn test_load_progress_restores_unlocked_modules() {
+        let mut s = fresh_state();
+        s.progress.unlocked_modules = vec![1, 2, 3];
+        let json = s.save_progress_json();
+        let mut loaded = fresh_state();
+        loaded.load_progress_json(&json);
+        assert_eq!(loaded.progress.unlocked_modules, vec![1, 2, 3]);
+    }
+
+    #[test]
+    fn test_load_progress_restores_xp() {
+        let mut s = fresh_state();
+        s.user.total_xp = 240;
+        s.progress.xp = 200;
+        let json = s.save_progress_json();
+        let mut loaded = fresh_state();
+        loaded.load_progress_json(&json);
+        assert_eq!(loaded.user.total_xp, 240);
+        assert_eq!(loaded.progress.xp, 200);
+    }
+
+    #[test]
+    fn test_load_progress_restores_onboarded() {
+        let mut s = fresh_state();
+        s.is_onboarded = true;
+        let json = s.save_progress_json();
+        let mut loaded = fresh_state();
+        assert!(!loaded.is_onboarded);
+        loaded.load_progress_json(&json);
+        assert!(loaded.is_onboarded);
+    }
+
+    #[test]
+    fn test_load_progress_handles_empty_json() {
+        let mut s = fresh_state();
+        assert!(!s.load_progress_json(""), "Empty string should return false");
+    }
+
+    #[test]
+    fn test_load_progress_handles_corrupt_json() {
+        let mut s = fresh_state();
+        s.user.total_xp = 100;
+        assert!(!s.load_progress_json("not valid json {{{"), "Corrupt JSON should return false");
+        assert_eq!(s.user.total_xp, 100, "State should be unchanged after corrupt JSON");
+    }
+
+    #[test]
+    fn test_load_progress_handles_partial_json() {
+        let mut s = fresh_state();
+        s.user.total_xp = 50; // pre-existing value
+        // JSON with only some fields
+        let partial = r#"{"total_xp": 300, "is_onboarded": true}"#;
+        assert!(s.load_progress_json(partial));
+        assert_eq!(s.user.total_xp, 300, "Should update fields present in JSON");
+        assert!(s.is_onboarded, "Should update is_onboarded from JSON");
+        // Fields not in JSON should keep their previous values
+        assert_eq!(s.progress.active_module, 1, "Missing fields should remain at previous value");
     }
 
     // ── Language switching ──

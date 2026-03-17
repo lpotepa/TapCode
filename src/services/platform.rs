@@ -37,7 +37,47 @@ pub enum StorageError {
     ReadError(String),
 }
 
-/// In-memory storage for web (wraps localStorage when available)
+// ── Web LocalStorage (wasm32 only) ──
+
+#[cfg(target_arch = "wasm32")]
+pub struct WebLocalStorage;
+
+#[cfg(target_arch = "wasm32")]
+impl WebLocalStorage {
+    pub fn new() -> Self {
+        Self
+    }
+
+    fn get_storage() -> Option<web_sys::Storage> {
+        web_sys::window()?.local_storage().ok()?
+    }
+}
+
+#[cfg(target_arch = "wasm32")]
+impl SecureStorage for WebLocalStorage {
+    fn set(&self, key: &str, value: &str) -> Result<(), StorageError> {
+        Self::get_storage()
+            .ok_or(StorageError::NotAvailable)?
+            .set_item(key, value)
+            .map_err(|_| StorageError::WriteError("localStorage set failed".into()))
+    }
+
+    fn get(&self, key: &str) -> Result<Option<String>, StorageError> {
+        Ok(Self::get_storage()
+            .ok_or(StorageError::NotAvailable)?
+            .get_item(key)
+            .map_err(|_| StorageError::ReadError("localStorage get failed".into()))?)
+    }
+
+    fn delete(&self, key: &str) -> Result<(), StorageError> {
+        Self::get_storage()
+            .ok_or(StorageError::NotAvailable)?
+            .remove_item(key)
+            .map_err(|_| StorageError::WriteError("localStorage delete failed".into()))
+    }
+}
+
+/// In-memory storage for testing and non-web platforms
 pub struct MemoryStorage {
     data: std::sync::Mutex<std::collections::HashMap<String, String>>,
 }
