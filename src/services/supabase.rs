@@ -15,17 +15,18 @@ use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 
 // ── Configuration ──
-// Option 1: Set at compile time via env vars (source .env && cargo build)
-// Option 2: Baked in via option_env!() with fallback defaults
-// The .env file is gitignored. .env.example shows the format.
+// Real keys live in .env (gitignored). Injected at compile time via option_env!().
+// Fallbacks are dummy values so the app compiles without .env — Supabase calls
+// will fail at runtime until real keys are provided.
+// To build with real keys: source .env && dx serve --platform web
 
 pub const SUPABASE_URL: &str = match option_env!("SUPABASE_URL") {
     Some(v) => v,
-    None => "https://dynffktqahqfelfriwfm.supabase.co",
+    None => "https://placeholder.supabase.co",
 };
 pub const SUPABASE_ANON_KEY: &str = match option_env!("SUPABASE_ANON_KEY") {
     Some(v) => v,
-    None => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5bmZma3RxYWhxZmVsZnJpd2ZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3NDM1MjUsImV4cCI6MjA4OTMxOTUyNX0.Dqrx_AvQbLeS_pU6OFrHoFoO0NSj0kQWDmvq35TvyPE",
+    None => "placeholder_anon_key",
 };
 const JWT_STORAGE_KEY: &str = "supabase_jwt";
 const REFRESH_TOKEN_STORAGE_KEY: &str = "supabase_refresh_token";
