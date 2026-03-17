@@ -1,11 +1,29 @@
 use dioxus::prelude::*;
 use crate::state::AppState;
 use crate::route::Route;
+use crate::services::sync::ProdSyncService;
+use std::sync::Arc;
 
 #[component]
 pub fn PaywallScreen() -> Element {
     let mut state = use_context::<Signal<AppState>>();
+    let sync_ctx = use_context::<Signal<Option<Arc<ProdSyncService>>>>();
     let nav = navigator();
+
+    // TAP-30: Helper to unlock modules and fire sync in background
+    let mut handle_purchase = move || {
+        state.write().unlock_all_modules();
+
+        // Fire-and-forget sync to Supabase
+        spawn(async move {
+            if let Some(sync) = sync_ctx.read().clone() {
+                let state_snap = state.read().clone();
+                sync.sync_purchase(&state_snap).await;
+            }
+        });
+
+        let _ = nav.push(Route::Home {});
+    };
 
     rsx! {
         div {
@@ -89,9 +107,7 @@ pub fn PaywallScreen() -> Element {
                     button {
                         class: "pricing-card pricing-card-featured",
                         onclick: move |_| {
-                            // Ticket 22: Unlock all modules (real IAP/Stripe comes later)
-                            state.write().unlock_all_modules();
-                            let _ = nav.push(Route::Home {});
+                            handle_purchase();
                         },
                         div { class: "pricing-badge", "Best Value" }
                         div { class: "pricing-amount", "€4.99" }
@@ -102,8 +118,7 @@ pub fn PaywallScreen() -> Element {
                     button {
                         class: "pricing-card",
                         onclick: move |_| {
-                            state.write().unlock_all_modules();
-                            let _ = nav.push(Route::Home {});
+                            handle_purchase();
                         },
                         div { class: "pricing-amount", "€9.99" }
                         div { class: "pricing-period", "lifetime · one-time" }
@@ -113,8 +128,7 @@ pub fn PaywallScreen() -> Element {
                     button {
                         class: "pricing-card",
                         onclick: move |_| {
-                            state.write().unlock_all_modules();
-                            let _ = nav.push(Route::Home {});
+                            handle_purchase();
                         },
                         div { class: "pricing-amount", "€1.99" }
                         div { class: "pricing-period", "per month" }

@@ -6,6 +6,8 @@ use crate::engine::{self, validate_answer, get_challenge_by_id, get_token_catego
 use crate::components::*;
 use crate::components::picker::ChipGroupDisplay;
 use crate::component_logic::keyboard::{KeyAction, resolve_key_action};
+use crate::services::sync::ProdSyncService;
+use std::sync::Arc;
 
 #[derive(Props, Clone, PartialEq)]
 pub struct LessonProps {
@@ -15,6 +17,7 @@ pub struct LessonProps {
 #[component]
 pub fn LessonScreen(props: LessonProps) -> Element {
     let mut state = use_context::<Signal<AppState>>();
+    let sync_ctx = use_context::<Signal<Option<Arc<ProdSyncService>>>>();
     let nav = navigator();
 
     // Lesson-local state
@@ -110,6 +113,7 @@ pub fn LessonScreen(props: LessonProps) -> Element {
         match result {
             ValidationResult::Correct => {
                 let xp = xp_for_attempt(challenge_for_check.xp, *attempt_num.read());
+                let anum = *attempt_num.read();
                 show_confetti.set(true);
                 xp_bouncing.set(true);
                 xp_float.set(Some(xp));
@@ -123,14 +127,36 @@ pub fn LessonScreen(props: LessonProps) -> Element {
                     xp_awarded: xp,
                     explanation: challenge_for_check.explanation.clone(),
                 });
+
+                // TAP-30: Fire-and-forget sync to Supabase
+                let cid = challenge_for_check.id.clone();
+                let lid = challenge_for_check.language.clone();
+                spawn(async move {
+                    if let Some(sync) = sync_ctx.read().clone() {
+                        let state_snap = state.read().clone();
+                        sync.sync_challenge_complete(&cid, &lid, true, anum, &state_snap).await;
+                        sync.sync_streak(&state_snap).await;
+                    }
+                });
             }
             ValidationResult::Wrong(diff) => {
+                let anum = *attempt_num.read();
                 state.write().record_attempt(false);
                 show_diff.set(true);
                 diff_data.set(Some(diff.clone()));
                 feedback.set(FeedbackKind::Wrong {
                     diff,
                     explanation: challenge_for_check.hint_concept.clone(),
+                });
+
+                // TAP-30: Sync wrong attempt too
+                let cid = challenge_for_check.id.clone();
+                let lid = challenge_for_check.language.clone();
+                spawn(async move {
+                    if let Some(sync) = sync_ctx.read().clone() {
+                        let state_snap = state.read().clone();
+                        sync.sync_challenge_complete(&cid, &lid, false, anum, &state_snap).await;
+                    }
                 });
             }
         }
