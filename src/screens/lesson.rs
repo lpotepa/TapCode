@@ -39,6 +39,27 @@ pub fn LessonScreen(props: LessonProps) -> Element {
     // Keyboard action signal (Ticket 23): set in onkeydown, dispatched before render
     let mut pending_key_action: Signal<Option<KeyAction>> = use_signal(|| None);
 
+    // Track which challenge we're rendering — reset all signals when it changes.
+    // This fixes the bug where navigating from Module Complete → new module's first
+    // challenge would show Module Complete again because show_module_complete was
+    // still true from the previous challenge (Dioxus reuses the component instance).
+    let mut last_challenge_id: Signal<String> = use_signal(|| String::new());
+    if *last_challenge_id.read() != props.id {
+        last_challenge_id.set(props.id.clone());
+        assembled.set(vec![]);
+        feedback.set(FeedbackKind::None);
+        hint_tier.set(HintTier::None);
+        attempt_num.set(1);
+        show_diff.set(false);
+        diff_data.set(None);
+        show_confetti.set(false);
+        xp_bouncing.set(false);
+        xp_float.set(None);
+        ghost_hint.set(None);
+        show_module_complete.set(false);
+        pending_key_action.set(None);
+    }
+
     let s = state.read();
     let challenge = get_challenge_by_id(&s.pack, &props.id);
 

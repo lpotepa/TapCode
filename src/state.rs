@@ -842,4 +842,44 @@ mod tests {
             );
         }
     }
+
+    // ── Bug fix: navigating to new module should NOT show module complete ──
+
+    #[test]
+    fn module_1_complete_module_2_not_complete() {
+        let mut s = fresh_state();
+        // Complete all module 1
+        let m1_ids: Vec<String> = s.pack.modules[0].challenge_ids.clone();
+        for id in &m1_ids { s.complete_challenge(id); }
+
+        assert!(s.is_module_complete(1), "Module 1 should be complete");
+        assert!(!s.is_module_complete(2), "Module 2 should NOT be complete");
+    }
+
+    #[test]
+    fn starting_module_2_first_challenge_not_done() {
+        let mut s = fresh_state();
+        // Complete all module 1
+        let m1_ids: Vec<String> = s.pack.modules[0].challenge_ids.clone();
+        for id in &m1_ids { s.complete_challenge(id); }
+
+        // Module 2 is unlocked but no challenges completed
+        assert!(s.is_module_unlocked(2));
+        let m2_first = &s.pack.modules[1].challenge_ids[0];
+        assert!(
+            !s.progress.completed_challenges.contains(m2_first),
+            "First challenge of module 2 should NOT be completed"
+        );
+    }
+
+    #[test]
+    fn next_challenge_after_module_1_is_module_2_first() {
+        let mut s = fresh_state();
+        let m1_ids: Vec<String> = s.pack.modules[0].challenge_ids.clone();
+        for id in &m1_ids { s.complete_challenge(id); }
+
+        let next = s.get_next_challenge_id();
+        assert_eq!(next, Some("rust-m2-c1".into()),
+            "After completing module 1, next should be rust-m2-c1");
+    }
 }
