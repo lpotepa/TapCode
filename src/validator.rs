@@ -30,26 +30,32 @@ pub struct CompilerAdapter {
 impl CompilerAdapter {
     /// Build the Rust compiler adapter
     pub fn rust() -> Self {
+        // Templates use {SCAFFOLD} for context code and {FRAGMENT} for the answer.
+        // For statement/expression: scaffold goes INSIDE fn main, before the fragment,
+        //   so variable declarations and `use` imports are in scope.
+        // For fn_def/type_def: scaffold goes BEFORE the fragment (module level),
+        //   so struct/trait/import definitions are available.
+        // For program: scaffold goes before the fragment (the fragment IS the program).
         let mut wrappers = HashMap::new();
         wrappers.insert(
             FragmentType::Expression,
-            "fn main() { let _ = {FRAGMENT}; }".to_string(),
+            "{SCAFFOLD_OUTER}\nfn main() { {SCAFFOLD_INNER}\nlet _ = {FRAGMENT}; }".to_string(),
         );
         wrappers.insert(
             FragmentType::Statement,
-            "fn main() { {FRAGMENT} }".to_string(),
+            "{SCAFFOLD_OUTER}\nfn main() { {SCAFFOLD_INNER}\n{FRAGMENT} }".to_string(),
         );
         wrappers.insert(
             FragmentType::FnDef,
-            "{FRAGMENT}\nfn main() {}".to_string(),
+            "{SCAFFOLD}\n{FRAGMENT}\nfn main() {}".to_string(),
         );
         wrappers.insert(
             FragmentType::TypeDef,
-            "{FRAGMENT}\nfn main() {}".to_string(),
+            "{SCAFFOLD}\n{FRAGMENT}\nfn main() {}".to_string(),
         );
         wrappers.insert(
             FragmentType::Program,
-            "{FRAGMENT}".to_string(),
+            "{SCAFFOLD}\n{FRAGMENT}".to_string(),
         );
 
         CompilerAdapter {
@@ -61,10 +67,84 @@ impl CompilerAdapter {
     }
 
     /// Reconstruct a full program from a challenge fragment.
-    pub fn wrap_fragment(&self, fragment: &str, fragment_type: &FragmentType) -> Option<String> {
+    ///
+    /// Scaffold provides context code needed for the fragment to compile.
+    /// For statement/expression types, the scaffold is split into:
+    ///   - "outer" lines (module-level items like `use`, `struct`, `fn`, `trait`, `enum`,
+    ///     `impl`, `type`, `const`, `static`, `mod`, `pub`, and `#[`)
+    ///   - "inner" lines (everything else, like `let` bindings)
+    /// Outer lines go before `fn main`, inner lines go inside it before the fragment.
+    /// For fn_def/type_def/program types, the entire scaffold goes before the fragment.
+    pub fn wrap_fragment(&self, fragment: &str, fragment_type: &FragmentType, scaffold: &str) -> Option<String> {
         self.fragment_wrappers.get(fragment_type).map(|template| {
-            template.replace("{FRAGMENT}", fragment)
+            let program = match fragment_type {
+                FragmentType::Statement | FragmentType::Expression => {
+                    // Split scaffold into outer (module-level) and inner (fn-level) lines
+                    let (outer, inner) = Self::split_scaffold(scaffold);
+                    template
+                        .replace("{SCAFFOLD_OUTER}", &outer)
+                        .replace("{SCAFFOLD_INNER}", &inner)
+                        .replace("{FRAGMENT}", fragment)
+                }
+                _ => {
+                    template
+                        .replace("{SCAFFOLD}", scaffold)
+                        .replace("{FRAGMENT}", fragment)
+                }
+            };
+            // Clean up leading/trailing whitespace from empty scaffold substitutions
+            let mut cleaned = String::new();
+            for line in program.lines() {
+                let trimmed = line.trim();
+                if !trimmed.is_empty() {
+                    if !cleaned.is_empty() {
+                        cleaned.push('\n');
+                    }
+                    cleaned.push_str(line);
+                }
+            }
+            cleaned
         })
+    }
+
+    /// Split scaffold code into outer (module-level) and inner (fn-level) parts.
+    /// Lines starting with module-level keywords go to outer, rest to inner.
+    fn split_scaffold(scaffold: &str) -> (String, String) {
+        if scaffold.is_empty() {
+            return (String::new(), String::new());
+        }
+
+        let mut outer_lines = Vec::new();
+        let mut inner_lines = Vec::new();
+
+        for line in scaffold.lines() {
+            let trimmed = line.trim();
+            if trimmed.is_empty() {
+                continue;
+            }
+            // Module-level items: use, struct, enum, fn, trait, impl, type, const,
+            // static, mod, pub, extern, #[ (attributes)
+            if trimmed.starts_with("use ")
+                || trimmed.starts_with("struct ")
+                || trimmed.starts_with("enum ")
+                || trimmed.starts_with("fn ")
+                || trimmed.starts_with("trait ")
+                || trimmed.starts_with("impl ")
+                || trimmed.starts_with("type ")
+                || trimmed.starts_with("const ")
+                || trimmed.starts_with("static ")
+                || trimmed.starts_with("mod ")
+                || trimmed.starts_with("pub ")
+                || trimmed.starts_with("extern ")
+                || trimmed.starts_with("#[")
+            {
+                outer_lines.push(line);
+            } else {
+                inner_lines.push(line);
+            }
+        }
+
+        (outer_lines.join("\n"), inner_lines.join("\n"))
     }
 }
 
@@ -197,7 +277,7 @@ pub fn validate_challenge_static(challenge: &Challenge) -> ChallengeValidation {
     // 6. Reconstructed program must be valid syntax (adapter wrapping works)
     if let Some(adapter) = get_adapter(&challenge.language) {
         let fragment = challenge.answer.join(" ");
-        match adapter.wrap_fragment(&fragment, &challenge.fragment_type) {
+        match adapter.wrap_fragment(&fragment, &challenge.fragment_type, &challenge.scaffold) {
             Some(program) => {
                 if program.trim().is_empty() {
                     errors.push(format!("[{}] wrapped program is empty", challenge.id));
@@ -266,7 +346,7 @@ mod tests {
     #[test]
     fn s1_3_rust_adapter_wraps_statement() {
         let adapter = CompilerAdapter::rust();
-        let result = adapter.wrap_fragment("let x = 5;", &FragmentType::Statement);
+        let result = adapter.wrap_fragment("let x = 5;", &FragmentType::Statement, "");
         assert!(result.is_some());
         let program = result.unwrap();
         assert!(program.contains("fn main()"));
@@ -276,14 +356,14 @@ mod tests {
     #[test]
     fn s1_4_rust_adapter_wraps_expression() {
         let adapter = CompilerAdapter::rust();
-        let result = adapter.wrap_fragment("42", &FragmentType::Expression);
+        let result = adapter.wrap_fragment("42", &FragmentType::Expression, "");
         assert!(result.unwrap().contains("let _ = 42;"));
     }
 
     #[test]
     fn s1_5_rust_adapter_wraps_fn_def() {
         let adapter = CompilerAdapter::rust();
-        let result = adapter.wrap_fragment("fn add(a: i32, b: i32) -> i32 { a + b }", &FragmentType::FnDef);
+        let result = adapter.wrap_fragment("fn add(a: i32, b: i32) -> i32 { a + b }", &FragmentType::FnDef, "");
         let program = result.unwrap();
         assert!(program.contains("fn add"));
         assert!(program.contains("fn main()"));
@@ -292,8 +372,37 @@ mod tests {
     #[test]
     fn s1_6_rust_adapter_wraps_program() {
         let adapter = CompilerAdapter::rust();
-        let result = adapter.wrap_fragment("fn main() { println!(\"hi\"); }", &FragmentType::Program);
+        let result = adapter.wrap_fragment("fn main() { println!(\"hi\"); }", &FragmentType::Program, "");
         assert_eq!(result.unwrap(), "fn main() { println!(\"hi\"); }");
+    }
+
+    #[test]
+    fn s1_8_scaffold_prepended_to_program() {
+        let adapter = CompilerAdapter::rust();
+        let result = adapter.wrap_fragment("x = 10;", &FragmentType::Statement, "let mut x = 0;");
+        let program = result.unwrap();
+        // For statement type, scaffold variable decls go inside fn main before fragment
+        assert!(program.contains("fn main()"));
+        assert!(program.contains("let mut x = 0;"));
+        assert!(program.contains("x = 10;"));
+        // The variable decl must come before the reassignment
+        let decl_pos = program.find("let mut x = 0;").unwrap();
+        let frag_pos = program.find("x = 10;").unwrap();
+        assert!(decl_pos < frag_pos, "scaffold must appear before fragment");
+    }
+
+    #[test]
+    fn s1_9_scaffold_outer_items_go_before_fn_main() {
+        let adapter = CompilerAdapter::rust();
+        let scaffold = "use std::collections::HashMap;\nlet mut map = HashMap::new();";
+        let result = adapter.wrap_fragment("map.insert(1, 2);", &FragmentType::Statement, scaffold);
+        let program = result.unwrap();
+        // use goes before fn main (outer), let goes inside fn main (inner)
+        let use_pos = program.find("use std::collections::HashMap;").unwrap();
+        let main_pos = program.find("fn main()").unwrap();
+        let let_pos = program.find("let mut map").unwrap();
+        assert!(use_pos < main_pos, "use should be before fn main");
+        assert!(let_pos > main_pos, "let should be inside fn main");
     }
 
     #[test]
@@ -328,6 +437,7 @@ mod tests {
             ],
             xp: 20,
             explanation: "".into(),
+            scaffold: "".into(),
         };
 
         let result = validate_challenge_static(&c);
@@ -353,6 +463,7 @@ mod tests {
             ],
             xp: 20,
             explanation: "".into(),
+            scaffold: "".into(),
         };
 
         let result = validate_challenge_static(&c);
@@ -389,6 +500,7 @@ mod tests {
             ],
             xp: 20,
             explanation: "".into(),
+            scaffold: "".into(),
         };
 
         let result = validate_challenge_static(&c);
@@ -415,6 +527,7 @@ mod tests {
             ],
             xp: 20,
             explanation: "".into(),
+            scaffold: "".into(),
         };
 
         let result = validate_challenge_static(&c);
@@ -543,7 +656,7 @@ mod tests {
 
         for challenge in &pack.challenges {
             let fragment = challenge.answer.join(" ");
-            let program = adapter.wrap_fragment(&fragment, &challenge.fragment_type);
+            let program = adapter.wrap_fragment(&fragment, &challenge.fragment_type, &challenge.scaffold);
             assert!(
                 program.is_some(),
                 "Challenge '{}': adapter couldn't wrap fragment type {:?}",
@@ -555,10 +668,11 @@ mod tests {
                 "Challenge '{}': wrapped program is empty",
                 challenge.id
             );
-            // For Rust, every program should contain fn main()
+            // For Rust, every program should contain fn main
+            // (token-joined fragments may have spaces in "fn main ( )")
             assert!(
-                program.contains("fn main()") || program.contains("fn main ()"),
-                "Challenge '{}': wrapped program missing fn main()",
+                program.contains("fn main"),
+                "Challenge '{}': wrapped program missing fn main",
                 challenge.id
             );
         }

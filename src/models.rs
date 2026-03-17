@@ -100,6 +100,8 @@ pub struct Challenge {
     pub xp: u32,
     #[serde(default)]
     pub explanation: String,
+    #[serde(default)]
+    pub scaffold: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -243,6 +245,7 @@ impl Challenge {
             chips: vec![],
             xp: 20,
             explanation: "Test explanation".into(),
+            scaffold: "".into(),
         }
     }
 }

@@ -693,7 +693,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "println! is a macro — note the !. Macros in Rust are expanded at compile time. The parentheses wrap the arguments, and the semicolon ends the statement."
+      "explanation": "println! is a macro — note the !. Macros in Rust are expanded at compile time. The parentheses wrap the arguments, and the semicolon ends the statement.",
+      "scaffold": ""
     },
     {
       "id": "rust-m1-c2",
@@ -753,7 +754,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "The {} placeholder in the format string gets replaced by the value of x at runtime. You can have multiple {} placeholders with multiple comma-separated values."
+      "explanation": "The {} placeholder in the format string gets replaced by the value of x at runtime. You can have multiple {} placeholders with multiple comma-separated values.",
+      "scaffold": "let x = 42;"
     },
     {
       "id": "rust-m1-c3",
@@ -816,7 +818,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Each {} is filled in order: the first {} gets a, the second {} gets b. Rust checks at compile time that the number of placeholders matches the number of arguments."
+      "explanation": "Each {} is filled in order: the first {} gets a, the second {} gets b. Rust checks at compile time that the number of placeholders matches the number of arguments.",
+      "scaffold": "let a = 1;\nlet b = 2;"
     },
     {
       "id": "rust-m1-c4",
@@ -866,7 +869,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "print! is the no-newline version of println!. The output stays on the same line, which is useful for building up output incrementally."
+      "explanation": "print! is the no-newline version of println!. The output stays on the same line, which is useful for building up output incrementally.",
+      "scaffold": ""
     },
     {
       "id": "rust-m1-c5",
@@ -927,7 +931,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "dbg! outputs to stderr with file:line info — perfect for debugging. Unlike println!, it returns the value it wraps, so you can use it inline."
+      "explanation": "dbg! outputs to stderr with file:line info — perfect for debugging. Unlike println!, it returns the value it wraps, so you can use it inline.",
+      "scaffold": "let x = 42;"
     },
     {
       "id": "rust-m2-c1",
@@ -986,7 +991,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "let creates a new variable binding. Variables in Rust are immutable by default — you can't reassign x after this unless you use mut."
+      "explanation": "let creates a new variable binding. Variables in Rust are immutable by default — you can't reassign x after this unless you use mut.",
+      "scaffold": ""
     },
     {
       "id": "rust-m2-c2",
@@ -1046,7 +1052,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "mut marks a variable as mutable. Rust makes you opt into mutability explicitly — this helps catch accidental mutations."
+      "explanation": "mut marks a variable as mutable. Rust makes you opt into mutability explicitly — this helps catch accidental mutations.",
+      "scaffold": ""
     },
     {
       "id": "rust-m2-c3",
@@ -1104,7 +1111,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Reassignment uses = without let. This only works if x was declared with let mut. Trying to reassign an immutable variable causes a compile error."
+      "explanation": "Reassignment uses = without let. This only works if x was declared with let mut. Trying to reassign an immutable variable causes a compile error.",
+      "scaffold": "let mut x = 0;"
     },
     {
       "id": "rust-m2-c4",
@@ -1172,7 +1180,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "The : i32 is a type annotation. Rust can usually infer types, but explicit annotations are useful when the type isn't obvious or you want to be specific."
+      "explanation": "The : i32 is a type annotation. Rust can usually infer types, but explicit annotations are useful when the type isn't obvious or you want to be specific.",
+      "scaffold": ""
     },
     {
       "id": "rust-m2-c5",
@@ -1230,7 +1239,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Shadowing creates a completely new variable that happens to share the name. Unlike mut, shadowing lets you change the type too."
+      "explanation": "Shadowing creates a completely new variable that happens to share the name. Unlike mut, shadowing lets you change the type too.",
+      "scaffold": ""
     },
     {
       "id": "rust-m3-c1",
@@ -1241,7 +1251,7 @@
       "prompt": "Define the program's entry point function — it takes no arguments and returns nothing",
       "hint_concept": "Every Rust program starts from a specific function. You declare functions with a keyword, then the name, parentheses for parameters, and curly braces for the body.",
       "hint_structural": "_ _ ( ) { }",
-      "fragment_type": "fn_def",
+      "fragment_type": "program",
       "answer": [
         "fn",
         "main",
@@ -1285,7 +1295,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "fn declares a function. main is special — it's the entry point of every Rust program. The empty () means no parameters, and {} is the empty body."
+      "explanation": "fn declares a function. main is special — it's the entry point of every Rust program. The empty () means no parameters, and {} is the empty body.",
+      "scaffold": ""
     },
     {
       "id": "rust-m3-c2",
@@ -1312,6 +1323,7 @@
         "->",
         "i32",
         "{",
+        "0",
         "}"
       ],
       "answer_variants": [],
@@ -1359,10 +1371,19 @@
             "->",
             ";"
           ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "0",
+            "1",
+            "42"
+          ]
         }
       ],
       "xp": 20,
-      "explanation": "Each parameter is declared as name: type. The -> i32 after the parameter list declares the return type. This function signature says: give me two i32 values, and I'll give you back an i32."
+      "explanation": "Each parameter is declared as name: type. The -> i32 after the parameter list declares the return type. This function signature says: give me two i32 values, and I'll give you back an i32.",
+      "scaffold": ""
     },
     {
       "id": "rust-m3-c3",
@@ -1412,7 +1433,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "In Rust, the last expression without a semicolon is the return value. Adding a semicolon would turn it into a statement that returns (), causing a type error."
+      "explanation": "In Rust, the last expression without a semicolon is the return value. Adding a semicolon would turn it into a statement that returns (), causing a type error.",
+      "scaffold": "let a: i32 = 3;\nlet b: i32 = 5;"
     },
     {
       "id": "rust-m3-c4",
@@ -1467,7 +1489,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Function calls use the name followed by arguments in parentheses. The arguments are matched to parameters by position: 3 goes to a, and 5 goes to b."
+      "explanation": "Function calls use the name followed by arguments in parentheses. The arguments are matched to parameters by position: 3 goes to a, and 5 goes to b.",
+      "scaffold": "fn add(a: i32, b: i32) -> i32 { a + b }"
     },
     {
       "id": "rust-m3-c5",
@@ -1536,7 +1559,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "When a function returns nothing, you omit the -> return type entirely. The &str type is a string slice — a borrowed reference to string data, commonly used for function parameters."
+      "explanation": "When a function returns nothing, you omit the -> return type entirely. The &str type is a string slice — a borrowed reference to string data, commonly used for function parameters.",
+      "scaffold": ""
     },
     {
       "id": "rust-m4-c1",
@@ -1603,7 +1627,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Rust if-else doesn't need parentheses around the condition — just if condition { ... } else { ... }. Both branches use curly braces, even for single-line bodies."
+      "explanation": "Rust if-else doesn't need parentheses around the condition — just if condition { ... } else { ... }. Both branches use curly braces, even for single-line bodies.",
+      "scaffold": "let x: i32 = 5;"
     },
     {
       "id": "rust-m4-c2",
@@ -1651,7 +1676,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "loop creates an infinite loop — it runs forever unless you break out. Unlike while true, Rust has loop as a first-class construct. The compiler knows code after break is unreachable."
+      "explanation": "loop creates an infinite loop — it runs forever unless you break out. Unlike while true, Rust has loop as a first-class construct. The compiler knows code after break is unreachable.",
+      "scaffold": ""
     },
     {
       "id": "rust-m4-c3",
@@ -1718,7 +1744,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "for i in 0..5 iterates i through 0, 1, 2, 3, 4. The .. operator creates an exclusive range. Use ..= for an inclusive range (0..=5 would include 5)."
+      "explanation": "for i in 0..5 iterates i through 0, 1, 2, 3, 4. The .. operator creates an exclusive range. Use ..= for an inclusive range (0..=5 would include 5).",
+      "scaffold": ""
     },
     {
       "id": "rust-m4-c4",
@@ -1782,7 +1809,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "while loops run as long as the condition is true. No parentheses around the condition — Rust's syntax is clean. If x starts at 0 or below, the body never executes."
+      "explanation": "while loops run as long as the condition is true. No parentheses around the condition — Rust's syntax is clean. If x starts at 0 or below, the body never executes.",
+      "scaffold": "let mut x: i32 = 0;"
     },
     {
       "id": "rust-m4-c5",
@@ -1851,7 +1879,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "match is Rust's powerful pattern matching. Each arm is pattern => body. The _ wildcard catches everything else. Rust requires match to be exhaustive — you must handle all possible values."
+      "explanation": "match is Rust's powerful pattern matching. Each arm is pattern => body. The _ wildcard catches everything else. Rust requires match to be exhaustive — you must handle all possible values.",
+      "scaffold": "let x: i32 = 1;"
     },
     {
       "id": "rust-m5-c1",
@@ -1919,7 +1948,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "String::new() creates an empty, heap-allocated string. The :: syntax calls an associated function (like a static method). String owns its data, unlike &str which is a borrowed reference."
+      "explanation": "String::new() creates an empty, heap-allocated string. The :: syntax calls an associated function (like a static method). String owns its data, unlike &str which is a borrowed reference.",
+      "scaffold": ""
     },
     {
       "id": "rust-m5-c2",
@@ -1996,7 +2026,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "String::from() converts a &str literal into a heap-allocated String. The String now owns its data and can be mutated, grown, or passed to functions that take ownership."
+      "explanation": "String::from() converts a &str literal into a heap-allocated String. The String now owns its data and can be mutated, grown, or passed to functions that take ownership.",
+      "scaffold": ""
     },
     {
       "id": "rust-m5-c3",
@@ -2056,7 +2087,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "clone() creates a deep copy of the String — both s and s2 now own independent copies of the data. Without clone, assigning s to s2 would move ownership, making s unusable."
+      "explanation": "clone() creates a deep copy of the String — both s and s2 now own independent copies of the data. Without clone, assigning s to s2 would move ownership, making s unusable.",
+      "scaffold": "let s = String::from(\"hello\");"
     },
     {
       "id": "rust-m5-c4",
@@ -2105,7 +2137,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "&s creates an immutable reference — greet can read the String but can't modify it. After the call, s is still valid because ownership wasn't transferred, only borrowed."
+      "explanation": "&s creates an immutable reference — greet can read the String but can't modify it. After the call, s is still valid because ownership wasn't transferred, only borrowed.",
+      "scaffold": "fn greet(_: &String) {}\nlet s = String::from(\"hello\");"
     },
     {
       "id": "rust-m5-c5",
@@ -2163,7 +2196,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "&mut s creates a mutable reference. The function can now modify s. Rust's borrow checker ensures only one mutable reference exists at a time, preventing data races."
+      "explanation": "&mut s creates a mutable reference. The function can now modify s. Rust's borrow checker ensures only one mutable reference exists at a time, preventing data races.",
+      "scaffold": "fn modify(_: &mut String) {}\nlet mut s = String::from(\"hello\");"
     },
     {
       "id": "rust-m6-c1",
@@ -2236,7 +2270,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "struct defines a custom data type with named fields. The trailing comma after the last field is optional but idiomatic in Rust. Each field has a name and a type."
+      "explanation": "struct defines a custom data type with named fields. The trailing comma after the last field is optional but idiomatic in Rust. Each field has a name and a type.",
+      "scaffold": ""
     },
     {
       "id": "rust-m6-c2",
@@ -2311,7 +2346,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Struct instantiation looks like the definition but with values instead of types. Every field must be initialized — Rust doesn't have null or default values unless you opt in."
+      "explanation": "Struct instantiation looks like the definition but with values instead of types. Every field must be initialized — Rust doesn't have null or default values unless you opt in.",
+      "scaffold": "struct Point { x: i32, y: i32 }"
     },
     {
       "id": "rust-m6-c3",
@@ -2355,7 +2391,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Dot notation accesses struct fields. If p is immutable, you can read p.x but not assign to it. Use let mut p to allow field mutation."
+      "explanation": "Dot notation accesses struct fields. If p is immutable, you can read p.x but not assign to it. Use let mut p to allow field mutation.",
+      "scaffold": "struct Point { x: i32, y: i32 }\nlet p = Point { x: 1, y: 2 };"
     },
     {
       "id": "rust-m6-c4",
@@ -2441,7 +2478,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "impl Point { ... } adds methods to the Point struct. &self means the method borrows the instance immutably. You'd call it as p.distance() — Rust automatically passes p as self."
+      "explanation": "impl Point { ... } adds methods to the Point struct. &self means the method borrows the instance immutably. You'd call it as p.distance() — Rust automatically passes p as self.",
+      "scaffold": "struct Point { x: i32, y: i32 }"
     },
     {
       "id": "rust-m6-c5",
@@ -2524,7 +2562,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Associated functions (no self parameter) are called with :: syntax: Point::new(). By convention, new is the constructor name. The Point literal is implicitly returned (no semicolon)."
+      "explanation": "Associated functions (no self parameter) are called with :: syntax: Point::new(). By convention, new is the constructor name. The Point literal is implicitly returned (no semicolon).",
+      "scaffold": "struct Point { x: i32, y: i32 }"
     },
     {
       "id": "rust-m7-c1",
@@ -2584,7 +2623,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "enum defines a type whose value is exactly one of the listed variants. Color::Red and Color::Blue are the only valid values. Trailing commas are idiomatic."
+      "explanation": "enum defines a type whose value is exactly one of the listed variants. Color::Red and Color::Blue are the only valid values. Trailing commas are idiomatic.",
+      "scaffold": ""
     },
     {
       "id": "rust-m7-c2",
@@ -2653,7 +2693,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Circle(f64) means the Circle variant carries one f64 value. You'd create one with Shape::Circle(3.14). This is more powerful than C-style enums — variants can hold any data."
+      "explanation": "Circle(f64) means the Circle variant carries one f64 value. You'd create one with Shape::Circle(3.14). This is more powerful than C-style enums — variants can hold any data.",
+      "scaffold": ""
     },
     {
       "id": "rust-m7-c3",
@@ -2721,7 +2762,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Matching on enums uses full paths like Color::Red. Rust requires exhaustive matching — every variant must have an arm, or you need a _ wildcard catch-all."
+      "explanation": "Matching on enums uses full paths like Color::Red. Rust requires exhaustive matching — every variant must have an arm, or you need a _ wildcard catch-all.",
+      "scaffold": "enum Color { Red, Blue }\nlet color = Color::Red;"
     },
     {
       "id": "rust-m7-c4",
@@ -2793,7 +2835,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "if let Some(x) = value destructures the Option. If value is Some, x gets the inner value and the body runs. If it's None, the body is skipped. Cleaner than a full match for single-pattern checks."
+      "explanation": "if let Some(x) = value destructures the Option. If value is Some, x gets the inner value and the body runs. If it's None, the body is skipped. Cleaner than a full match for single-pattern checks.",
+      "scaffold": "let value: Option<i32> = Some(42);"
     },
     {
       "id": "rust-m7-c5",
@@ -2803,13 +2846,24 @@
       "title": "Create an Ok result",
       "prompt": "Construct a successful Result value wrapping the number 42",
       "hint_concept": "Result has two variants: Ok for success and Err for failure. Wrap the success value in the appropriate variant constructor.",
-      "hint_structural": "_ ( _ )",
-      "fragment_type": "expression",
+      "hint_structural": "_ _ : _ < _ , _ > = _ ( _ ) ;",
+      "fragment_type": "statement",
       "answer": [
+        "let",
+        "_",
+        ":",
+        "Result",
+        "<",
+        "i32",
+        ",",
+        "String",
+        ">",
+        "=",
         "Ok",
         "(",
         "42",
-        ")"
+        ")",
+        ";"
       ],
       "answer_variants": [],
       "expected": {
@@ -2819,12 +2873,22 @@
       },
       "chips": [
         {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
           "group": "types",
           "tokens": [
             "Ok",
             "Err",
             "Some",
-            "None"
+            "None",
+            "Result",
+            "String",
+            "i32"
           ]
         },
         {
@@ -2833,7 +2897,19 @@
             "(",
             ")",
             ";",
-            ","
+            ",",
+            ":",
+            "<",
+            ">",
+            "="
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "_",
+            "value",
+            "x"
           ]
         },
         {
@@ -2846,7 +2922,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Ok(42) creates a Result::Ok containing 42. Result<T, E> has two variants: Ok(T) for success and Err(E) for failure. Rust uses Result instead of exceptions for error handling."
+      "explanation": "Ok(42) creates a Result::Ok containing 42. Result<T, E> has two variants: Ok(T) for success and Err(E) for failure. Rust uses Result instead of exceptions for error handling.",
+      "scaffold": ""
     },
     {
       "id": "rust-m8-c1",
@@ -2893,7 +2970,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "unwrap() extracts the Ok value or panics on Err. It's quick for prototyping but risky in production — a panic crashes the program. Prefer expect(), ?, or match for real code."
+      "explanation": "unwrap() extracts the Ok value or panics on Err. It's quick for prototyping but risky in production — a panic crashes the program. Prefer expect(), ?, or match for real code.",
+      "scaffold": "let result: Result<i32, String> = Ok(42);"
     },
     {
       "id": "rust-m8-c2",
@@ -2949,7 +3027,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "expect() is like unwrap() but with a custom message. When it panics, you see your message instead of a generic error — invaluable for debugging."
+      "explanation": "expect() is like unwrap() but with a custom message. When it panics, you see your message instead of a generic error — invaluable for debugging.",
+      "scaffold": "let result: Result<i32, String> = Ok(42);"
     },
     {
       "id": "rust-m8-c3",
@@ -2957,17 +3036,49 @@
       "module": 8,
       "position": 3,
       "title": "Propagate with ?",
-      "prompt": "Bind the success value of result to a variable called value, using the operator that automatically returns early on error",
+      "prompt": "Define a function that creates a Result, extracts its value using the ? operator, and returns it",
       "hint_concept": "A special operator after a Result expression extracts Ok or returns the Err to the caller. It replaces verbose match-and-return patterns.",
-      "hint_structural": "_ _ = _ _ ;",
-      "fragment_type": "statement",
+      "hint_structural": "_ _ ( ) -> _ < _ , _ > { _ _ : _ < _ , _ > = _ ( _ ) ; _ _ = _ _ ; _ ( _ ) }",
+      "fragment_type": "fn_def",
       "answer": [
+        "fn",
+        "try_it",
+        "(",
+        ")",
+        "->",
+        "Result",
+        "<",
+        "i32",
+        ",",
+        "String",
+        ">",
+        "{",
+        "let",
+        "result",
+        ":",
+        "Result",
+        "<",
+        "i32",
+        ",",
+        "String",
+        ">",
+        "=",
+        "Ok",
+        "(",
+        "42",
+        ")",
+        ";",
         "let",
         "value",
         "=",
         "result",
         "?",
-        ";"
+        ";",
+        "Ok",
+        "(",
+        "value",
+        ")",
+        "}"
       ],
       "answer_variants": [],
       "expected": {
@@ -2979,6 +3090,7 @@
         {
           "group": "keywords",
           "tokens": [
+            "fn",
             "let",
             "mut",
             "return"
@@ -2987,6 +3099,7 @@
         {
           "group": "identifiers",
           "tokens": [
+            "try_it",
             "value",
             "result",
             "x",
@@ -2994,19 +3107,44 @@
           ]
         },
         {
+          "group": "types",
+          "tokens": [
+            "Result",
+            "Ok",
+            "Err",
+            "String",
+            "i32"
+          ]
+        },
+        {
           "group": "symbols",
           "tokens": [
+            "(",
+            ")",
+            "{",
+            "}",
+            "->",
+            "<",
+            ">",
+            ":",
+            ",",
             "=",
             "?",
-            ";",
-            ".",
-            "(",
-            ")"
+            ";"
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "42",
+            "0",
+            "1"
           ]
         }
       ],
       "xp": 20,
-      "explanation": "The ? operator is Rust's ergonomic error propagation. If result is Ok, it unwraps the value. If Err, it returns the error from the current function immediately. Much cleaner than manual matching."
+      "explanation": "The ? operator is Rust's ergonomic error propagation. If result is Ok, it unwraps the value. If Err, it returns the error from the current function immediately. Much cleaner than manual matching.",
+      "scaffold": ""
     },
     {
       "id": "rust-m8-c4",
@@ -3086,7 +3224,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Matching on Result gives you full control over both cases. Ok(value) binds the success data; Err(e) binds the error. This is the most explicit way to handle Results."
+      "explanation": "Matching on Result gives you full control over both cases. Ok(value) binds the success data; Err(e) binds the error. This is the most explicit way to handle Results.",
+      "scaffold": "let result: Result<i32, String> = Ok(42);"
     },
     {
       "id": "rust-m8-c5",
@@ -3096,8 +3235,8 @@
       "title": "Fallible main",
       "prompt": "Declare a main function that returns a Result with unit success type and a boxed dynamic Error trait object, with an empty body",
       "hint_concept": "main can return Result so you can use ? in it. The error type is typically a boxed trait object that can hold any error type.",
-      "hint_structural": "_ _ ( ) -> _ < _ , _ < _ _ _ _ _ > > { }",
-      "fragment_type": "fn_def",
+      "hint_structural": "_ _ ( ) -> _ < _ , _ < _ _ _ _ _ > > { _ ( _ ) }",
+      "fragment_type": "program",
       "answer": [
         "fn",
         "main",
@@ -3120,6 +3259,11 @@
         ">",
         ">",
         "{",
+        "Ok",
+        "(",
+        "(",
+        ")",
+        ")",
         "}"
       ],
       "answer_variants": [],
@@ -3155,7 +3299,8 @@
             "Result",
             "Box",
             "Option",
-            "String"
+            "String",
+            "Ok"
           ]
         },
         {
@@ -3175,7 +3320,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "fn main() -> Result<(), Box<dyn std::error::Error>> lets you use ? throughout main. () means success returns nothing. Box<dyn Error> can hold any error type — maximum flexibility."
+      "explanation": "fn main() -> Result<(), Box<dyn std::error::Error>> lets you use ? throughout main. () means success returns nothing. Box<dyn Error> can hold any error type — maximum flexibility.",
+      "scaffold": ""
     },
     {
       "id": "rust-m9-c1",
@@ -3185,8 +3331,8 @@
       "title": "Derive Debug",
       "prompt": "Write the attribute that automatically implements the Debug trait for the struct that follows",
       "hint_concept": "Rust can auto-generate trait implementations using a derive attribute. Attributes are written with # and square brackets above the item.",
-      "hint_structural": "_ _ _ ( _ ) _",
-      "fragment_type": "statement",
+      "hint_structural": "_ _ _ ( _ ) _ _ _ ;",
+      "fragment_type": "type_def",
       "answer": [
         "#",
         "[",
@@ -3194,7 +3340,10 @@
         "(",
         "Debug",
         ")",
-        "]"
+        "]",
+        "struct",
+        "Foo",
+        ";"
       ],
       "answer_variants": [],
       "expected": {
@@ -3209,7 +3358,15 @@
             "derive",
             "Debug",
             "Display",
-            "Clone"
+            "Clone",
+            "Foo"
+          ]
+        },
+        {
+          "group": "keywords",
+          "tokens": [
+            "struct",
+            "enum"
           ]
         },
         {
@@ -3222,12 +3379,14 @@
             ")",
             ",",
             "{",
-            "}"
+            "}",
+            ";"
           ]
         }
       ],
       "xp": 20,
-      "explanation": "#[derive(Debug)] tells the compiler to auto-generate a Debug implementation. This lets you print the struct with {:?} in format strings — essential for debugging."
+      "explanation": "#[derive(Debug)] tells the compiler to auto-generate a Debug implementation. This lets you print the struct with {:?} in format strings — essential for debugging.",
+      "scaffold": ""
     },
     {
       "id": "rust-m9-c2",
@@ -3237,7 +3396,7 @@
       "title": "Implement Display",
       "prompt": "Write the impl block header that implements the standard library Display trait for Point, with an empty body",
       "hint_concept": "To implement a trait for a type, use impl followed by the trait path, the keyword for, and then the type name.",
-      "hint_structural": "_ _ _ _ _ _ _ _ { }",
+      "hint_structural": "_ _ :: _ :: _ _ _ { _ _ ( _ _ , _ : _ _ _ :: _ :: _ ) -> _ :: _ :: _ { _ ( _ ) } }",
       "fragment_type": "type_def",
       "answer": [
         "impl",
@@ -3249,6 +3408,35 @@
         "for",
         "Point",
         "{",
+        "fn",
+        "fmt",
+        "(",
+        "&",
+        "self",
+        ",",
+        "f",
+        ":",
+        "&",
+        "mut",
+        "std",
+        "::",
+        "fmt",
+        "::",
+        "Formatter",
+        ")",
+        "->",
+        "std",
+        "::",
+        "fmt",
+        "::",
+        "Result",
+        "{",
+        "Ok",
+        "(",
+        "(",
+        ")",
+        ")",
+        "}",
         "}"
       ],
       "answer_variants": [],
@@ -3264,7 +3452,8 @@
             "impl",
             "for",
             "fn",
-            "trait"
+            "trait",
+            "mut"
           ]
         },
         {
@@ -3275,7 +3464,18 @@
             "Display",
             "Point",
             "Debug",
-            "Color"
+            "Color",
+            "self",
+            "f",
+            "Formatter",
+            "Result"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Ok",
+            "Err"
           ]
         },
         {
@@ -3287,12 +3487,16 @@
             "(",
             ")",
             "->",
+            "&",
+            ":",
+            ",",
             ";"
           ]
         }
       ],
       "xp": 20,
-      "explanation": "impl Trait for Type is how you implement traits in Rust. std::fmt::Display controls how a type appears when printed with {} in format strings. Unlike Debug, Display must be manually implemented."
+      "explanation": "impl Trait for Type is how you implement traits in Rust. std::fmt::Display controls how a type appears when printed with {} in format strings. Unlike Debug, Display must be manually implemented.",
+      "scaffold": "struct Point { x: i32, y: i32 }"
     },
     {
       "id": "rust-m9-c3",
@@ -3358,7 +3562,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "trait defines an interface. fn greet(&self); is a method signature — no body, just a semicolon. Any type that implements Greetable must provide a body for greet."
+      "explanation": "trait defines an interface. fn greet(&self); is a method signature — no body, just a semicolon. Any type that implements Greetable must provide a body for greet.",
+      "scaffold": ""
     },
     {
       "id": "rust-m9-c4",
@@ -3368,7 +3573,7 @@
       "title": "Implement a trait",
       "prompt": "Write the impl block header that implements the Greetable trait for the struct Person, with an empty body",
       "hint_concept": "Implementing your own trait uses the same syntax as implementing standard library traits: impl TraitName for TypeName.",
-      "hint_structural": "_ _ _ _ { }",
+      "hint_structural": "_ _ _ _ { _ _ ( _ _ ) { } }",
       "fragment_type": "type_def",
       "answer": [
         "impl",
@@ -3376,6 +3581,14 @@
         "for",
         "Person",
         "{",
+        "fn",
+        "greet",
+        "(",
+        "&",
+        "self",
+        ")",
+        "{",
+        "}",
         "}"
       ],
       "answer_variants": [],
@@ -3391,7 +3604,8 @@
             "impl",
             "for",
             "trait",
-            "struct"
+            "struct",
+            "fn"
           ]
         },
         {
@@ -3400,7 +3614,9 @@
             "Greetable",
             "Person",
             "Point",
-            "Display"
+            "Display",
+            "greet",
+            "self"
           ]
         },
         {
@@ -3411,12 +3627,14 @@
             "(",
             ")",
             "::",
-            ";"
+            ";",
+            "&"
           ]
         }
       ],
       "xp": 20,
-      "explanation": "impl Greetable for Person means Person now satisfies the Greetable interface. You'd need to provide the body for fn greet(&self) inside the braces for this to compile."
+      "explanation": "impl Greetable for Person means Person now satisfies the Greetable interface. You'd need to provide the body for fn greet(&self) inside the braces for this to compile.",
+      "scaffold": "trait Greetable { fn greet(&self); }\nstruct Person;"
     },
     {
       "id": "rust-m9-c5",
@@ -3488,7 +3706,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "impl Display as a parameter type means: any type that implements Display. The compiler generates a specialized version for each concrete type used — zero-cost abstraction."
+      "explanation": "impl Display as a parameter type means: any type that implements Display. The compiler generates a specialized version for each concrete type used — zero-cost abstraction.",
+      "scaffold": ""
     },
     {
       "id": "rust-m10-c1",
@@ -3498,11 +3717,16 @@
       "title": "Empty vector",
       "prompt": "Create an empty vector using the vec macro and bind it to the variable v",
       "hint_concept": "The vec! macro is the most common way to create vectors. Empty square brackets mean no initial elements.",
-      "hint_structural": "_ _ = _ _ _ ;",
+      "hint_structural": "_ _ : _ < _ > = _ _ _ ;",
       "fragment_type": "statement",
       "answer": [
         "let",
         "v",
+        ":",
+        "Vec",
+        "<",
+        "i32",
+        ">",
         "=",
         "vec!",
         "[",
@@ -3548,12 +3772,24 @@
             "(",
             ")",
             "{",
-            "}"
+            "}",
+            "<",
+            ">",
+            ":"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Vec",
+            "i32",
+            "String"
           ]
         }
       ],
       "xp": 20,
-      "explanation": "vec![] creates an empty Vec. The vec! macro can also initialize with values: vec![1, 2, 3]. The type is inferred from how you use the vector later."
+      "explanation": "vec![] creates an empty Vec. The vec! macro can also initialize with values: vec![1, 2, 3]. The type is inferred from how you use the vector later.",
+      "scaffold": ""
     },
     {
       "id": "rust-m10-c2",
@@ -3613,7 +3849,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "push() adds an element to the end of a Vec. The vector must be declared with let mut for this to work, since push modifies it in place."
+      "explanation": "push() adds an element to the end of a Vec. The vector must be declared with let mut for this to work, since push modifies it in place.",
+      "scaffold": "let mut v: Vec<i32> = Vec::new();"
     },
     {
       "id": "rust-m10-c3",
@@ -3673,7 +3910,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "&v borrows the vector, so you can still use v after the loop. Without &, the for loop would consume v (take ownership). Each iteration, item is a reference to one element."
+      "explanation": "&v borrows the vector, so you can still use v after the loop. Without &, the for loop would consume v (take ownership). Each iteration, item is a reference to one element.",
+      "scaffold": "let v: Vec<i32> = vec![1, 2, 3];"
     },
     {
       "id": "rust-m10-c4",
@@ -3683,12 +3921,19 @@
       "title": "Create a HashMap",
       "prompt": "Create a new empty HashMap and bind it to a mutable variable called map",
       "hint_concept": "HashMap works like other collections — it has an associated new() function. You need it mutable if you plan to insert entries later.",
-      "hint_structural": "_ _ _ = _ _ _ ( ) ;",
+      "hint_structural": "_ _ _ : _ < _ , _ > = _ :: _ ( ) ;",
       "fragment_type": "statement",
       "answer": [
         "let",
         "mut",
         "map",
+        ":",
+        "HashMap",
+        "<",
+        "String",
+        ",",
+        "i32",
+        ">",
         "=",
         "HashMap",
         "::",
@@ -3726,7 +3971,8 @@
           "tokens": [
             "HashMap",
             "Vec",
-            "String"
+            "String",
+            "i32"
           ]
         },
         {
@@ -3737,12 +3983,17 @@
             "(",
             ")",
             ";",
-            "."
+            ".",
+            ":",
+            "<",
+            ">",
+            ","
           ]
         }
       ],
       "xp": 20,
-      "explanation": "HashMap::new() creates an empty hash map. let mut is needed because inserting entries mutates the map. Key and value types are inferred from the first insert."
+      "explanation": "HashMap::new() creates an empty hash map. let mut is needed because inserting entries mutates the map. Key and value types are inferred from the first insert.",
+      "scaffold": "use std::collections::HashMap;"
     },
     {
       "id": "rust-m10-c5",
@@ -3799,7 +4050,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "get() returns Option<&V> — Some with a reference to the value if the key exists, or None if it doesn't. This avoids panics on missing keys, unlike direct indexing with []."
+      "explanation": "get() returns Option<&V> — Some with a reference to the value if the key exists, or None if it doesn't. This avoids panics on missing keys, unlike direct indexing with [].",
+      "scaffold": "use std::collections::HashMap;\nlet mut map: HashMap<&str, i32> = HashMap::new();\nmap.insert(\"name\", 42);"
     },
     {
       "id": "rust-m11-c1",
@@ -3809,7 +4061,7 @@
       "title": "Your first closure",
       "prompt": "Define a closure stored in a variable that takes one parameter and returns that parameter plus one",
       "hint_concept": "Closures are anonymous functions. In Rust, their parameters go between pipe characters |param|, and the body follows directly.",
-      "hint_structural": "_ _ = _ _ _ _ + _ ;",
+      "hint_structural": "_ _ = _ _ : _ _ _ + _ ;",
       "fragment_type": "statement",
       "answer": [
         "let",
@@ -3817,6 +4069,8 @@
         "=",
         "|",
         "x",
+        ":",
+        "i32",
         "|",
         "x",
         "+",
@@ -3854,7 +4108,8 @@
             "|",
             "+",
             ";",
-            "-"
+            "-",
+            ":"
           ]
         },
         {
@@ -3864,10 +4119,18 @@
             "2",
             "0"
           ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "i32",
+            "f64"
+          ]
         }
       ],
       "xp": 20,
-      "explanation": "Closures use |param| syntax instead of fn(param). The body expression x + 1 is returned implicitly. Closures can capture variables from their surrounding scope, unlike regular functions."
+      "explanation": "Closures use |param| syntax instead of fn(param). The body expression x + 1 is returned implicitly. Closures can capture variables from their surrounding scope, unlike regular functions.",
+      "scaffold": ""
     },
     {
       "id": "rust-m11-c2",
@@ -3946,7 +4209,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "The || with nothing between the pipes means the closure takes no parameters. It captures name from the surrounding scope automatically — this is one of the key differences between closures and functions."
+      "explanation": "The || with nothing between the pipes means the closure takes no parameters. It captures name from the surrounding scope automatically — this is one of the key differences between closures and functions.",
+      "scaffold": "let name = \"Alice\";"
     },
     {
       "id": "rust-m11-c3",
@@ -4015,7 +4279,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "iter() creates a borrowing iterator over the vector. map() takes a closure and applies it to each element, producing a new lazy iterator. The result isn't computed until consumed (e.g., by collect)."
+      "explanation": "iter() creates a borrowing iterator over the vector. map() takes a closure and applies it to each element, producing a new lazy iterator. The result isn't computed until consumed (e.g., by collect).",
+      "scaffold": "let v: Vec<i32> = vec![1, 2, 3];"
     },
     {
       "id": "rust-m11-c4",
@@ -4025,7 +4290,7 @@
       "title": "Filter an iterator",
       "prompt": "Keep only the positive numbers from an iterator over vector v, using a pattern that destructures the reference in the closure parameter",
       "hint_concept": "filter() keeps elements where the closure returns true. Since iter() yields references, you can use & in the closure parameter to destructure and get the value directly.",
-      "hint_structural": "_ . _ ( ) . _ ( _ & _ _ _ > _ )",
+      "hint_structural": "_ . _ ( ) . _ ( _ & & _ _ _ > _ )",
       "fragment_type": "expression",
       "answer": [
         "v",
@@ -4037,6 +4302,7 @@
         "filter",
         "(",
         "|",
+        "&",
         "&",
         "x",
         "|",
@@ -4086,7 +4352,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "filter() receives references to elements. The |&x| pattern destructures the reference so x is the value itself. Only elements where the closure returns true are kept in the resulting iterator."
+      "explanation": "filter() receives references to elements. The |&x| pattern destructures the reference so x is the value itself. Only elements where the closure returns true are kept in the resulting iterator.",
+      "scaffold": "let v: Vec<i32> = vec![1, 2, 3];"
     },
     {
       "id": "rust-m11-c5",
@@ -4096,7 +4363,7 @@
       "title": "Collect into a Vec",
       "prompt": "Consume an iterator over v and gather all its elements into a new Vec of i32 values",
       "hint_concept": "Iterators are lazy — they don't compute anything until consumed. A method called collect() consumes the iterator and gathers results into a collection. You need a type annotation so Rust knows what collection to build.",
-      "hint_structural": "_ _ : _ < _ > = _ . _ ( ) . _ ( ) ;",
+      "hint_structural": "_ _ : _ < _ _ > = _ . _ ( ) . _ ( ) ;",
       "fragment_type": "statement",
       "answer": [
         "let",
@@ -4104,6 +4371,7 @@
         ":",
         "Vec",
         "<",
+        "&",
         "i32",
         ">",
         "=",
@@ -4168,7 +4436,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "collect() consumes the iterator and builds a collection. The type annotation Vec<i32> tells Rust what to collect into — without it, Rust can't infer which collection type you want."
+      "explanation": "collect() consumes the iterator and builds a collection. The type annotation Vec<i32> tells Rust what to collect into — without it, Rust can't infer which collection type you want.",
+      "scaffold": "let v: Vec<i32> = vec![1, 2, 3];"
     },
     {
       "id": "rust-m12-c1",
@@ -4266,7 +4535,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "The lifetime 'a tells the compiler that the returned reference will live at least as long as the shorter of x and y. Without this annotation, Rust can't determine how the return value's lifetime relates to the inputs."
+      "explanation": "The lifetime 'a tells the compiler that the returned reference will live at least as long as the shorter of x and y. Without this annotation, Rust can't determine how the return value's lifetime relates to the inputs.",
+      "scaffold": ""
     },
     {
       "id": "rust-m12-c2",
@@ -4347,7 +4617,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Any struct that stores a reference must declare a lifetime parameter. This tells the compiler that an Excerpt instance can't outlive the string slice it borrows in its text field."
+      "explanation": "Any struct that stores a reference must declare a lifetime parameter. This tells the compiler that an Excerpt instance can't outlive the string slice it borrows in its text field.",
+      "scaffold": ""
     },
     {
       "id": "rust-m12-c3",
@@ -4415,7 +4686,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "The impl<'a> declares the lifetime parameter, and Excerpt<'a> uses it. This pattern mirrors how generic type parameters work — declare on impl, then apply to the type."
+      "explanation": "The impl<'a> declares the lifetime parameter, and Excerpt<'a> uses it. This pattern mirrors how generic type parameters work — declare on impl, then apply to the type.",
+      "scaffold": "struct Excerpt<'a> { text: &'a str }"
     },
     {
       "id": "rust-m12-c4",
@@ -4514,7 +4786,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Using separate lifetimes 'a and 'b tells the compiler that x and y can have different lifetimes. The return type &'a str ties the result to x's lifetime only, so y's data can be dropped independently."
+      "explanation": "Using separate lifetimes 'a and 'b tells the compiler that x and y can have different lifetimes. The return type &'a str ties the result to x's lifetime only, so y's data can be dropped independently.",
+      "scaffold": ""
     },
     {
       "id": "rust-m12-c5",
@@ -4595,7 +4868,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "'static means the reference lives for the entire program. All string literals are &'static str because they're baked into the compiled binary and always available."
+      "explanation": "'static means the reference lives for the entire program. All string literals are &'static str because they're baked into the compiled binary and always available.",
+      "scaffold": ""
     },
     {
       "id": "rust-m13-c1",
@@ -4671,7 +4945,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Box::new() allocates the value on the heap and returns a pointer to it. When the Box goes out of scope, both the pointer and the heap data are freed. Box has single ownership — only one owner at a time."
+      "explanation": "Box::new() allocates the value on the heap and returns a pointer to it. When the Box goes out of scope, both the pointer and the heap data are freed. Box has single ownership — only one owner at a time.",
+      "scaffold": ""
     },
     {
       "id": "rust-m13-c2",
@@ -4747,7 +5022,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Rc::new() creates a reference-counted pointer. Unlike Box, multiple Rc pointers can share ownership of the same data. The internal counter tracks how many clones exist."
+      "explanation": "Rc::new() creates a reference-counted pointer. Unlike Box, multiple Rc pointers can share ownership of the same data. The internal counter tracks how many clones exist.",
+      "scaffold": "use std::rc::Rc;"
     },
     {
       "id": "rust-m13-c3",
@@ -4818,7 +5094,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Rc::clone(&a) increments the reference count and returns a new Rc pointing to the same data. This is preferred over a.clone() because it makes clear you're only bumping a counter, not deep-copying data."
+      "explanation": "Rc::clone(&a) increments the reference count and returns a new Rc pointing to the same data. This is preferred over a.clone() because it makes clear you're only bumping a counter, not deep-copying data.",
+      "scaffold": "use std::rc::Rc;\nlet a = Rc::new(5);"
     },
     {
       "id": "rust-m13-c4",
@@ -4896,7 +5173,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "RefCell::new() wraps a value with runtime borrow checking. Unlike compile-time references, RefCell lets you mutate the inner value even when you only have a shared (&) reference to the RefCell itself."
+      "explanation": "RefCell::new() wraps a value with runtime borrow checking. Unlike compile-time references, RefCell lets you mutate the inner value even when you only have a shared (&) reference to the RefCell itself.",
+      "scaffold": "use std::cell::RefCell;"
     },
     {
       "id": "rust-m13-c5",
@@ -4958,7 +5236,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "borrow_mut() returns a RefMut smart pointer that acts like a mutable reference. If something else is already borrowing the RefCell's data, this will panic at runtime."
+      "explanation": "borrow_mut() returns a RefMut smart pointer that acts like a mutable reference. If something else is already borrowing the RefCell's data, this will panic at runtime.",
+      "scaffold": "use std::cell::RefCell;\nlet cell = RefCell::new(5);"
     },
     {
       "id": "rust-m14-c1",
@@ -5016,7 +5295,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "std::thread::spawn takes a closure and runs it in a new OS thread. The || means the closure takes no parameters. The thread runs concurrently with the main thread."
+      "explanation": "std::thread::spawn takes a closure and runs it in a new OS thread. The || means the closure takes no parameters. The thread runs concurrently with the main thread.",
+      "scaffold": ""
     },
     {
       "id": "rust-m14-c2",
@@ -5084,7 +5364,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "The move keyword before the closure forces all captured variables to be moved into the closure, transferring ownership. This is essential for threads because the spawned thread may outlive the scope where the variables were created."
+      "explanation": "The move keyword before the closure forces all captured variables to be moved into the closure, transferring ownership. This is essential for threads because the spawned thread may outlive the scope where the variables were created.",
+      "scaffold": ""
     },
     {
       "id": "rust-m14-c3",
@@ -5160,7 +5441,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Mutex::new(0) creates a mutex guarding the value 0. Any thread that wants to read or write the data must first acquire the lock, ensuring exclusive access."
+      "explanation": "Mutex::new(0) creates a mutex guarding the value 0. Any thread that wants to read or write the data must first acquire the lock, ensuring exclusive access.",
+      "scaffold": "use std::sync::Mutex;"
     },
     {
       "id": "rust-m14-c4",
@@ -5227,7 +5509,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "m.lock() blocks until the lock is available, then returns a Result<MutexGuard>. unwrap() extracts the guard, which provides mutable access. The lock is automatically released when the guard goes out of scope."
+      "explanation": "m.lock() blocks until the lock is available, then returns a Result<MutexGuard>. unwrap() extracts the guard, which provides mutable access. The lock is automatically released when the guard goes out of scope.",
+      "scaffold": "use std::sync::Mutex;\nlet m = Mutex::new(0);"
     },
     {
       "id": "rust-m14-c5",
@@ -5310,7 +5593,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Arc<Mutex<T>> is the standard pattern for shared mutable state across threads. Arc (Atomic Reference Counting) handles thread-safe ownership sharing, while Mutex handles thread-safe mutation."
+      "explanation": "Arc<Mutex<T>> is the standard pattern for shared mutable state across threads. Arc (Atomic Reference Counting) handles thread-safe ownership sharing, while Mutex handles thread-safe mutation.",
+      "scaffold": "use std::sync::{Arc, Mutex};"
     },
     {
       "id": "rust-m15-c1",
@@ -5387,7 +5671,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "The <T> declares a generic type parameter. T can be any type — the compiler generates specialized code for each concrete type used. This function works with i32, String, or any other type."
+      "explanation": "The <T> declares a generic type parameter. T can be any type — the compiler generates specialized code for each concrete type used. This function works with i32, String, or any other type.",
+      "scaffold": ""
     },
     {
       "id": "rust-m15-c2",
@@ -5464,7 +5749,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "The bound T: Display means this function only accepts types that implement the Display trait. Trying to call show with a type that doesn't implement Display causes a compile error."
+      "explanation": "The bound T: Display means this function only accepts types that implement the Display trait. Trying to call show with a type that doesn't implement Display causes a compile error.",
+      "scaffold": "use std::fmt::Display;"
     },
     {
       "id": "rust-m15-c3",
@@ -5533,7 +5819,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "The dyn keyword marks Animal as a trait object, meaning method calls are dispatched dynamically at runtime (via a vtable) instead of statically. This lets you store different concrete types behind the same trait reference."
+      "explanation": "The dyn keyword marks Animal as a trait object, meaning method calls are dispatched dynamically at runtime (via a vtable) instead of statically. This lets you store different concrete types behind the same trait reference.",
+      "scaffold": "trait Animal {}\nstruct Dog;\nimpl Animal for Dog {}\nlet dog = Dog;"
     },
     {
       "id": "rust-m15-c4",
@@ -5604,7 +5891,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Wrapper<T> can hold a value of any type. When you create Wrapper { value: 42 }, T becomes i32. When you create Wrapper { value: \"hi\" }, T becomes &str. The compiler generates code for each concrete type."
+      "explanation": "Wrapper<T> can hold a value of any type. When you create Wrapper { value: 42 }, T becomes i32. When you create Wrapper { value: \"hi\" }, T becomes &str. The compiler generates code for each concrete type.",
+      "scaffold": ""
     },
     {
       "id": "rust-m15-c5",
@@ -5666,7 +5954,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "The impl<T> declares the type parameter, and Wrapper<T> uses it. This means the methods inside will work for any Wrapper, regardless of what type T is."
+      "explanation": "The impl<T> declares the type parameter, and Wrapper<T> uses it. This means the methods inside will work for any Wrapper, regardless of what type T is.",
+      "scaffold": "struct Wrapper<T> { value: T }"
     },
     {
       "id": "rust-m16-c1",
@@ -5738,7 +6027,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Pattern matching lets you take apart data structures in a single step. The (x, y) on the left mirrors the shape of the (1, 2) tuple on the right, binding x to 1 and y to 2."
+      "explanation": "Pattern matching lets you take apart data structures in a single step. The (x, y) on the left mirrors the shape of the (1, 2) tuple on the right, binding x to 1 and y to 2.",
+      "scaffold": ""
     },
     {
       "id": "rust-m16-c2",
@@ -5809,7 +6099,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Struct destructuring mirrors the struct's field names. Writing Point { x, y } is shorthand for Point { x: x, y: y } — each field is bound to a local variable with the same name."
+      "explanation": "Struct destructuring mirrors the struct's field names. Writing Point { x, y } is shorthand for Point { x: x, y: y } — each field is bound to a local variable with the same name.",
+      "scaffold": "struct Point { x: i32, y: i32 }\nlet point = Point { x: 1, y: 2 };"
     },
     {
       "id": "rust-m16-c3",
@@ -5879,7 +6170,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "if let is syntactic sugar for a match with one arm. It's cleaner than a full match when you only care about one variant. The code block runs only when value matches Some(x)."
+      "explanation": "if let is syntactic sugar for a match with one arm. It's cleaner than a full match when you only care about one variant. The code block runs only when value matches Some(x).",
+      "scaffold": "let value: Option<i32> = Some(42);"
     },
     {
       "id": "rust-m16-c4",
@@ -5955,7 +6247,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "while let runs the loop body as long as the pattern matches. When stack.pop() returns None (the stack is empty), the pattern fails and the loop ends. No explicit break needed."
+      "explanation": "while let runs the loop body as long as the pattern matches. When stack.pop() returns None (the stack is empty), the pattern fails and the loop ends. No explicit break needed.",
+      "scaffold": "let mut stack: Vec<i32> = vec![1, 2, 3];"
     },
     {
       "id": "rust-m16-c5",
@@ -6033,7 +6326,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "The if n > 0 is a match guard — an extra condition after the pattern. The arm only fires if both the pattern matches AND the guard is true. The _ arm catches everything else."
+      "explanation": "The if n > 0 is a match guard — an extra condition after the pattern. The arm only fires if both the pattern matches AND the guard is true. The _ arm catches everything else.",
+      "scaffold": "let x: i32 = 5;"
     },
     {
       "id": "rust-m17-c1",
@@ -6099,7 +6393,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "A &str is a borrowed view into string data. When you write &s where s is a String, Rust automatically coerces it to a &str covering the entire string. This is called deref coercion."
+      "explanation": "A &str is a borrowed view into string data. When you write &s where s is a String, Rust automatically coerces it to a &str covering the entire string. This is called deref coercion.",
+      "scaffold": "let s = String::from(\"hello\");"
     },
     {
       "id": "rust-m17-c2",
@@ -6166,7 +6461,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "to_string() creates a new heap-allocated String from a &str. String::from(\"hello\") does the same thing. The key difference: &str is borrowed and fixed-size, while String is owned and growable."
+      "explanation": "to_string() creates a new heap-allocated String from a &str. String::from(\"hello\") does the same thing. The key difference: &str is borrowed and fixed-size, while String is owned and growable.",
+      "scaffold": ""
     },
     {
       "id": "rust-m17-c3",
@@ -6246,7 +6542,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "format!() works exactly like println!() but returns a String instead of printing to stdout. It's the cleanest way to concatenate strings with formatting in Rust."
+      "explanation": "format!() works exactly like println!() but returns a String instead of printing to stdout. It's the cleanest way to concatenate strings with formatting in Rust.",
+      "scaffold": "let first = \"John\";\nlet last = \"Doe\";"
     },
     {
       "id": "rust-m17-c4",
@@ -6302,7 +6599,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "contains() searches the string for the given pattern and returns true if found. It works with &str, char, or any type that implements the Pattern trait."
+      "explanation": "contains() searches the string for the given pattern and returns true if found. It works with &str, char, or any type that implements the Pattern trait.",
+      "scaffold": "let s = String::from(\"hello rust\");"
     },
     {
       "id": "rust-m17-c5",
@@ -6359,7 +6657,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "push_str() appends a &str to the end of a String. There's also push() for appending a single char. Both require the String to be declared with let mut."
+      "explanation": "push_str() appends a &str to the end of a String. There's also push() for appending a single char. Both require the String to be declared with let mut.",
+      "scaffold": "let mut s = String::from(\"hello\");"
     },
     {
       "id": "rust-m18-c1",
@@ -6412,7 +6711,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "mod creates a new module namespace. Items inside are private by default — only accessible within the module and its children. Use pub to expose items to the outside."
+      "explanation": "mod creates a new module namespace. Items inside are private by default — only accessible within the module and its children. Use pub to expose items to the outside.",
+      "scaffold": ""
     },
     {
       "id": "rust-m18-c2",
@@ -6470,7 +6770,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "pub makes the function visible to code outside its module. Without pub, the function can only be called from within the same module or its child modules."
+      "explanation": "pub makes the function visible to code outside its module. Without pub, the function can only be called from within the same module or its child modules.",
+      "scaffold": ""
     },
     {
       "id": "rust-m18-c3",
@@ -6535,7 +6836,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "use brings items into scope so you can use their short names. After this statement, you can write HashMap::new() instead of std::collections::HashMap::new()."
+      "explanation": "use brings items into scope so you can use their short names. After this statement, you can write HashMap::new() instead of std::collections::HashMap::new().",
+      "scaffold": ""
     },
     {
       "id": "rust-m18-c4",
@@ -6545,14 +6847,30 @@
       "title": "Import from parent module",
       "prompt": "Bring a function called helper from the parent module into the current scope",
       "hint_concept": "To refer to items in the parent module, Rust provides a special path keyword that means 'one level up'. Combine it with use to import the item.",
-      "hint_structural": "_ _ :: _ ;",
-      "fragment_type": "statement",
+      "hint_structural": "_ _ ( ) { } _ _ { _ _ :: _ ; } _ _ ( ) { }",
+      "fragment_type": "program",
       "answer": [
+        "fn",
+        "helper",
+        "(",
+        ")",
+        "{",
+        "}",
+        "mod",
+        "child",
+        "{",
         "use",
         "super",
         "::",
         "helper",
-        ";"
+        ";",
+        "}",
+        "fn",
+        "main",
+        "(",
+        ")",
+        "{",
+        "}"
       ],
       "answer_variants": [],
       "expected": {
@@ -6564,33 +6882,38 @@
         {
           "group": "keywords",
           "tokens": [
+            "fn",
+            "mod",
             "use",
             "super",
-            "self",
-            "crate"
+            "pub"
           ]
         },
         {
           "group": "identifiers",
           "tokens": [
             "helper",
-            "utils",
+            "child",
             "main",
+            "utils",
             "work"
           ]
         },
         {
           "group": "symbols",
           "tokens": [
+            "(",
+            ")",
+            "{",
+            "}",
             "::",
-            ";",
-            ".",
-            ","
+            ";"
           ]
         }
       ],
       "xp": 20,
-      "explanation": "super refers to the parent module, like .. in file paths. use super::helper imports the helper function from the module one level up in the module tree."
+      "explanation": "super refers to the parent module, like .. in file paths. use super::helper imports the helper function from the module one level up in the module tree.",
+      "scaffold": ""
     },
     {
       "id": "rust-m18-c5",
@@ -6600,9 +6923,17 @@
       "title": "Re-export an item",
       "prompt": "Re-export a type called Config from a submodule called utils within the current module, making it publicly accessible",
       "hint_concept": "Combining pub with use creates a re-export. This makes an item from a nested path available as if it were defined at the current level, simplifying the public API.",
-      "hint_structural": "_ _ _ :: _ :: _ ;",
-      "fragment_type": "statement",
+      "hint_structural": "_ _ { _ _ _ ; } _ _ _ :: _ :: _ ; _ _ ( ) { }",
+      "fragment_type": "program",
       "answer": [
+        "mod",
+        "utils",
+        "{",
+        "pub",
+        "struct",
+        "Config",
+        ";",
+        "}",
         "pub",
         "use",
         "self",
@@ -6610,7 +6941,13 @@
         "utils",
         "::",
         "Config",
-        ";"
+        ";",
+        "fn",
+        "main",
+        "(",
+        ")",
+        "{",
+        "}"
       ],
       "answer_variants": [],
       "expected": {
@@ -6622,11 +6959,12 @@
         {
           "group": "keywords",
           "tokens": [
+            "mod",
             "pub",
             "use",
             "self",
-            "super",
-            "mod"
+            "struct",
+            "fn"
           ]
         },
         {
@@ -6634,6 +6972,7 @@
           "tokens": [
             "utils",
             "Config",
+            "main",
             "helper",
             "result"
           ]
@@ -6641,16 +6980,18 @@
         {
           "group": "symbols",
           "tokens": [
+            "{",
+            "}",
             "::",
             ";",
-            ",",
-            "{",
-            "}"
+            "(",
+            ")"
           ]
         }
       ],
       "xp": 20,
-      "explanation": "pub use re-exports an item, making it available at the current module's level. Users of your library can access Config directly instead of navigating through the utils submodule."
+      "explanation": "pub use re-exports an item, making it available at the current module's level. Users of your library can access Config directly instead of navigating through the utils submodule.",
+      "scaffold": ""
     },
     {
       "id": "rust-m19-c1",
@@ -6714,7 +7055,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "assert_eq! compares two values and panics with a detailed message if they're not equal. It's the workhorse of Rust testing — every #[test] function uses it."
+      "explanation": "assert_eq! compares two values and panics with a detailed message if they're not equal. It's the workhorse of Rust testing — every #[test] function uses it.",
+      "scaffold": "let x = 5;"
     },
     {
       "id": "rust-m19-c2",
@@ -6794,7 +7136,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "vec! is a convenience macro that creates a Vec and pushes each value into it. vec![1, 2, 3] is equivalent to creating an empty Vec and calling push three times."
+      "explanation": "vec! is a convenience macro that creates a Vec and pushes each value into it. vec![1, 2, 3] is equivalent to creating an empty Vec and calling push three times.",
+      "scaffold": ""
     },
     {
       "id": "rust-m19-c3",
@@ -6863,7 +7206,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "todo!() compiles successfully but panics at runtime with a 'not yet implemented' message. It's perfect for stubbing out functions while you work on the rest of your code."
+      "explanation": "todo!() compiles successfully but panics at runtime with a 'not yet implemented' message. It's perfect for stubbing out functions while you work on the rest of your code.",
+      "scaffold": ""
     },
     {
       "id": "rust-m19-c4",
@@ -6940,7 +7284,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "format!() returns a new String with the formatted result. It supports all the same format specifiers as println! — placeholders like {}, {:?}, {:.2}, etc."
+      "explanation": "format!() returns a new String with the formatted result. It supports all the same format specifiers as println! — placeholders like {}, {:?}, {:.2}, etc.",
+      "scaffold": "let x = 42;"
     },
     {
       "id": "rust-m19-c5",
@@ -7005,7 +7350,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "assert!() takes a boolean expression and panics if it's false. Unlike assert_eq!, it checks any condition — equality, inequality, comparisons, or complex boolean logic."
+      "explanation": "assert!() takes a boolean expression and panics if it's false. Unlike assert_eq!, it checks any condition — equality, inequality, comparisons, or complex boolean logic.",
+      "scaffold": "let x: i32 = 5;"
     },
     {
       "id": "rust-m20-c1",
@@ -7083,7 +7429,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "The Drop trait lets you run custom cleanup code when a value goes out of scope. The drop method receives &mut self and is called automatically — you never call it directly. Use std::mem::drop() to drop early."
+      "explanation": "The Drop trait lets you run custom cleanup code when a value goes out of scope. The drop method receives &mut self and is called automatically — you never call it directly. Use std::mem::drop() to drop early.",
+      "scaffold": "struct Custom;"
     },
     {
       "id": "rust-m20-c2",
@@ -7157,7 +7504,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "std::mem::replace swaps a value behind a mutable reference with a new one, returning the old value. It's a safe way to take ownership of a value you only have a mutable reference to."
+      "explanation": "std::mem::replace swaps a value behind a mutable reference with a new one, returning the old value. It's a safe way to take ownership of a value you only have a mutable reference to.",
+      "scaffold": "let mut x = 5;"
     },
     {
       "id": "rust-m20-c3",
@@ -7243,7 +7591,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "Cow<str> can hold either a &str (Borrowed) or a String (Owned). Starting with Borrowed avoids heap allocation. If you later call to_mut(), it clones into an owned String only when necessary."
+      "explanation": "Cow<str> can hold either a &str (Borrowed) or a String (Owned). Starting with Borrowed avoids heap allocation. If you later call to_mut(), it clones into an owned String only when necessary.",
+      "scaffold": "use std::borrow::Cow;"
     },
     {
       "id": "rust-m20-c4",
@@ -7298,7 +7647,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "type creates an alias — Num and i32 are fully interchangeable. Type aliases are most useful for shortening long generic types like Result<T, Box<dyn Error>>."
+      "explanation": "type creates an alias — Num and i32 are fully interchangeable. Type aliases are most useful for shortening long generic types like Result<T, Box<dyn Error>>.",
+      "scaffold": ""
     },
     {
       "id": "rust-m20-c5",
@@ -7375,7 +7725,8 @@
         }
       ],
       "xp": 20,
-      "explanation": "impl Into<String> means the parameter accepts any type that implements the Into<String> trait. This includes &str, String, and other convertible types. It's cleaner than writing fn greet<T: Into<String>>(name: T)."
+      "explanation": "impl Into<String> means the parameter accepts any type that implements the Into<String> trait. This includes &str, String, and other convertible types. It's cleaner than writing fn greet<T: Into<String>>(name: T).",
+      "scaffold": ""
     }
   ]
 }
