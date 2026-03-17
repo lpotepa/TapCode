@@ -9,26 +9,371 @@
     "tagline": "Systems programming. Memory safe."
   },
   "categories": [
-    { "name": "keywords", "display_name": "Keywords", "css_class": "chip-keyword", "tokens": ["let", "mut", "fn", "if", "else", "loop", "for", "while", "match", "in", "break", "return", "struct", "impl", "enum", "pub", "use", "mod", "self", "trait", "where", "async", "await", "move", "ref", "type", "const", "static", "unsafe", "dyn", "crate", "super"] },
-    { "name": "macros", "display_name": "Macros", "css_class": "chip-macro", "tokens": ["println!", "print!", "dbg!", "vec!", "format!", "todo!", "unimplemented!", "assert!", "assert_eq!", "panic!", "eprintln!"] },
-    { "name": "types", "display_name": "Types", "css_class": "chip-type", "tokens": ["i32", "i64", "u32", "u64", "f32", "f64", "bool", "char", "String", "str", "&str", "Vec", "Option", "Result", "Some", "None", "Ok", "Err", "Box", "HashMap", "usize", "isize", "u8", "i8"] },
-    { "name": "strings", "display_name": "Strings", "css_class": "chip-string", "tokens": ["\"Hello, Rust!\"", "\"Hello\"", "\"world\"", "\"{}\"", "\"{} {}\"", "\"name: {}\"", "\"value: {}\"", "\"error\"", "\"msg\"", "\"x = {}\""] },
-    { "name": "symbols", "display_name": "Symbols", "css_class": "chip-symbol", "tokens": ["{", "}", "(", ")", ";", ":", "::", "->", "=>", ",", ".", "&", "*", "=", "==", "!=", "<", ">", "<=", ">=", "+", "-", "/", "%", "&&", "||", "!", "..", "..=", "?", "#", "[", "]", "_", "|"] },
-    { "name": "identifiers", "display_name": "Names", "css_class": "chip-identifier", "tokens": ["x", "y", "z", "n", "i", "s", "a", "b", "name", "count", "result", "value", "item", "main", "new", "add", "get", "len", "push", "clone", "to_string", "from", "into", "unwrap", "expect", "is_some", "is_none", "map", "filter", "collect"] },
-    { "name": "numbers", "display_name": "Numbers", "css_class": "chip-number", "tokens": ["0", "1", "2", "3", "5", "10", "42", "100", "0.0", "3.14", "255", "1024"] }
+    {
+      "name": "keywords",
+      "display_name": "Keywords",
+      "css_class": "chip-keyword",
+      "tokens": [
+        "let",
+        "mut",
+        "fn",
+        "if",
+        "else",
+        "loop",
+        "for",
+        "while",
+        "match",
+        "in",
+        "break",
+        "return",
+        "struct",
+        "impl",
+        "enum",
+        "pub",
+        "use",
+        "mod",
+        "self",
+        "trait",
+        "where",
+        "async",
+        "await",
+        "move",
+        "ref",
+        "type",
+        "const",
+        "static",
+        "unsafe",
+        "dyn",
+        "crate",
+        "super"
+      ]
+    },
+    {
+      "name": "macros",
+      "display_name": "Macros",
+      "css_class": "chip-macro",
+      "tokens": [
+        "println!",
+        "print!",
+        "dbg!",
+        "vec!",
+        "format!",
+        "todo!",
+        "unimplemented!",
+        "assert!",
+        "assert_eq!",
+        "panic!",
+        "eprintln!"
+      ]
+    },
+    {
+      "name": "types",
+      "display_name": "Types",
+      "css_class": "chip-type",
+      "tokens": [
+        "i32",
+        "i64",
+        "u32",
+        "u64",
+        "f32",
+        "f64",
+        "bool",
+        "char",
+        "String",
+        "str",
+        "&str",
+        "Vec",
+        "Option",
+        "Result",
+        "Some",
+        "None",
+        "Ok",
+        "Err",
+        "Box",
+        "HashMap",
+        "usize",
+        "isize",
+        "u8",
+        "i8"
+      ]
+    },
+    {
+      "name": "strings",
+      "display_name": "Strings",
+      "css_class": "chip-string",
+      "tokens": [
+        "\"Hello, Rust!\"",
+        "\"Hello\"",
+        "\"world\"",
+        "\"{}\"",
+        "\"{} {}\"",
+        "\"name: {}\"",
+        "\"value: {}\"",
+        "\"error\"",
+        "\"msg\"",
+        "\"x = {}\""
+      ]
+    },
+    {
+      "name": "symbols",
+      "display_name": "Symbols",
+      "css_class": "chip-symbol",
+      "tokens": [
+        "{",
+        "}",
+        "(",
+        ")",
+        ";",
+        ":",
+        "::",
+        "->",
+        "=>",
+        ",",
+        ".",
+        "&",
+        "*",
+        "=",
+        "==",
+        "!=",
+        "<",
+        ">",
+        "<=",
+        ">=",
+        "+",
+        "-",
+        "/",
+        "%",
+        "&&",
+        "||",
+        "!",
+        "..",
+        "..=",
+        "?",
+        "#",
+        "[",
+        "]",
+        "_",
+        "|"
+      ]
+    },
+    {
+      "name": "identifiers",
+      "display_name": "Names",
+      "css_class": "chip-identifier",
+      "tokens": [
+        "x",
+        "y",
+        "z",
+        "n",
+        "i",
+        "s",
+        "a",
+        "b",
+        "name",
+        "count",
+        "result",
+        "value",
+        "item",
+        "main",
+        "new",
+        "add",
+        "get",
+        "len",
+        "push",
+        "clone",
+        "to_string",
+        "from",
+        "into",
+        "unwrap",
+        "expect",
+        "is_some",
+        "is_none",
+        "map",
+        "filter",
+        "collect"
+      ]
+    },
+    {
+      "name": "numbers",
+      "display_name": "Numbers",
+      "css_class": "chip-number",
+      "tokens": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "5",
+        "10",
+        "42",
+        "100",
+        "0.0",
+        "3.14",
+        "255",
+        "1024"
+      ]
+    }
   ],
   "context_rules": [
-    { "after_tokens": ["fn"], "highlight_groups": ["identifiers"], "dim_groups": ["keywords", "macros", "types", "strings", "numbers"] },
-    { "after_tokens": ["let"], "highlight_groups": ["identifiers", "keywords"], "dim_groups": ["macros", "types", "strings"] },
-    { "after_tokens": ["let", "mut"], "highlight_groups": ["identifiers"], "dim_groups": ["keywords", "macros", "types", "strings"] },
-    { "after_tokens": [":"], "highlight_groups": ["types"], "dim_groups": ["keywords", "macros", "strings", "identifiers", "numbers"] },
-    { "after_tokens": ["->"], "highlight_groups": ["types"], "dim_groups": ["keywords", "macros", "strings", "identifiers", "numbers"] },
-    { "after_tokens": ["="], "highlight_groups": ["identifiers", "numbers", "strings", "macros", "types"], "dim_groups": ["keywords"] },
-    { "after_tokens": ["("], "highlight_groups": ["identifiers", "numbers", "strings", "types", "symbols"], "dim_groups": ["keywords"] },
-    { "after_tokens": ["{"], "highlight_groups": ["keywords", "identifiers", "macros", "types"], "dim_groups": [] },
-    { "after_tokens": ["println!"], "highlight_groups": ["symbols"], "dim_groups": ["keywords", "types", "identifiers", "numbers"] },
-    { "after_tokens": ["println!", "("], "highlight_groups": ["strings", "identifiers", "numbers"], "dim_groups": ["keywords", "types", "macros"] },
-    { "after_tokens": [","], "highlight_groups": ["identifiers", "numbers", "strings", "types"], "dim_groups": ["keywords"] }
+    {
+      "after_tokens": [
+        "fn"
+      ],
+      "highlight_groups": [
+        "identifiers"
+      ],
+      "dim_groups": [
+        "keywords",
+        "macros",
+        "types",
+        "strings",
+        "numbers"
+      ]
+    },
+    {
+      "after_tokens": [
+        "let"
+      ],
+      "highlight_groups": [
+        "identifiers",
+        "keywords"
+      ],
+      "dim_groups": [
+        "macros",
+        "types",
+        "strings"
+      ]
+    },
+    {
+      "after_tokens": [
+        "let",
+        "mut"
+      ],
+      "highlight_groups": [
+        "identifiers"
+      ],
+      "dim_groups": [
+        "keywords",
+        "macros",
+        "types",
+        "strings"
+      ]
+    },
+    {
+      "after_tokens": [
+        ":"
+      ],
+      "highlight_groups": [
+        "types"
+      ],
+      "dim_groups": [
+        "keywords",
+        "macros",
+        "strings",
+        "identifiers",
+        "numbers"
+      ]
+    },
+    {
+      "after_tokens": [
+        "->"
+      ],
+      "highlight_groups": [
+        "types"
+      ],
+      "dim_groups": [
+        "keywords",
+        "macros",
+        "strings",
+        "identifiers",
+        "numbers"
+      ]
+    },
+    {
+      "after_tokens": [
+        "="
+      ],
+      "highlight_groups": [
+        "identifiers",
+        "numbers",
+        "strings",
+        "macros",
+        "types"
+      ],
+      "dim_groups": [
+        "keywords"
+      ]
+    },
+    {
+      "after_tokens": [
+        "("
+      ],
+      "highlight_groups": [
+        "identifiers",
+        "numbers",
+        "strings",
+        "types",
+        "symbols"
+      ],
+      "dim_groups": [
+        "keywords"
+      ]
+    },
+    {
+      "after_tokens": [
+        "{"
+      ],
+      "highlight_groups": [
+        "keywords",
+        "identifiers",
+        "macros",
+        "types"
+      ],
+      "dim_groups": []
+    },
+    {
+      "after_tokens": [
+        "println!"
+      ],
+      "highlight_groups": [
+        "symbols"
+      ],
+      "dim_groups": [
+        "keywords",
+        "types",
+        "identifiers",
+        "numbers"
+      ]
+    },
+    {
+      "after_tokens": [
+        "println!",
+        "("
+      ],
+      "highlight_groups": [
+        "strings",
+        "identifiers",
+        "numbers"
+      ],
+      "dim_groups": [
+        "keywords",
+        "types",
+        "macros"
+      ]
+    },
+    {
+      "after_tokens": [
+        ","
+      ],
+      "highlight_groups": [
+        "identifiers",
+        "numbers",
+        "strings",
+        "types"
+      ],
+      "dim_groups": [
+        "keywords"
+      ]
+    }
   ],
   "syntax_colors": {
     "keywords": "token-keyword",
@@ -44,43 +389,261 @@
       "id": 1,
       "title": "First Output",
       "description": "Print text to the console with println!, print!, and dbg!",
-      "challenge_ids": ["rust-m1-c1", "rust-m1-c2", "rust-m1-c3", "rust-m1-c4", "rust-m1-c5"],
-      "is_free": true
+      "is_free": true,
+      "challenge_ids": [
+        "rust-m1-c1",
+        "rust-m1-c2",
+        "rust-m1-c3",
+        "rust-m1-c4",
+        "rust-m1-c5"
+      ]
     },
     {
       "id": 2,
       "title": "Variables & Bindings",
       "description": "Declare variables with let, use mut, type annotations, and shadowing",
-      "challenge_ids": ["rust-m2-c1", "rust-m2-c2", "rust-m2-c3", "rust-m2-c4", "rust-m2-c5"],
-      "is_free": true
+      "is_free": true,
+      "challenge_ids": [
+        "rust-m2-c1",
+        "rust-m2-c2",
+        "rust-m2-c3",
+        "rust-m2-c4",
+        "rust-m2-c5"
+      ]
     },
     {
       "id": 3,
       "title": "Functions",
       "description": "Define functions with params, return types, and implicit returns",
-      "challenge_ids": ["rust-m3-c1", "rust-m3-c2", "rust-m3-c3", "rust-m3-c4", "rust-m3-c5"],
-      "is_free": true
+      "is_free": true,
+      "challenge_ids": [
+        "rust-m3-c1",
+        "rust-m3-c2",
+        "rust-m3-c3",
+        "rust-m3-c4",
+        "rust-m3-c5"
+      ]
     },
     {
       "id": 4,
       "title": "Control Flow",
       "description": "if/else, loop, for, while, and match expressions",
-      "challenge_ids": ["rust-m4-c1", "rust-m4-c2", "rust-m4-c3", "rust-m4-c4", "rust-m4-c5"],
-      "is_free": false
+      "is_free": false,
+      "challenge_ids": [
+        "rust-m4-c1",
+        "rust-m4-c2",
+        "rust-m4-c3",
+        "rust-m4-c4",
+        "rust-m4-c5"
+      ]
     },
     {
       "id": 5,
       "title": "Ownership Basics",
       "description": "String, move semantics, clone, and borrowing",
-      "challenge_ids": ["rust-m5-c1", "rust-m5-c2", "rust-m5-c3", "rust-m5-c4", "rust-m5-c5"],
-      "is_free": false
+      "is_free": false,
+      "challenge_ids": [
+        "rust-m5-c1",
+        "rust-m5-c2",
+        "rust-m5-c3",
+        "rust-m5-c4",
+        "rust-m5-c5"
+      ]
     },
     {
       "id": 6,
       "title": "Structs",
       "description": "Define structs, instantiate them, access fields, and impl methods",
-      "challenge_ids": ["rust-m6-c1", "rust-m6-c2", "rust-m6-c3", "rust-m6-c4", "rust-m6-c5"],
-      "is_free": false
+      "is_free": false,
+      "challenge_ids": [
+        "rust-m6-c1",
+        "rust-m6-c2",
+        "rust-m6-c3",
+        "rust-m6-c4",
+        "rust-m6-c5"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Enums & Match",
+      "description": "Variants, data variants, Option<T>, and Result<T,E>",
+      "is_free": false,
+      "challenge_ids": [
+        "rust-m7-c1",
+        "rust-m7-c2",
+        "rust-m7-c3",
+        "rust-m7-c4",
+        "rust-m7-c5"
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Error Handling",
+      "description": "unwrap, expect, the ? operator, and matching on Result",
+      "is_free": false,
+      "challenge_ids": [
+        "rust-m8-c1",
+        "rust-m8-c2",
+        "rust-m8-c3",
+        "rust-m8-c4",
+        "rust-m8-c5"
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Traits",
+      "description": "derive Debug, impl Display, trait bounds, and custom traits",
+      "is_free": false,
+      "challenge_ids": [
+        "rust-m9-c1",
+        "rust-m9-c2",
+        "rust-m9-c3",
+        "rust-m9-c4",
+        "rust-m9-c5"
+      ]
+    },
+    {
+      "id": 10,
+      "title": "Collections",
+      "description": "Vec, push, iteration, HashMap, and get",
+      "is_free": false,
+      "challenge_ids": [
+        "rust-m10-c1",
+        "rust-m10-c2",
+        "rust-m10-c3",
+        "rust-m10-c4",
+        "rust-m10-c5"
+      ]
+    },
+    {
+      "id": 11,
+      "title": "Closures & Iterators",
+      "description": "Anonymous functions, capturing, map, filter, and collect",
+      "is_free": false,
+      "challenge_ids": [
+        "rust-m11-c1",
+        "rust-m11-c2",
+        "rust-m11-c3",
+        "rust-m11-c4",
+        "rust-m11-c5"
+      ]
+    },
+    {
+      "id": 12,
+      "title": "Lifetimes",
+      "description": "Lifetime annotations, struct lifetimes, and 'static",
+      "is_free": false,
+      "challenge_ids": [
+        "rust-m12-c1",
+        "rust-m12-c2",
+        "rust-m12-c3",
+        "rust-m12-c4",
+        "rust-m12-c5"
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Smart Pointers",
+      "description": "Box, Rc, RefCell, Arc, and interior mutability",
+      "is_free": false,
+      "challenge_ids": [
+        "rust-m13-c1",
+        "rust-m13-c2",
+        "rust-m13-c3",
+        "rust-m13-c4",
+        "rust-m13-c5"
+      ]
+    },
+    {
+      "id": 14,
+      "title": "Concurrency",
+      "description": "Threads, move closures, Mutex, and Arc<Mutex<T>>",
+      "is_free": false,
+      "challenge_ids": [
+        "rust-m14-c1",
+        "rust-m14-c2",
+        "rust-m14-c3",
+        "rust-m14-c4",
+        "rust-m14-c5"
+      ]
+    },
+    {
+      "id": 15,
+      "title": "Generics & Trait Objects",
+      "description": "Generic functions, trait bounds, dyn Trait, and generic structs",
+      "is_free": false,
+      "challenge_ids": [
+        "rust-m15-c1",
+        "rust-m15-c2",
+        "rust-m15-c3",
+        "rust-m15-c4",
+        "rust-m15-c5"
+      ]
+    },
+    {
+      "id": 16,
+      "title": "Pattern Matching",
+      "description": "Destructuring tuples/structs, if let, while let, and match guards",
+      "is_free": false,
+      "challenge_ids": [
+        "rust-m16-c1",
+        "rust-m16-c2",
+        "rust-m16-c3",
+        "rust-m16-c4",
+        "rust-m16-c5"
+      ]
+    },
+    {
+      "id": 17,
+      "title": "Strings & Slices",
+      "description": "&str vs String, slices, format!, and string methods",
+      "is_free": false,
+      "challenge_ids": [
+        "rust-m17-c1",
+        "rust-m17-c2",
+        "rust-m17-c3",
+        "rust-m17-c4",
+        "rust-m17-c5"
+      ]
+    },
+    {
+      "id": 18,
+      "title": "Modules & Visibility",
+      "description": "mod, pub, use, super, and re-exports",
+      "is_free": false,
+      "challenge_ids": [
+        "rust-m18-c1",
+        "rust-m18-c2",
+        "rust-m18-c3",
+        "rust-m18-c4",
+        "rust-m18-c5"
+      ]
+    },
+    {
+      "id": 19,
+      "title": "Macros",
+      "description": "assert!, vec!, format!, todo!, and assert_eq!",
+      "is_free": false,
+      "challenge_ids": [
+        "rust-m19-c1",
+        "rust-m19-c2",
+        "rust-m19-c3",
+        "rust-m19-c4",
+        "rust-m19-c5"
+      ]
+    },
+    {
+      "id": 20,
+      "title": "Advanced Ownership",
+      "description": "Drop, mem::replace, Cow, type aliases, and impl Into",
+      "is_free": false,
+      "challenge_ids": [
+        "rust-m20-c1",
+        "rust-m20-c2",
+        "rust-m20-c3",
+        "rust-m20-c4",
+        "rust-m20-c5"
+      ]
     }
   ],
   "challenges": [
@@ -94,13 +657,40 @@
       "hint_concept": "In Rust, println! is a macro that prints text followed by a newline. Note the ! — that marks it as a macro, not a regular function.",
       "hint_structural": "_ ( _ ) ;",
       "fragment_type": "statement",
-      "answer": ["println!", "(", "\"Hello, Rust!\"", ")", ";"],
+      "answer": [
+        "println!",
+        "(",
+        "\"Hello, Rust!\"",
+        ")",
+        ";"
+      ],
       "answer_variants": [],
-      "expected": { "exit_code": 0, "stdout": "Hello, Rust!\n", "stderr": "" },
+      "expected": {
+        "exit_code": 0,
+        "stdout": "Hello, Rust!\n",
+        "stderr": ""
+      },
       "chips": [
-        { "group": "macros", "tokens": ["println!"] },
-        { "group": "symbols", "tokens": ["(", ")", ";"] },
-        { "group": "strings", "tokens": ["\"Hello, Rust!\""] }
+        {
+          "group": "macros",
+          "tokens": [
+            "println!"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            ";"
+          ]
+        },
+        {
+          "group": "strings",
+          "tokens": [
+            "\"Hello, Rust!\""
+          ]
+        }
       ],
       "xp": 20,
       "explanation": "println! is a macro — note the !. Macros in Rust are expanded at compile time. The parentheses wrap the arguments, and the semicolon ends the statement."
@@ -115,14 +705,52 @@
       "hint_concept": "Use {} inside a string as a placeholder. After the string, add a comma and the variable whose value fills the placeholder.",
       "hint_structural": "_ ( _ , _ ) ;",
       "fragment_type": "statement",
-      "answer": ["println!", "(", "\"{}\"", ",", "x", ")", ";"],
+      "answer": [
+        "println!",
+        "(",
+        "\"{}\"",
+        ",",
+        "x",
+        ")",
+        ";"
+      ],
       "answer_variants": [],
-      "expected": { "exit_code": 0, "stdout": "", "stderr": "" },
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
       "chips": [
-        { "group": "macros", "tokens": ["println!", "print!"] },
-        { "group": "symbols", "tokens": ["(", ")", ";", ","] },
-        { "group": "strings", "tokens": ["\"{}\"", "\"Hello\""] },
-        { "group": "identifiers", "tokens": ["x", "y"] }
+        {
+          "group": "macros",
+          "tokens": [
+            "println!",
+            "print!"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            ";",
+            ","
+          ]
+        },
+        {
+          "group": "strings",
+          "tokens": [
+            "\"{}\"",
+            "\"Hello\""
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "x",
+            "y"
+          ]
+        }
       ],
       "xp": 20,
       "explanation": "The {} placeholder in the format string gets replaced by the value of x at runtime. You can have multiple {} placeholders with multiple comma-separated values."
@@ -137,14 +765,55 @@
       "hint_concept": "You can use multiple {} placeholders in one format string. Each one is filled in order by the comma-separated values that follow.",
       "hint_structural": "_ ( _ , _ , _ ) ;",
       "fragment_type": "statement",
-      "answer": ["println!", "(", "\"{} {}\"", ",", "a", ",", "b", ")", ";"],
+      "answer": [
+        "println!",
+        "(",
+        "\"{} {}\"",
+        ",",
+        "a",
+        ",",
+        "b",
+        ")",
+        ";"
+      ],
       "answer_variants": [],
-      "expected": { "exit_code": 0, "stdout": "", "stderr": "" },
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
       "chips": [
-        { "group": "macros", "tokens": ["println!", "dbg!"] },
-        { "group": "symbols", "tokens": ["(", ")", ";", ","] },
-        { "group": "strings", "tokens": ["\"{} {}\"", "\"{}\""] },
-        { "group": "identifiers", "tokens": ["a", "b", "x"] }
+        {
+          "group": "macros",
+          "tokens": [
+            "println!",
+            "dbg!"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            ";",
+            ","
+          ]
+        },
+        {
+          "group": "strings",
+          "tokens": [
+            "\"{} {}\"",
+            "\"{}\""
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "a",
+            "b",
+            "x"
+          ]
+        }
       ],
       "xp": 20,
       "explanation": "Each {} is filled in order: the first {} gets a, the second {} gets b. Rust checks at compile time that the number of placeholders matches the number of arguments."
@@ -159,13 +828,42 @@
       "hint_concept": "There's a variant of the print macro that doesn't add a newline. It works the same way, just with a slightly different name.",
       "hint_structural": "_ ( _ ) ;",
       "fragment_type": "statement",
-      "answer": ["print!", "(", "\"Hello\"", ")", ";"],
+      "answer": [
+        "print!",
+        "(",
+        "\"Hello\"",
+        ")",
+        ";"
+      ],
       "answer_variants": [],
-      "expected": { "exit_code": 0, "stdout": "Hello", "stderr": "" },
+      "expected": {
+        "exit_code": 0,
+        "stdout": "Hello",
+        "stderr": ""
+      },
       "chips": [
-        { "group": "macros", "tokens": ["print!", "println!"] },
-        { "group": "symbols", "tokens": ["(", ")", ";"] },
-        { "group": "strings", "tokens": ["\"Hello\"", "\"world\""] }
+        {
+          "group": "macros",
+          "tokens": [
+            "print!",
+            "println!"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            ";"
+          ]
+        },
+        {
+          "group": "strings",
+          "tokens": [
+            "\"Hello\"",
+            "\"world\""
+          ]
+        }
       ],
       "xp": 20,
       "explanation": "print! is the no-newline version of println!. The output stays on the same line, which is useful for building up output incrementally."
@@ -180,13 +878,53 @@
       "hint_concept": "There's a macro designed for quick debugging that prints the expression, its value, and the file/line — all to stderr.",
       "hint_structural": "_ ( _ ) ;",
       "fragment_type": "statement",
-      "answer": ["dbg!", "(", "x", ")", ";"],
-      "answer_variants": [["dbg!", "(", "&", "x", ")", ";"]],
-      "expected": { "exit_code": 0, "stdout": "", "stderr": "" },
+      "answer": [
+        "dbg!",
+        "(",
+        "x",
+        ")",
+        ";"
+      ],
+      "answer_variants": [
+        [
+          "dbg!",
+          "(",
+          "&",
+          "x",
+          ")",
+          ";"
+        ]
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
       "chips": [
-        { "group": "macros", "tokens": ["dbg!", "println!"] },
-        { "group": "symbols", "tokens": ["(", ")", ";", "&"] },
-        { "group": "identifiers", "tokens": ["x", "y", "count"] }
+        {
+          "group": "macros",
+          "tokens": [
+            "dbg!",
+            "println!"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            ";",
+            "&"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "x",
+            "y",
+            "count"
+          ]
+        }
       ],
       "xp": 20,
       "explanation": "dbg! outputs to stderr with file:line info — perfect for debugging. Unlike println!, it returns the value it wraps, so you can use it inline."
@@ -201,14 +939,51 @@
       "hint_concept": "Variables in Rust are immutable by default. You declare them with a keyword followed by the name, an equals sign, and the value.",
       "hint_structural": "_ _ = _ ;",
       "fragment_type": "statement",
-      "answer": ["let", "x", "=", "42", ";"],
+      "answer": [
+        "let",
+        "x",
+        "=",
+        "42",
+        ";"
+      ],
       "answer_variants": [],
-      "expected": { "exit_code": 0, "stdout": "", "stderr": "" },
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
       "chips": [
-        { "group": "keywords", "tokens": ["let", "mut"] },
-        { "group": "identifiers", "tokens": ["x", "y", "count"] },
-        { "group": "symbols", "tokens": ["=", ";", ":"] },
-        { "group": "numbers", "tokens": ["42", "0", "10"] }
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "x",
+            "y",
+            "count"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "=",
+            ";",
+            ":"
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "42",
+            "0",
+            "10"
+          ]
+        }
       ],
       "xp": 20,
       "explanation": "let creates a new variable binding. Variables in Rust are immutable by default — you can't reassign x after this unless you use mut."
@@ -223,14 +998,52 @@
       "hint_concept": "To make a variable reassignable, you need an extra keyword between the declaration keyword and the variable name.",
       "hint_structural": "_ _ _ = _ ;",
       "fragment_type": "statement",
-      "answer": ["let", "mut", "x", "=", "0", ";"],
+      "answer": [
+        "let",
+        "mut",
+        "x",
+        "=",
+        "0",
+        ";"
+      ],
       "answer_variants": [],
-      "expected": { "exit_code": 0, "stdout": "", "stderr": "" },
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
       "chips": [
-        { "group": "keywords", "tokens": ["let", "mut", "fn"] },
-        { "group": "identifiers", "tokens": ["x", "y"] },
-        { "group": "symbols", "tokens": ["=", ";", ":"] },
-        { "group": "numbers", "tokens": ["0", "1", "42"] }
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut",
+            "fn"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "x",
+            "y"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "=",
+            ";",
+            ":"
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "0",
+            "1",
+            "42"
+          ]
+        }
       ],
       "xp": 20,
       "explanation": "mut marks a variable as mutable. Rust makes you opt into mutability explicitly — this helps catch accidental mutations."
@@ -245,14 +1058,50 @@
       "hint_concept": "Reassigning doesn't need the declaration keyword again — just the variable name, equals, and the new value.",
       "hint_structural": "_ = _ ;",
       "fragment_type": "statement",
-      "answer": ["x", "=", "10", ";"],
+      "answer": [
+        "x",
+        "=",
+        "10",
+        ";"
+      ],
       "answer_variants": [],
-      "expected": { "exit_code": 0, "stdout": "", "stderr": "" },
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
       "chips": [
-        { "group": "identifiers", "tokens": ["x", "y", "count"] },
-        { "group": "symbols", "tokens": ["=", ";", ":"] },
-        { "group": "numbers", "tokens": ["10", "0", "42"] },
-        { "group": "keywords", "tokens": ["let", "mut"] }
+        {
+          "group": "identifiers",
+          "tokens": [
+            "x",
+            "y",
+            "count"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "=",
+            ";",
+            ":"
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "10",
+            "0",
+            "42"
+          ]
+        },
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        }
       ],
       "xp": 20,
       "explanation": "Reassignment uses = without let. This only works if x was declared with let mut. Trying to reassign an immutable variable causes a compile error."
@@ -267,15 +1116,60 @@
       "hint_concept": "You can tell the compiler the exact type of a variable by placing a colon and the type name between the variable name and the equals sign.",
       "hint_structural": "_ _ _ _ = _ ;",
       "fragment_type": "statement",
-      "answer": ["let", "x", ":", "i32", "=", "5", ";"],
+      "answer": [
+        "let",
+        "x",
+        ":",
+        "i32",
+        "=",
+        "5",
+        ";"
+      ],
       "answer_variants": [],
-      "expected": { "exit_code": 0, "stdout": "", "stderr": "" },
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
       "chips": [
-        { "group": "keywords", "tokens": ["let", "mut"] },
-        { "group": "identifiers", "tokens": ["x", "y"] },
-        { "group": "symbols", "tokens": [":", "=", ";"] },
-        { "group": "types", "tokens": ["i32", "u32", "f64"] },
-        { "group": "numbers", "tokens": ["5", "0", "42"] }
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "x",
+            "y"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            ":",
+            "=",
+            ";"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "i32",
+            "u32",
+            "f64"
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "5",
+            "0",
+            "42"
+          ]
+        }
       ],
       "xp": 20,
       "explanation": "The : i32 is a type annotation. Rust can usually infer types, but explicit annotations are useful when the type isn't obvious or you want to be specific."
@@ -290,14 +1184,50 @@
       "hint_concept": "You can declare a new variable with the same name as an existing one. The new declaration shadows the old one in the current scope.",
       "hint_structural": "_ _ = _ ;",
       "fragment_type": "statement",
-      "answer": ["let", "x", "=", "100", ";"],
+      "answer": [
+        "let",
+        "x",
+        "=",
+        "100",
+        ";"
+      ],
       "answer_variants": [],
-      "expected": { "exit_code": 0, "stdout": "", "stderr": "" },
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
       "chips": [
-        { "group": "keywords", "tokens": ["let", "mut"] },
-        { "group": "identifiers", "tokens": ["x", "y", "z"] },
-        { "group": "symbols", "tokens": ["=", ";"] },
-        { "group": "numbers", "tokens": ["100", "42", "0"] }
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "x",
+            "y",
+            "z"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "=",
+            ";"
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "100",
+            "42",
+            "0"
+          ]
+        }
       ],
       "xp": 20,
       "explanation": "Shadowing creates a completely new variable that happens to share the name. Unlike mut, shadowing lets you change the type too."
@@ -312,16 +1242,6140 @@
       "hint_concept": "Every Rust program starts from a specific function. You declare functions with a keyword, then the name, parentheses for parameters, and curly braces for the body.",
       "hint_structural": "_ _ ( ) { }",
       "fragment_type": "fn_def",
-      "answer": ["fn", "main", "(", ")", "{", "}"],
+      "answer": [
+        "fn",
+        "main",
+        "(",
+        ")",
+        "{",
+        "}"
+      ],
       "answer_variants": [],
-      "expected": { "exit_code": 0, "stdout": "", "stderr": "" },
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
       "chips": [
-        { "group": "keywords", "tokens": ["fn", "let", "pub"] },
-        { "group": "identifiers", "tokens": ["main", "add", "get"] },
-        { "group": "symbols", "tokens": ["(", ")", "{", "}", ";"] }
+        {
+          "group": "keywords",
+          "tokens": [
+            "fn",
+            "let",
+            "pub"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "main",
+            "add",
+            "get"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            "{",
+            "}",
+            ";"
+          ]
+        }
       ],
       "xp": 20,
       "explanation": "fn declares a function. main is special — it's the entry point of every Rust program. The empty () means no parameters, and {} is the empty body."
+    },
+    {
+      "id": "rust-m3-c2",
+      "language": "rust",
+      "module": 3,
+      "position": 2,
+      "title": "Function with parameters",
+      "prompt": "Define a function called add that accepts two 32-bit integer parameters a and b, and returns a 32-bit integer — leave the body empty for now",
+      "hint_concept": "After the function name, list parameters inside parentheses as name: type pairs separated by commas. Use -> after the closing parenthesis to declare the return type.",
+      "hint_structural": "_ _ ( _ : _ , _ : _ ) -> _ { }",
+      "fragment_type": "fn_def",
+      "answer": [
+        "fn",
+        "add",
+        "(",
+        "a",
+        ":",
+        "i32",
+        ",",
+        "b",
+        ":",
+        "i32",
+        ")",
+        "->",
+        "i32",
+        "{",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "fn",
+            "let",
+            "pub"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "add",
+            "a",
+            "b",
+            "main",
+            "get"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "i32",
+            "u32",
+            "f64"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            "{",
+            "}",
+            ":",
+            ",",
+            "->",
+            ";"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Each parameter is declared as name: type. The -> i32 after the parameter list declares the return type. This function signature says: give me two i32 values, and I'll give you back an i32."
+    },
+    {
+      "id": "rust-m3-c3",
+      "language": "rust",
+      "module": 3,
+      "position": 3,
+      "title": "Implicit return",
+      "prompt": "Write an expression that adds a and b together — without a semicolon, so it becomes the return value",
+      "hint_concept": "In Rust, the last expression in a function body (without a semicolon) is automatically returned. No return keyword needed.",
+      "hint_structural": "_ _ _",
+      "fragment_type": "expression",
+      "answer": [
+        "a",
+        "+",
+        "b"
+      ],
+      "answer_variants": [
+        [
+          "b",
+          "+",
+          "a"
+        ]
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "identifiers",
+          "tokens": [
+            "a",
+            "b",
+            "x",
+            "y"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "+",
+            "-",
+            "*",
+            ";"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "In Rust, the last expression without a semicolon is the return value. Adding a semicolon would turn it into a statement that returns (), causing a type error."
+    },
+    {
+      "id": "rust-m3-c4",
+      "language": "rust",
+      "module": 3,
+      "position": 4,
+      "title": "Call a function",
+      "prompt": "Call the add function, passing in 3 and 5 as arguments",
+      "hint_concept": "To call a function, write its name followed by parentheses containing the arguments separated by commas.",
+      "hint_structural": "_ ( _ , _ )",
+      "fragment_type": "expression",
+      "answer": [
+        "add",
+        "(",
+        "3",
+        ",",
+        "5",
+        ")"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "identifiers",
+          "tokens": [
+            "add",
+            "get",
+            "main"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            ",",
+            ";"
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "3",
+            "5",
+            "10",
+            "0"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Function calls use the name followed by arguments in parentheses. The arguments are matched to parameters by position: 3 goes to a, and 5 goes to b."
+    },
+    {
+      "id": "rust-m3-c5",
+      "language": "rust",
+      "module": 3,
+      "position": 5,
+      "title": "Function with no return",
+      "prompt": "Define a function called greet that takes a string slice parameter called name and returns nothing — leave the body empty",
+      "hint_concept": "When a function doesn't return a value, you simply omit the -> return type. A string slice type is written with an ampersand prefix.",
+      "hint_structural": "_ _ ( _ : _ ) { }",
+      "fragment_type": "fn_def",
+      "answer": [
+        "fn",
+        "greet",
+        "(",
+        "name",
+        ":",
+        "&str",
+        ")",
+        "{",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "fn",
+            "let",
+            "pub"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "greet",
+            "name",
+            "main",
+            "add"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "&str",
+            "String",
+            "i32"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            "{",
+            "}",
+            ":",
+            ",",
+            "->"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "When a function returns nothing, you omit the -> return type entirely. The &str type is a string slice — a borrowed reference to string data, commonly used for function parameters."
+    },
+    {
+      "id": "rust-m4-c1",
+      "language": "rust",
+      "module": 4,
+      "position": 1,
+      "title": "If-else branch",
+      "prompt": "Write a conditional that checks whether x is greater than zero, with empty bodies for both the true and false branches",
+      "hint_concept": "Rust uses if followed by a condition (no parentheses needed), then curly braces. The else branch follows immediately after the closing brace.",
+      "hint_structural": "_ _ _ _ { } _ { }",
+      "fragment_type": "statement",
+      "answer": [
+        "if",
+        "x",
+        ">",
+        "0",
+        "{",
+        "}",
+        "else",
+        "{",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "if",
+            "else",
+            "match",
+            "while"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "x",
+            "y",
+            "count"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            ">",
+            "<",
+            "=="
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "0",
+            "1",
+            "10"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Rust if-else doesn't need parentheses around the condition — just if condition { ... } else { ... }. Both branches use curly braces, even for single-line bodies."
+    },
+    {
+      "id": "rust-m4-c2",
+      "language": "rust",
+      "module": 4,
+      "position": 2,
+      "title": "Loop with break",
+      "prompt": "Write an infinite loop that immediately exits on the first iteration",
+      "hint_concept": "Rust has a dedicated keyword for infinite loops. Inside the body, use a keyword that exits the loop immediately.",
+      "hint_structural": "_ { _ ; }",
+      "fragment_type": "statement",
+      "answer": [
+        "loop",
+        "{",
+        "break",
+        ";",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "loop",
+            "for",
+            "while",
+            "break",
+            "return"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            ";",
+            "(",
+            ")"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "loop creates an infinite loop — it runs forever unless you break out. Unlike while true, Rust has loop as a first-class construct. The compiler knows code after break is unreachable."
+    },
+    {
+      "id": "rust-m4-c3",
+      "language": "rust",
+      "module": 4,
+      "position": 3,
+      "title": "For loop with range",
+      "prompt": "Write a for loop that iterates a variable i over the range from 0 up to (but not including) 5, with an empty body",
+      "hint_concept": "Rust's for loop uses the keyword in to bind each element. Ranges are expressed with two dots between the start and end values.",
+      "hint_structural": "_ _ _ _ _ _ { }",
+      "fragment_type": "statement",
+      "answer": [
+        "for",
+        "i",
+        "in",
+        "0",
+        "..",
+        "5",
+        "{",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "for",
+            "in",
+            "loop",
+            "while"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "i",
+            "x",
+            "item"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            "..",
+            "..=",
+            ";"
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "0",
+            "5",
+            "10",
+            "1"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "for i in 0..5 iterates i through 0, 1, 2, 3, 4. The .. operator creates an exclusive range. Use ..= for an inclusive range (0..=5 would include 5)."
+    },
+    {
+      "id": "rust-m4-c4",
+      "language": "rust",
+      "module": 4,
+      "position": 4,
+      "title": "While loop",
+      "prompt": "Write a while loop that continues as long as x is greater than zero, with an empty body",
+      "hint_concept": "A while loop checks its condition before each iteration. Like if, no parentheses are needed around the condition.",
+      "hint_structural": "_ _ _ _ { }",
+      "fragment_type": "statement",
+      "answer": [
+        "while",
+        "x",
+        ">",
+        "0",
+        "{",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "while",
+            "loop",
+            "for",
+            "if"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "x",
+            "y",
+            "i"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            ">",
+            "<",
+            "=="
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "0",
+            "1",
+            "5"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "while loops run as long as the condition is true. No parentheses around the condition — Rust's syntax is clean. If x starts at 0 or below, the body never executes."
+    },
+    {
+      "id": "rust-m4-c5",
+      "language": "rust",
+      "module": 4,
+      "position": 5,
+      "title": "Match expression",
+      "prompt": "Write a match expression on x with two arms: one for the value 1 and a catch-all default arm, both with empty bodies",
+      "hint_concept": "match compares a value against patterns. Each arm uses => to separate the pattern from the body. An underscore matches anything not covered by other arms.",
+      "hint_structural": "_ _ { _ => { } _ => { } }",
+      "fragment_type": "statement",
+      "answer": [
+        "match",
+        "x",
+        "{",
+        "1",
+        "=>",
+        "{",
+        "}",
+        "_",
+        "=>",
+        "{",
+        "}",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "match",
+            "if",
+            "else"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "x",
+            "y",
+            "value"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            "=>",
+            "_",
+            ","
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "1",
+            "0",
+            "2"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "match is Rust's powerful pattern matching. Each arm is pattern => body. The _ wildcard catches everything else. Rust requires match to be exhaustive — you must handle all possible values."
+    },
+    {
+      "id": "rust-m5-c1",
+      "language": "rust",
+      "module": 5,
+      "position": 1,
+      "title": "Empty String",
+      "prompt": "Create a new, empty owned String and bind it to the variable s",
+      "hint_concept": "String is a growable, heap-allocated type. It has an associated function that creates a new empty instance — call it using double-colon syntax.",
+      "hint_structural": "_ _ = _ _ _ ( ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "s",
+        "=",
+        "String",
+        "::",
+        "new",
+        "(",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut",
+            "fn"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "s",
+            "new",
+            "x",
+            "from"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "String",
+            "Vec",
+            "&str"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "=",
+            "::",
+            "(",
+            ")",
+            ";",
+            "."
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "String::new() creates an empty, heap-allocated string. The :: syntax calls an associated function (like a static method). String owns its data, unlike &str which is a borrowed reference."
+    },
+    {
+      "id": "rust-m5-c2",
+      "language": "rust",
+      "module": 5,
+      "position": 2,
+      "title": "String from literal",
+      "prompt": "Create an owned String containing hello and bind it to the variable s",
+      "hint_concept": "The String type has an associated function that converts a string literal into an owned String. It uses the double-colon syntax like new does.",
+      "hint_structural": "_ _ = _ _ _ ( _ ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "s",
+        "=",
+        "String",
+        "::",
+        "from",
+        "(",
+        "\"hello\"",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut",
+            "fn"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "s",
+            "from",
+            "new",
+            "x"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "String",
+            "Vec",
+            "i32"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "=",
+            "::",
+            "(",
+            ")",
+            ";",
+            "."
+          ]
+        },
+        {
+          "group": "strings",
+          "tokens": [
+            "\"hello\"",
+            "\"world\"",
+            "\"name\""
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "String::from() converts a &str literal into a heap-allocated String. The String now owns its data and can be mutated, grown, or passed to functions that take ownership."
+    },
+    {
+      "id": "rust-m5-c3",
+      "language": "rust",
+      "module": 5,
+      "position": 3,
+      "title": "Clone a String",
+      "prompt": "Make a deep copy of the String s and bind it to a new variable s2",
+      "hint_concept": "When you need a duplicate of heap data, call a method that creates an independent copy. This lets the original and the copy be used separately.",
+      "hint_structural": "_ _ = _ . _ ( ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "s2",
+        "=",
+        "s",
+        ".",
+        "clone",
+        "(",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "s2",
+            "s",
+            "clone",
+            "x",
+            "copy"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "=",
+            ".",
+            "(",
+            ")",
+            ";",
+            "::"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "clone() creates a deep copy of the String — both s and s2 now own independent copies of the data. Without clone, assigning s to s2 would move ownership, making s unusable."
+    },
+    {
+      "id": "rust-m5-c4",
+      "language": "rust",
+      "module": 5,
+      "position": 4,
+      "title": "Immutable borrow",
+      "prompt": "Pass the String s to the greet function as a read-only reference, so s remains usable afterward",
+      "hint_concept": "To let a function read data without taking ownership, pass a reference using the ampersand symbol before the variable name.",
+      "hint_structural": "_ ( _ _ ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "greet",
+        "(",
+        "&",
+        "s",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "identifiers",
+          "tokens": [
+            "greet",
+            "s",
+            "modify",
+            "x"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            "&",
+            ";",
+            ".",
+            "*"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "&s creates an immutable reference — greet can read the String but can't modify it. After the call, s is still valid because ownership wasn't transferred, only borrowed."
+    },
+    {
+      "id": "rust-m5-c5",
+      "language": "rust",
+      "module": 5,
+      "position": 5,
+      "title": "Mutable borrow",
+      "prompt": "Pass s to the modify function as a mutable reference, allowing it to change the String's contents",
+      "hint_concept": "A mutable reference needs both the ampersand and the mutability keyword before the variable name. This lets the function modify the borrowed data.",
+      "hint_structural": "_ ( _ _ _ ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "modify",
+        "(",
+        "&",
+        "mut",
+        "s",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "identifiers",
+          "tokens": [
+            "modify",
+            "s",
+            "greet",
+            "x"
+          ]
+        },
+        {
+          "group": "keywords",
+          "tokens": [
+            "mut",
+            "let",
+            "ref"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            "&",
+            ";",
+            ".",
+            "*"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "&mut s creates a mutable reference. The function can now modify s. Rust's borrow checker ensures only one mutable reference exists at a time, preventing data races."
+    },
+    {
+      "id": "rust-m6-c1",
+      "language": "rust",
+      "module": 6,
+      "position": 1,
+      "title": "Define a struct",
+      "prompt": "Define a struct called Point with two fields: x and y, both 32-bit integers",
+      "hint_concept": "A struct groups named fields together. Declare it with the struct keyword, then the name, and list each field as name: type inside curly braces.",
+      "hint_structural": "_ _ { _ : _ , _ : _ , }",
+      "fragment_type": "type_def",
+      "answer": [
+        "struct",
+        "Point",
+        "{",
+        "x",
+        ":",
+        "i32",
+        ",",
+        "y",
+        ":",
+        "i32",
+        ",",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "struct",
+            "enum",
+            "fn"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "Point",
+            "x",
+            "y",
+            "z",
+            "Color"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "i32",
+            "f64",
+            "u32"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            ":",
+            ",",
+            ";",
+            "(",
+            ")"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "struct defines a custom data type with named fields. The trailing comma after the last field is optional but idiomatic in Rust. Each field has a name and a type."
+    },
+    {
+      "id": "rust-m6-c2",
+      "language": "rust",
+      "module": 6,
+      "position": 2,
+      "title": "Instantiate a struct",
+      "prompt": "Create a Point with both x and y set to zero, and bind it to the variable p",
+      "hint_concept": "To create an instance, use the struct name followed by curly braces with field_name: value pairs. Bind the result to a variable.",
+      "hint_structural": "_ _ = _ { _ : _ , _ : _ , } ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "p",
+        "=",
+        "Point",
+        "{",
+        "x",
+        ":",
+        "0",
+        ",",
+        "y",
+        ":",
+        "0",
+        ",",
+        "}",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut",
+            "struct"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "p",
+            "Point",
+            "x",
+            "y",
+            "z"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            ":",
+            ",",
+            "=",
+            ";"
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "0",
+            "1",
+            "42"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Struct instantiation looks like the definition but with values instead of types. Every field must be initialized — Rust doesn't have null or default values unless you opt in."
+    },
+    {
+      "id": "rust-m6-c3",
+      "language": "rust",
+      "module": 6,
+      "position": 3,
+      "title": "Access a field",
+      "prompt": "Read the x coordinate from the point p",
+      "hint_concept": "Struct fields are accessed using dot notation — the variable name, a dot, and the field name.",
+      "hint_structural": "_ . _",
+      "fragment_type": "expression",
+      "answer": [
+        "p",
+        ".",
+        "x"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "identifiers",
+          "tokens": [
+            "p",
+            "x",
+            "y",
+            "Point"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            ".",
+            "::",
+            "(",
+            ")"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Dot notation accesses struct fields. If p is immutable, you can read p.x but not assign to it. Use let mut p to allow field mutation."
+    },
+    {
+      "id": "rust-m6-c4",
+      "language": "rust",
+      "module": 6,
+      "position": 4,
+      "title": "Impl block with method",
+      "prompt": "Write an impl block for Point containing a method called distance that borrows self immutably and returns a 64-bit float — use 0.0 as a placeholder body",
+      "hint_concept": "Methods live inside impl blocks. The first parameter of a method is &self (an immutable borrow of the instance). Declare the return type after ->.",
+      "hint_structural": "_ _ { _ _ ( _ _ ) -> _ { _ } }",
+      "fragment_type": "type_def",
+      "answer": [
+        "impl",
+        "Point",
+        "{",
+        "fn",
+        "distance",
+        "(",
+        "&",
+        "self",
+        ")",
+        "->",
+        "f64",
+        "{",
+        "0.0",
+        "}",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "impl",
+            "fn",
+            "struct",
+            "pub"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "Point",
+            "distance",
+            "self",
+            "new",
+            "area"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "f64",
+            "i32",
+            "f32"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            "(",
+            ")",
+            "->",
+            "&",
+            ":",
+            ","
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "0.0",
+            "0",
+            "1"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "impl Point { ... } adds methods to the Point struct. &self means the method borrows the instance immutably. You'd call it as p.distance() — Rust automatically passes p as self."
+    },
+    {
+      "id": "rust-m6-c5",
+      "language": "rust",
+      "module": 6,
+      "position": 5,
+      "title": "Constructor function",
+      "prompt": "Inside an impl block, define an associated function called new that takes no parameters and returns a Point at the origin (0, 0)",
+      "hint_concept": "A constructor is an associated function (no self parameter) that returns an instance. Build a Point literal with field values and return it implicitly.",
+      "hint_structural": "_ _ ( ) -> _ { _ { _ : _ , _ : _ , } }",
+      "fragment_type": "fn_def",
+      "answer": [
+        "fn",
+        "new",
+        "(",
+        ")",
+        "->",
+        "Point",
+        "{",
+        "Point",
+        "{",
+        "x",
+        ":",
+        "0",
+        ",",
+        "y",
+        ":",
+        "0",
+        ",",
+        "}",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "fn",
+            "let",
+            "impl",
+            "pub"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "new",
+            "Point",
+            "x",
+            "y",
+            "z",
+            "self"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            "(",
+            ")",
+            "->",
+            ":",
+            ",",
+            ";"
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "0",
+            "1",
+            "42"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Associated functions (no self parameter) are called with :: syntax: Point::new(). By convention, new is the constructor name. The Point literal is implicitly returned (no semicolon)."
+    },
+    {
+      "id": "rust-m7-c1",
+      "language": "rust",
+      "module": 7,
+      "position": 1,
+      "title": "Simple enum",
+      "prompt": "Define an enum called Color with two variants: Red and Blue",
+      "hint_concept": "Enums define a type that can be one of several variants. List the variant names inside curly braces, separated by commas.",
+      "hint_structural": "_ _ { _ , _ , }",
+      "fragment_type": "type_def",
+      "answer": [
+        "enum",
+        "Color",
+        "{",
+        "Red",
+        ",",
+        "Blue",
+        ",",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "enum",
+            "struct",
+            "match"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "Color",
+            "Red",
+            "Blue",
+            "Green",
+            "Shape"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            ",",
+            ";",
+            "(",
+            ")"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "enum defines a type whose value is exactly one of the listed variants. Color::Red and Color::Blue are the only valid values. Trailing commas are idiomatic."
+    },
+    {
+      "id": "rust-m7-c2",
+      "language": "rust",
+      "module": 7,
+      "position": 2,
+      "title": "Enum with data",
+      "prompt": "Define an enum called Shape with one variant, Circle, that holds a 64-bit float value",
+      "hint_concept": "Enum variants can carry data. Put the type of the attached data in parentheses after the variant name, like a tuple.",
+      "hint_structural": "_ _ { _ ( _ ) , }",
+      "fragment_type": "type_def",
+      "answer": [
+        "enum",
+        "Shape",
+        "{",
+        "Circle",
+        "(",
+        "f64",
+        ")",
+        ",",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "enum",
+            "struct",
+            "fn"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "Shape",
+            "Circle",
+            "Square",
+            "Color"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "f64",
+            "i32",
+            "f32"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            "(",
+            ")",
+            ",",
+            ";",
+            ":"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Circle(f64) means the Circle variant carries one f64 value. You'd create one with Shape::Circle(3.14). This is more powerful than C-style enums — variants can hold any data."
+    },
+    {
+      "id": "rust-m7-c3",
+      "language": "rust",
+      "module": 7,
+      "position": 3,
+      "title": "Match on enum variants",
+      "prompt": "Write a match expression on the variable color, with one arm for Color::Red and one for Color::Blue, both with empty bodies",
+      "hint_concept": "When matching on an enum, each arm uses the full path Type::Variant. Every variant must be covered for the match to compile.",
+      "hint_structural": "_ _ { _ _ _ => { } _ _ _ => { } }",
+      "fragment_type": "statement",
+      "answer": [
+        "match",
+        "color",
+        "{",
+        "Color",
+        "::",
+        "Red",
+        "=>",
+        "{",
+        "}",
+        "Color",
+        "::",
+        "Blue",
+        "=>",
+        "{",
+        "}",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "match",
+            "if",
+            "else"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "color",
+            "Color",
+            "Red",
+            "Blue",
+            "Green"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            "::",
+            "=>",
+            ",",
+            "_"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Matching on enums uses full paths like Color::Red. Rust requires exhaustive matching — every variant must have an arm, or you need a _ wildcard catch-all."
+    },
+    {
+      "id": "rust-m7-c4",
+      "language": "rust",
+      "module": 7,
+      "position": 4,
+      "title": "Unwrap an Option",
+      "prompt": "Use an if-let to check whether the variable value contains Some data, binding the inner value to x, with an empty body",
+      "hint_concept": "if let lets you match a single pattern. Use it to destructure Some(x) and only run code when the Option has a value inside.",
+      "hint_structural": "_ _ _ ( _ ) = _ { }",
+      "fragment_type": "statement",
+      "answer": [
+        "if",
+        "let",
+        "Some",
+        "(",
+        "x",
+        ")",
+        "=",
+        "value",
+        "{",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "if",
+            "let",
+            "match",
+            "else"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Some",
+            "None",
+            "Ok",
+            "Err"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "x",
+            "value",
+            "result",
+            "y"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            "{",
+            "}",
+            "=",
+            "=>",
+            ";"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "if let Some(x) = value destructures the Option. If value is Some, x gets the inner value and the body runs. If it's None, the body is skipped. Cleaner than a full match for single-pattern checks."
+    },
+    {
+      "id": "rust-m7-c5",
+      "language": "rust",
+      "module": 7,
+      "position": 5,
+      "title": "Create an Ok result",
+      "prompt": "Construct a successful Result value wrapping the number 42",
+      "hint_concept": "Result has two variants: Ok for success and Err for failure. Wrap the success value in the appropriate variant constructor.",
+      "hint_structural": "_ ( _ )",
+      "fragment_type": "expression",
+      "answer": [
+        "Ok",
+        "(",
+        "42",
+        ")"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "types",
+          "tokens": [
+            "Ok",
+            "Err",
+            "Some",
+            "None"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            ";",
+            ","
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "42",
+            "0",
+            "1"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Ok(42) creates a Result::Ok containing 42. Result<T, E> has two variants: Ok(T) for success and Err(E) for failure. Rust uses Result instead of exceptions for error handling."
+    },
+    {
+      "id": "rust-m8-c1",
+      "language": "rust",
+      "module": 8,
+      "position": 1,
+      "title": "Unwrap a Result",
+      "prompt": "Extract the success value from result, panicking if it contains an error",
+      "hint_concept": "There's a method that extracts the Ok value from a Result. If the Result is an Err, the program panics with a generic error message.",
+      "hint_structural": "_ . _ ( )",
+      "fragment_type": "expression",
+      "answer": [
+        "result",
+        ".",
+        "unwrap",
+        "(",
+        ")"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "identifiers",
+          "tokens": [
+            "result",
+            "unwrap",
+            "expect",
+            "value"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            ".",
+            "(",
+            ")",
+            ";",
+            "?"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "unwrap() extracts the Ok value or panics on Err. It's quick for prototyping but risky in production — a panic crashes the program. Prefer expect(), ?, or match for real code."
+    },
+    {
+      "id": "rust-m8-c2",
+      "language": "rust",
+      "module": 8,
+      "position": 2,
+      "title": "Expect with message",
+      "prompt": "Extract the success value from result, providing a custom panic message if it fails",
+      "hint_concept": "Like unwrap, but you provide a string that describes what went wrong. This makes debugging much easier when something panics.",
+      "hint_structural": "_ . _ ( _ )",
+      "fragment_type": "expression",
+      "answer": [
+        "result",
+        ".",
+        "expect",
+        "(",
+        "\"error\"",
+        ")"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "identifiers",
+          "tokens": [
+            "result",
+            "expect",
+            "unwrap",
+            "value"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            ".",
+            "(",
+            ")",
+            ";",
+            "?"
+          ]
+        },
+        {
+          "group": "strings",
+          "tokens": [
+            "\"error\"",
+            "\"msg\"",
+            "\"failed\""
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "expect() is like unwrap() but with a custom message. When it panics, you see your message instead of a generic error — invaluable for debugging."
+    },
+    {
+      "id": "rust-m8-c3",
+      "language": "rust",
+      "module": 8,
+      "position": 3,
+      "title": "Propagate with ?",
+      "prompt": "Bind the success value of result to a variable called value, using the operator that automatically returns early on error",
+      "hint_concept": "A special operator after a Result expression extracts Ok or returns the Err to the caller. It replaces verbose match-and-return patterns.",
+      "hint_structural": "_ _ = _ _ ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "value",
+        "=",
+        "result",
+        "?",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut",
+            "return"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "value",
+            "result",
+            "x",
+            "data"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "=",
+            "?",
+            ";",
+            ".",
+            "(",
+            ")"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "The ? operator is Rust's ergonomic error propagation. If result is Ok, it unwraps the value. If Err, it returns the error from the current function immediately. Much cleaner than manual matching."
+    },
+    {
+      "id": "rust-m8-c4",
+      "language": "rust",
+      "module": 8,
+      "position": 4,
+      "title": "Match on Result",
+      "prompt": "Write a match on result with an Ok arm binding to value and an Err arm binding to e, both with empty bodies",
+      "hint_concept": "You can pattern match on Result just like any enum. Destructure the Ok and Err variants to bind their inner values to variables.",
+      "hint_structural": "_ _ { _ ( _ ) => { } _ ( _ ) => { } }",
+      "fragment_type": "statement",
+      "answer": [
+        "match",
+        "result",
+        "{",
+        "Ok",
+        "(",
+        "value",
+        ")",
+        "=>",
+        "{",
+        "}",
+        "Err",
+        "(",
+        "e",
+        ")",
+        "=>",
+        "{",
+        "}",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "match",
+            "if",
+            "let"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Ok",
+            "Err",
+            "Some",
+            "None"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "result",
+            "value",
+            "e",
+            "x",
+            "data"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            "(",
+            ")",
+            "=>",
+            ",",
+            "_"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Matching on Result gives you full control over both cases. Ok(value) binds the success data; Err(e) binds the error. This is the most explicit way to handle Results."
+    },
+    {
+      "id": "rust-m8-c5",
+      "language": "rust",
+      "module": 8,
+      "position": 5,
+      "title": "Fallible main",
+      "prompt": "Declare a main function that returns a Result with unit success type and a boxed dynamic Error trait object, with an empty body",
+      "hint_concept": "main can return Result so you can use ? in it. The error type is typically a boxed trait object that can hold any error type.",
+      "hint_structural": "_ _ ( ) -> _ < _ , _ < _ _ _ _ _ > > { }",
+      "fragment_type": "fn_def",
+      "answer": [
+        "fn",
+        "main",
+        "(",
+        ")",
+        "->",
+        "Result",
+        "<",
+        "(",
+        ")",
+        ",",
+        "Box",
+        "<",
+        "dyn",
+        "std",
+        "::",
+        "error",
+        "::",
+        "Error",
+        ">",
+        ">",
+        "{",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "fn",
+            "dyn",
+            "let",
+            "pub",
+            "impl"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "main",
+            "std",
+            "error",
+            "Error",
+            "result"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Result",
+            "Box",
+            "Option",
+            "String"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            "{",
+            "}",
+            "->",
+            "<",
+            ">",
+            "::",
+            ",",
+            ";"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "fn main() -> Result<(), Box<dyn std::error::Error>> lets you use ? throughout main. () means success returns nothing. Box<dyn Error> can hold any error type — maximum flexibility."
+    },
+    {
+      "id": "rust-m9-c1",
+      "language": "rust",
+      "module": 9,
+      "position": 1,
+      "title": "Derive Debug",
+      "prompt": "Write the attribute that automatically implements the Debug trait for the struct that follows",
+      "hint_concept": "Rust can auto-generate trait implementations using a derive attribute. Attributes are written with # and square brackets above the item.",
+      "hint_structural": "_ _ _ ( _ ) _",
+      "fragment_type": "statement",
+      "answer": [
+        "#",
+        "[",
+        "derive",
+        "(",
+        "Debug",
+        ")",
+        "]"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "identifiers",
+          "tokens": [
+            "derive",
+            "Debug",
+            "Display",
+            "Clone"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "#",
+            "[",
+            "]",
+            "(",
+            ")",
+            ",",
+            "{",
+            "}"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "#[derive(Debug)] tells the compiler to auto-generate a Debug implementation. This lets you print the struct with {:?} in format strings — essential for debugging."
+    },
+    {
+      "id": "rust-m9-c2",
+      "language": "rust",
+      "module": 9,
+      "position": 2,
+      "title": "Implement Display",
+      "prompt": "Write the impl block header that implements the standard library Display trait for Point, with an empty body",
+      "hint_concept": "To implement a trait for a type, use impl followed by the trait path, the keyword for, and then the type name.",
+      "hint_structural": "_ _ _ _ _ _ _ _ { }",
+      "fragment_type": "type_def",
+      "answer": [
+        "impl",
+        "std",
+        "::",
+        "fmt",
+        "::",
+        "Display",
+        "for",
+        "Point",
+        "{",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "impl",
+            "for",
+            "fn",
+            "trait"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "std",
+            "fmt",
+            "Display",
+            "Point",
+            "Debug",
+            "Color"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            "::",
+            "(",
+            ")",
+            "->",
+            ";"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "impl Trait for Type is how you implement traits in Rust. std::fmt::Display controls how a type appears when printed with {} in format strings. Unlike Debug, Display must be manually implemented."
+    },
+    {
+      "id": "rust-m9-c3",
+      "language": "rust",
+      "module": 9,
+      "position": 3,
+      "title": "Define a trait",
+      "prompt": "Define a trait called Greetable with a single method greet that borrows self immutably and returns nothing",
+      "hint_concept": "Traits define shared behavior. Declare with the trait keyword, then list method signatures inside. Method signatures in traits end with a semicolon (no body needed).",
+      "hint_structural": "_ _ { _ _ ( _ _ ) ; }",
+      "fragment_type": "type_def",
+      "answer": [
+        "trait",
+        "Greetable",
+        "{",
+        "fn",
+        "greet",
+        "(",
+        "&",
+        "self",
+        ")",
+        ";",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "trait",
+            "fn",
+            "impl",
+            "struct"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "Greetable",
+            "greet",
+            "self",
+            "Printable",
+            "show"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            "(",
+            ")",
+            "&",
+            ";",
+            "->",
+            ":"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "trait defines an interface. fn greet(&self); is a method signature — no body, just a semicolon. Any type that implements Greetable must provide a body for greet."
+    },
+    {
+      "id": "rust-m9-c4",
+      "language": "rust",
+      "module": 9,
+      "position": 4,
+      "title": "Implement a trait",
+      "prompt": "Write the impl block header that implements the Greetable trait for the struct Person, with an empty body",
+      "hint_concept": "Implementing your own trait uses the same syntax as implementing standard library traits: impl TraitName for TypeName.",
+      "hint_structural": "_ _ _ _ { }",
+      "fragment_type": "type_def",
+      "answer": [
+        "impl",
+        "Greetable",
+        "for",
+        "Person",
+        "{",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "impl",
+            "for",
+            "trait",
+            "struct"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "Greetable",
+            "Person",
+            "Point",
+            "Display"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            "(",
+            ")",
+            "::",
+            ";"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "impl Greetable for Person means Person now satisfies the Greetable interface. You'd need to provide the body for fn greet(&self) inside the braces for this to compile."
+    },
+    {
+      "id": "rust-m9-c5",
+      "language": "rust",
+      "module": 9,
+      "position": 5,
+      "title": "Generic with impl Trait",
+      "prompt": "Define a function called show that accepts a parameter item whose type implements the standard Display trait, with an empty body",
+      "hint_concept": "Instead of naming a generic type, you can write impl Trait directly as a parameter type. This means the function accepts any type implementing that trait.",
+      "hint_structural": "_ _ ( _ : _ _ _ _ _ _ ) { }",
+      "fragment_type": "fn_def",
+      "answer": [
+        "fn",
+        "show",
+        "(",
+        "item",
+        ":",
+        "impl",
+        "std",
+        "::",
+        "fmt",
+        "::",
+        "Display",
+        ")",
+        "{",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "fn",
+            "impl",
+            "trait",
+            "pub",
+            "for"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "show",
+            "item",
+            "std",
+            "fmt",
+            "Display",
+            "Debug",
+            "print"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            "{",
+            "}",
+            "::",
+            ":",
+            "->",
+            ";"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "impl Display as a parameter type means: any type that implements Display. The compiler generates a specialized version for each concrete type used — zero-cost abstraction."
+    },
+    {
+      "id": "rust-m10-c1",
+      "language": "rust",
+      "module": 10,
+      "position": 1,
+      "title": "Empty vector",
+      "prompt": "Create an empty vector using the vec macro and bind it to the variable v",
+      "hint_concept": "The vec! macro is the most common way to create vectors. Empty square brackets mean no initial elements.",
+      "hint_structural": "_ _ = _ _ _ ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "v",
+        "=",
+        "vec!",
+        "[",
+        "]",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "v",
+            "x",
+            "items"
+          ]
+        },
+        {
+          "group": "macros",
+          "tokens": [
+            "vec!",
+            "println!"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "=",
+            "[",
+            "]",
+            ";",
+            "(",
+            ")",
+            "{",
+            "}"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "vec![] creates an empty Vec. The vec! macro can also initialize with values: vec![1, 2, 3]. The type is inferred from how you use the vector later."
+    },
+    {
+      "id": "rust-m10-c2",
+      "language": "rust",
+      "module": 10,
+      "position": 2,
+      "title": "Push to a vector",
+      "prompt": "Add the number 42 to the end of the mutable vector v",
+      "hint_concept": "Vectors have a method that appends an element to the end. Use dot notation to call it, passing the new value as an argument.",
+      "hint_structural": "_ . _ ( _ ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "v",
+        ".",
+        "push",
+        "(",
+        "42",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "identifiers",
+          "tokens": [
+            "v",
+            "push",
+            "pop",
+            "get",
+            "len"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            ".",
+            "(",
+            ")",
+            ";",
+            ",",
+            "[",
+            "]"
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "42",
+            "0",
+            "1"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "push() adds an element to the end of a Vec. The vector must be declared with let mut for this to work, since push modifies it in place."
+    },
+    {
+      "id": "rust-m10-c3",
+      "language": "rust",
+      "module": 10,
+      "position": 3,
+      "title": "Iterate a vector",
+      "prompt": "Write a for loop that iterates over a borrowed reference to vector v, binding each element to item, with an empty body",
+      "hint_concept": "To iterate without consuming the vector, borrow it with an ampersand in the for loop. Each iteration binds one element to the loop variable.",
+      "hint_structural": "_ _ _ _ _ { }",
+      "fragment_type": "statement",
+      "answer": [
+        "for",
+        "item",
+        "in",
+        "&",
+        "v",
+        "{",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "for",
+            "in",
+            "loop",
+            "while"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "item",
+            "v",
+            "i",
+            "x"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            "&",
+            "..",
+            "(",
+            ")",
+            ";"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "&v borrows the vector, so you can still use v after the loop. Without &, the for loop would consume v (take ownership). Each iteration, item is a reference to one element."
+    },
+    {
+      "id": "rust-m10-c4",
+      "language": "rust",
+      "module": 10,
+      "position": 4,
+      "title": "Create a HashMap",
+      "prompt": "Create a new empty HashMap and bind it to a mutable variable called map",
+      "hint_concept": "HashMap works like other collections — it has an associated new() function. You need it mutable if you plan to insert entries later.",
+      "hint_structural": "_ _ _ = _ _ _ ( ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "mut",
+        "map",
+        "=",
+        "HashMap",
+        "::",
+        "new",
+        "(",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut",
+            "fn"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "map",
+            "new",
+            "table",
+            "from"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "HashMap",
+            "Vec",
+            "String"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "=",
+            "::",
+            "(",
+            ")",
+            ";",
+            "."
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "HashMap::new() creates an empty hash map. let mut is needed because inserting entries mutates the map. Key and value types are inferred from the first insert."
+    },
+    {
+      "id": "rust-m10-c5",
+      "language": "rust",
+      "module": 10,
+      "position": 5,
+      "title": "Look up a key",
+      "prompt": "Look up the key name in the HashMap called map, getting an Option back",
+      "hint_concept": "HashMaps have a method that takes a key and returns an Option — Some if found, None if not. Pass the key as a string argument.",
+      "hint_structural": "_ . _ ( _ )",
+      "fragment_type": "expression",
+      "answer": [
+        "map",
+        ".",
+        "get",
+        "(",
+        "\"name\"",
+        ")"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "identifiers",
+          "tokens": [
+            "map",
+            "get",
+            "insert",
+            "value"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            ".",
+            "(",
+            ")",
+            ";",
+            "[",
+            "]"
+          ]
+        },
+        {
+          "group": "strings",
+          "tokens": [
+            "\"name\"",
+            "\"key\"",
+            "\"id\""
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "get() returns Option<&V> — Some with a reference to the value if the key exists, or None if it doesn't. This avoids panics on missing keys, unlike direct indexing with []."
+    },
+    {
+      "id": "rust-m11-c1",
+      "language": "rust",
+      "module": 11,
+      "position": 1,
+      "title": "Your first closure",
+      "prompt": "Define a closure stored in a variable that takes one parameter and returns that parameter plus one",
+      "hint_concept": "Closures are anonymous functions. In Rust, their parameters go between pipe characters |param|, and the body follows directly.",
+      "hint_structural": "_ _ = _ _ _ _ + _ ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "add_one",
+        "=",
+        "|",
+        "x",
+        "|",
+        "x",
+        "+",
+        "1",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut",
+            "fn"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "add_one",
+            "x",
+            "y",
+            "count"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "=",
+            "|",
+            "+",
+            ";",
+            "-"
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "1",
+            "2",
+            "0"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Closures use |param| syntax instead of fn(param). The body expression x + 1 is returned implicitly. Closures can capture variables from their surrounding scope, unlike regular functions."
+    },
+    {
+      "id": "rust-m11-c2",
+      "language": "rust",
+      "module": 11,
+      "position": 2,
+      "title": "Capturing closure",
+      "prompt": "Create a closure with no parameters that captures and prints an outer variable called name using a format placeholder",
+      "hint_concept": "A closure with no parameters still needs the pipe characters — just with nothing between them. Closures automatically capture variables from the enclosing scope.",
+      "hint_structural": "_ _ = _ _ _ ( _ , _ ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "show",
+        "=",
+        "|",
+        "|",
+        "println!",
+        "(",
+        "\"{}\"",
+        ",",
+        "name",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut",
+            "fn"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "show",
+            "name",
+            "count",
+            "display"
+          ]
+        },
+        {
+          "group": "macros",
+          "tokens": [
+            "println!",
+            "print!"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "=",
+            "|",
+            "(",
+            ")",
+            ";",
+            ",",
+            "&",
+            ":"
+          ]
+        },
+        {
+          "group": "strings",
+          "tokens": [
+            "\"{}\"",
+            "\"{} {}\""
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "The || with nothing between the pipes means the closure takes no parameters. It captures name from the surrounding scope automatically — this is one of the key differences between closures and functions."
+    },
+    {
+      "id": "rust-m11-c3",
+      "language": "rust",
+      "module": 11,
+      "position": 3,
+      "title": "Map an iterator",
+      "prompt": "Transform each element of vector v by doubling it, using an iterator adapter that applies a closure to each element",
+      "hint_concept": "To transform elements, first get an iterator with .iter(), then chain a method that applies a closure to each element, producing a new iterator of transformed values.",
+      "hint_structural": "_ . _ ( ) . _ ( _ _ _ _ * _ )",
+      "fragment_type": "expression",
+      "answer": [
+        "v",
+        ".",
+        "iter",
+        "(",
+        ")",
+        ".",
+        "map",
+        "(",
+        "|",
+        "x",
+        "|",
+        "x",
+        "*",
+        "2",
+        ")"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "identifiers",
+          "tokens": [
+            "v",
+            "iter",
+            "map",
+            "x",
+            "filter",
+            "collect"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            ".",
+            "(",
+            ")",
+            "|",
+            "*",
+            "+",
+            ","
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "2",
+            "1",
+            "3"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "iter() creates a borrowing iterator over the vector. map() takes a closure and applies it to each element, producing a new lazy iterator. The result isn't computed until consumed (e.g., by collect)."
+    },
+    {
+      "id": "rust-m11-c4",
+      "language": "rust",
+      "module": 11,
+      "position": 4,
+      "title": "Filter an iterator",
+      "prompt": "Keep only the positive numbers from an iterator over vector v, using a pattern that destructures the reference in the closure parameter",
+      "hint_concept": "filter() keeps elements where the closure returns true. Since iter() yields references, you can use & in the closure parameter to destructure and get the value directly.",
+      "hint_structural": "_ . _ ( ) . _ ( _ & _ _ _ > _ )",
+      "fragment_type": "expression",
+      "answer": [
+        "v",
+        ".",
+        "iter",
+        "(",
+        ")",
+        ".",
+        "filter",
+        "(",
+        "|",
+        "&",
+        "x",
+        "|",
+        "x",
+        ">",
+        "0",
+        ")"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "identifiers",
+          "tokens": [
+            "v",
+            "iter",
+            "filter",
+            "x",
+            "map",
+            "collect"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            ".",
+            "(",
+            ")",
+            "|",
+            "&",
+            ">",
+            "<",
+            "=="
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "0",
+            "1",
+            "5"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "filter() receives references to elements. The |&x| pattern destructures the reference so x is the value itself. Only elements where the closure returns true are kept in the resulting iterator."
+    },
+    {
+      "id": "rust-m11-c5",
+      "language": "rust",
+      "module": 11,
+      "position": 5,
+      "title": "Collect into a Vec",
+      "prompt": "Consume an iterator over v and gather all its elements into a new Vec of i32 values",
+      "hint_concept": "Iterators are lazy — they don't compute anything until consumed. A method called collect() consumes the iterator and gathers results into a collection. You need a type annotation so Rust knows what collection to build.",
+      "hint_structural": "_ _ : _ < _ > = _ . _ ( ) . _ ( ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "result",
+        ":",
+        "Vec",
+        "<",
+        "i32",
+        ">",
+        "=",
+        "v",
+        ".",
+        "iter",
+        "(",
+        ")",
+        ".",
+        "collect",
+        "(",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "result",
+            "v",
+            "iter",
+            "collect",
+            "map",
+            "filter"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Vec",
+            "i32",
+            "String"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            ":",
+            "<",
+            ">",
+            "=",
+            ".",
+            "(",
+            ")",
+            ";",
+            "->",
+            "&"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "collect() consumes the iterator and builds a collection. The type annotation Vec<i32> tells Rust what to collect into — without it, Rust can't infer which collection type you want."
+    },
+    {
+      "id": "rust-m12-c1",
+      "language": "rust",
+      "module": 12,
+      "position": 1,
+      "title": "Lifetime on a function",
+      "prompt": "Annotate a function called longest that takes two string slice parameters and returns a string slice, all sharing the same lifetime",
+      "hint_concept": "Lifetime parameters go in angle brackets after the function name, like generic types. They start with an apostrophe. Use the same lifetime on both parameters and the return type to tell the compiler they're all related.",
+      "hint_structural": "_ _ < _ > ( _ : _ _ _ , _ : _ _ _ ) -> _ _ _ { _ }",
+      "fragment_type": "fn_def",
+      "answer": [
+        "fn",
+        "longest",
+        "<",
+        "'a",
+        ">",
+        "(",
+        "x",
+        ":",
+        "&",
+        "'a",
+        "str",
+        ",",
+        "y",
+        ":",
+        "&",
+        "'a",
+        "str",
+        ")",
+        "->",
+        "&",
+        "'a",
+        "str",
+        "{",
+        "x",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "fn",
+            "let",
+            "pub"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "longest",
+            "x",
+            "y",
+            "first",
+            "s"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "str",
+            "String",
+            "i32"
+          ]
+        },
+        {
+          "group": "lifetimes",
+          "tokens": [
+            "'a",
+            "'b",
+            "'static"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "<",
+            ">",
+            "(",
+            ")",
+            ":",
+            "&",
+            ",",
+            "->",
+            "{",
+            "}",
+            ";"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "The lifetime 'a tells the compiler that the returned reference will live at least as long as the shorter of x and y. Without this annotation, Rust can't determine how the return value's lifetime relates to the inputs."
+    },
+    {
+      "id": "rust-m12-c2",
+      "language": "rust",
+      "module": 12,
+      "position": 2,
+      "title": "Struct with a lifetime",
+      "prompt": "Define a struct called Excerpt that holds a field named text which is a borrowed string slice with a lifetime annotation",
+      "hint_concept": "Structs that hold references need lifetime parameters, declared in angle brackets after the struct name. The same lifetime is then used on the reference field.",
+      "hint_structural": "_ _ < _ > { _ : _ _ _ , }",
+      "fragment_type": "type_def",
+      "answer": [
+        "struct",
+        "Excerpt",
+        "<",
+        "'a",
+        ">",
+        "{",
+        "text",
+        ":",
+        "&",
+        "'a",
+        "str",
+        ",",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "struct",
+            "enum",
+            "impl"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Excerpt",
+            "str",
+            "String",
+            "i32"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "text",
+            "name",
+            "value"
+          ]
+        },
+        {
+          "group": "lifetimes",
+          "tokens": [
+            "'a",
+            "'b"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "<",
+            ">",
+            "{",
+            "}",
+            ":",
+            "&",
+            ",",
+            ";"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Any struct that stores a reference must declare a lifetime parameter. This tells the compiler that an Excerpt instance can't outlive the string slice it borrows in its text field."
+    },
+    {
+      "id": "rust-m12-c3",
+      "language": "rust",
+      "module": 12,
+      "position": 3,
+      "title": "Implement on a lifetime struct",
+      "prompt": "Write the impl block header for the Excerpt struct, properly declaring and using its lifetime parameter",
+      "hint_concept": "When implementing methods on a struct with lifetimes, the lifetime must be declared on the impl block itself and then used on the struct name.",
+      "hint_structural": "_ < _ > _ < _ > { }",
+      "fragment_type": "type_def",
+      "answer": [
+        "impl",
+        "<",
+        "'a",
+        ">",
+        "Excerpt",
+        "<",
+        "'a",
+        ">",
+        "{",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "impl",
+            "struct",
+            "fn"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Excerpt",
+            "Wrapper",
+            "Point"
+          ]
+        },
+        {
+          "group": "lifetimes",
+          "tokens": [
+            "'a",
+            "'b",
+            "'static"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "<",
+            ">",
+            "{",
+            "}",
+            "(",
+            ")"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "The impl<'a> declares the lifetime parameter, and Excerpt<'a> uses it. This pattern mirrors how generic type parameters work — declare on impl, then apply to the type."
+    },
+    {
+      "id": "rust-m12-c4",
+      "language": "rust",
+      "module": 12,
+      "position": 4,
+      "title": "Two lifetime parameters",
+      "prompt": "Define a function called first that takes two string slice parameters with different lifetimes and returns a slice tied to the first parameter's lifetime",
+      "hint_concept": "You can have multiple lifetime parameters separated by commas. Use different lifetimes on different parameters when the return value only needs to live as long as one of them.",
+      "hint_structural": "_ _ < _ , _ > ( _ : _ _ _ , _ : _ _ _ ) -> _ _ _ { _ }",
+      "fragment_type": "fn_def",
+      "answer": [
+        "fn",
+        "first",
+        "<",
+        "'a",
+        ",",
+        "'b",
+        ">",
+        "(",
+        "x",
+        ":",
+        "&",
+        "'a",
+        "str",
+        ",",
+        "y",
+        ":",
+        "&",
+        "'b",
+        "str",
+        ")",
+        "->",
+        "&",
+        "'a",
+        "str",
+        "{",
+        "x",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "fn",
+            "let",
+            "pub"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "first",
+            "x",
+            "y",
+            "longest",
+            "s"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "str",
+            "String"
+          ]
+        },
+        {
+          "group": "lifetimes",
+          "tokens": [
+            "'a",
+            "'b",
+            "'static"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "<",
+            ">",
+            "(",
+            ")",
+            ":",
+            "&",
+            ",",
+            "->",
+            "{",
+            "}",
+            ";"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Using separate lifetimes 'a and 'b tells the compiler that x and y can have different lifetimes. The return type &'a str ties the result to x's lifetime only, so y's data can be dropped independently."
+    },
+    {
+      "id": "rust-m12-c5",
+      "language": "rust",
+      "module": 12,
+      "position": 5,
+      "title": "Static lifetime",
+      "prompt": "Declare a string slice variable s with the special lifetime that lasts for the entire program duration",
+      "hint_concept": "There's a special lifetime that means the reference is valid for the entire run of the program. String literals always have this lifetime because they're embedded in the binary.",
+      "hint_structural": "_ _ : _ _ _ = _ ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "s",
+        ":",
+        "&",
+        "'static",
+        "str",
+        "=",
+        "\"hello\"",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut",
+            "const"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "s",
+            "x",
+            "name"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "str",
+            "String",
+            "i32"
+          ]
+        },
+        {
+          "group": "lifetimes",
+          "tokens": [
+            "'static",
+            "'a"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            ":",
+            "&",
+            "=",
+            ";",
+            "->"
+          ]
+        },
+        {
+          "group": "strings",
+          "tokens": [
+            "\"hello\"",
+            "\"world\"",
+            "\"rust\""
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "'static means the reference lives for the entire program. All string literals are &'static str because they're baked into the compiled binary and always available."
+    },
+    {
+      "id": "rust-m13-c1",
+      "language": "rust",
+      "module": 13,
+      "position": 1,
+      "title": "Box a value",
+      "prompt": "Allocate the number 5 on the heap using a smart pointer that provides single ownership",
+      "hint_concept": "Box is the simplest smart pointer. It stores data on the heap instead of the stack. You create one by calling its constructor with the value to store.",
+      "hint_structural": "_ _ = _ :: _ ( _ ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "b",
+        "=",
+        "Box",
+        "::",
+        "new",
+        "(",
+        "5",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "b",
+            "x",
+            "new",
+            "value"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Box",
+            "Rc",
+            "Vec"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "::",
+            "(",
+            ")",
+            "=",
+            ";",
+            "."
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "5",
+            "0",
+            "42"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Box::new() allocates the value on the heap and returns a pointer to it. When the Box goes out of scope, both the pointer and the heap data are freed. Box has single ownership — only one owner at a time."
+    },
+    {
+      "id": "rust-m13-c2",
+      "language": "rust",
+      "module": 13,
+      "position": 2,
+      "title": "Reference counting",
+      "prompt": "Create a reference-counted smart pointer holding the value 5, enabling shared ownership",
+      "hint_concept": "Rc stands for Reference Counted. It tracks how many owners exist and only frees the data when the last owner is dropped. Create one the same way as Box.",
+      "hint_structural": "_ _ = _ :: _ ( _ ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "a",
+        "=",
+        "Rc",
+        "::",
+        "new",
+        "(",
+        "5",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "a",
+            "b",
+            "new",
+            "value"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Rc",
+            "Box",
+            "Arc"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "::",
+            "(",
+            ")",
+            "=",
+            ";",
+            "."
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "5",
+            "0",
+            "1"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Rc::new() creates a reference-counted pointer. Unlike Box, multiple Rc pointers can share ownership of the same data. The internal counter tracks how many clones exist."
+    },
+    {
+      "id": "rust-m13-c3",
+      "language": "rust",
+      "module": 13,
+      "position": 3,
+      "title": "Clone an Rc",
+      "prompt": "Create a second owner of an Rc pointer called a, using the idiomatic Rc cloning method",
+      "hint_concept": "To add another owner, you clone the Rc. The idiomatic way calls clone as an associated function on the Rc type, passing a reference to the existing pointer.",
+      "hint_structural": "_ _ = _ :: _ ( _ _ ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "b",
+        "=",
+        "Rc",
+        "::",
+        "clone",
+        "(",
+        "&",
+        "a",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "b",
+            "a",
+            "clone",
+            "new",
+            "c"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Rc",
+            "Arc",
+            "Box"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "::",
+            "(",
+            ")",
+            "&",
+            "=",
+            ";",
+            "."
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Rc::clone(&a) increments the reference count and returns a new Rc pointing to the same data. This is preferred over a.clone() because it makes clear you're only bumping a counter, not deep-copying data."
+    },
+    {
+      "id": "rust-m13-c4",
+      "language": "rust",
+      "module": 13,
+      "position": 4,
+      "title": "Interior mutability",
+      "prompt": "Create a RefCell wrapping the value 5, allowing mutation through shared references at runtime",
+      "hint_concept": "RefCell enforces borrowing rules at runtime instead of compile time. It wraps a value and lets you get mutable access even through a shared reference, panicking if the rules are violated.",
+      "hint_structural": "_ _ = _ :: _ ( _ ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "cell",
+        "=",
+        "RefCell",
+        "::",
+        "new",
+        "(",
+        "5",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "cell",
+            "new",
+            "value",
+            "x"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "RefCell",
+            "Rc",
+            "Box",
+            "Mutex"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "::",
+            "(",
+            ")",
+            "=",
+            ";",
+            "&",
+            "."
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "5",
+            "0",
+            "42"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "RefCell::new() wraps a value with runtime borrow checking. Unlike compile-time references, RefCell lets you mutate the inner value even when you only have a shared (&) reference to the RefCell itself."
+    },
+    {
+      "id": "rust-m13-c5",
+      "language": "rust",
+      "module": 13,
+      "position": 5,
+      "title": "Borrow from RefCell",
+      "prompt": "Get a mutable borrow from a RefCell called cell, storing it in a mutable variable",
+      "hint_concept": "RefCell has a method that returns a mutable smart pointer to the inner value. The result needs to be stored in a mutable variable so you can use it to modify the data.",
+      "hint_structural": "_ _ _ = _ . _ ( ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "mut",
+        "val",
+        "=",
+        "cell",
+        ".",
+        "borrow_mut",
+        "(",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut",
+            "ref"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "val",
+            "cell",
+            "borrow_mut",
+            "x",
+            "unwrap"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "=",
+            ".",
+            "(",
+            ")",
+            ";",
+            "&"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "borrow_mut() returns a RefMut smart pointer that acts like a mutable reference. If something else is already borrowing the RefCell's data, this will panic at runtime."
+    },
+    {
+      "id": "rust-m14-c1",
+      "language": "rust",
+      "module": 14,
+      "position": 1,
+      "title": "Spawn a thread",
+      "prompt": "Create a new operating system thread with an empty body using the standard library's threading function",
+      "hint_concept": "The standard library provides thread spawning in the std::thread module. You pass a closure as the work for the new thread to execute.",
+      "hint_structural": "_ :: _ :: _ ( _ _ { } ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "std",
+        "::",
+        "thread",
+        "::",
+        "spawn",
+        "(",
+        "|",
+        "|",
+        "{",
+        "}",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "identifiers",
+          "tokens": [
+            "std",
+            "thread",
+            "spawn",
+            "join",
+            "sleep"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "::",
+            "(",
+            ")",
+            "|",
+            "{",
+            "}",
+            ";",
+            "."
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "std::thread::spawn takes a closure and runs it in a new OS thread. The || means the closure takes no parameters. The thread runs concurrently with the main thread."
+    },
+    {
+      "id": "rust-m14-c2",
+      "language": "rust",
+      "module": 14,
+      "position": 2,
+      "title": "Move into a thread",
+      "prompt": "Spawn a new thread, transferring ownership of captured variables into the thread's closure",
+      "hint_concept": "By default, closures borrow captured variables. Threads might outlive the current scope, so you need a keyword before the closure parameters that forces ownership transfer.",
+      "hint_structural": "_ :: _ :: _ ( _ _ _ { } ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "std",
+        "::",
+        "thread",
+        "::",
+        "spawn",
+        "(",
+        "move",
+        "|",
+        "|",
+        "{",
+        "}",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "move",
+            "mut",
+            "let"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "std",
+            "thread",
+            "spawn",
+            "join",
+            "sleep"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "::",
+            "(",
+            ")",
+            "|",
+            "{",
+            "}",
+            ";",
+            ".",
+            "&"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "The move keyword before the closure forces all captured variables to be moved into the closure, transferring ownership. This is essential for threads because the spawned thread may outlive the scope where the variables were created."
+    },
+    {
+      "id": "rust-m14-c3",
+      "language": "rust",
+      "module": 14,
+      "position": 3,
+      "title": "Create a Mutex",
+      "prompt": "Wrap the value 0 in a mutual exclusion lock to enable safe shared mutation",
+      "hint_concept": "A Mutex protects data so only one thread can access it at a time. You create one by passing the initial value to its constructor.",
+      "hint_structural": "_ _ = _ :: _ ( _ ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "m",
+        "=",
+        "Mutex",
+        "::",
+        "new",
+        "(",
+        "0",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "m",
+            "new",
+            "x",
+            "lock"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Mutex",
+            "Arc",
+            "Rc"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "::",
+            "(",
+            ")",
+            "=",
+            ";",
+            "."
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "0",
+            "1",
+            "5"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Mutex::new(0) creates a mutex guarding the value 0. Any thread that wants to read or write the data must first acquire the lock, ensuring exclusive access."
+    },
+    {
+      "id": "rust-m14-c4",
+      "language": "rust",
+      "module": 14,
+      "position": 4,
+      "title": "Lock a Mutex",
+      "prompt": "Acquire the lock on a Mutex called m and store the resulting guard in a mutable variable, handling the potential error with unwrap",
+      "hint_concept": "Calling lock on a Mutex returns a Result because the lock could be poisoned. Unwrapping it gives you a MutexGuard that acts like a mutable reference to the inner data.",
+      "hint_structural": "_ _ _ = _ . _ ( ) . _ ( ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "mut",
+        "num",
+        "=",
+        "m",
+        ".",
+        "lock",
+        "(",
+        ")",
+        ".",
+        "unwrap",
+        "(",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut",
+            "ref"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "num",
+            "m",
+            "lock",
+            "unwrap",
+            "expect",
+            "val"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "=",
+            ".",
+            "(",
+            ")",
+            ";",
+            "&"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "m.lock() blocks until the lock is available, then returns a Result<MutexGuard>. unwrap() extracts the guard, which provides mutable access. The lock is automatically released when the guard goes out of scope."
+    },
+    {
+      "id": "rust-m14-c5",
+      "language": "rust",
+      "module": 14,
+      "position": 5,
+      "title": "Arc with Mutex",
+      "prompt": "Wrap a Mutex holding 0 inside an atomic reference counter, enabling safe sharing across threads",
+      "hint_concept": "Arc is like Rc but thread-safe. Wrapping a Mutex in an Arc lets you clone the Arc into multiple threads, each of which can lock the Mutex to access the data.",
+      "hint_structural": "_ _ = _ :: _ ( _ :: _ ( _ ) ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "counter",
+        "=",
+        "Arc",
+        "::",
+        "new",
+        "(",
+        "Mutex",
+        "::",
+        "new",
+        "(",
+        "0",
+        ")",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "counter",
+            "new",
+            "m",
+            "value"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Arc",
+            "Mutex",
+            "Rc",
+            "Box"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "::",
+            "(",
+            ")",
+            "=",
+            ";",
+            ".",
+            "&"
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "0",
+            "1",
+            "5"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Arc<Mutex<T>> is the standard pattern for shared mutable state across threads. Arc (Atomic Reference Counting) handles thread-safe ownership sharing, while Mutex handles thread-safe mutation."
+    },
+    {
+      "id": "rust-m15-c1",
+      "language": "rust",
+      "module": 15,
+      "position": 1,
+      "title": "Generic identity function",
+      "prompt": "Define a generic function called identity that takes a value of any type and returns it unchanged",
+      "hint_concept": "Generic type parameters go in angle brackets after the function name. Use a single uppercase letter as the type parameter, then use it for both the parameter type and return type.",
+      "hint_structural": "_ _ < _ > ( _ : _ ) -> _ { _ }",
+      "fragment_type": "fn_def",
+      "answer": [
+        "fn",
+        "identity",
+        "<",
+        "T",
+        ">",
+        "(",
+        "x",
+        ":",
+        "T",
+        ")",
+        "->",
+        "T",
+        "{",
+        "x",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "fn",
+            "let",
+            "pub"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "identity",
+            "x",
+            "value",
+            "show"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "T",
+            "i32",
+            "String"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "<",
+            ">",
+            "(",
+            ")",
+            ":",
+            "->",
+            "{",
+            "}",
+            ";"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "The <T> declares a generic type parameter. T can be any type — the compiler generates specialized code for each concrete type used. This function works with i32, String, or any other type."
+    },
+    {
+      "id": "rust-m15-c2",
+      "language": "rust",
+      "module": 15,
+      "position": 2,
+      "title": "Trait bound on a generic",
+      "prompt": "Define a generic function called show that takes a parameter of any type that can be displayed on screen",
+      "hint_concept": "You can constrain a generic type with a trait bound using a colon after the type parameter. This restricts the function to types that implement the specified trait.",
+      "hint_structural": "_ _ < _ : _ > ( _ : _ ) { }",
+      "fragment_type": "fn_def",
+      "answer": [
+        "fn",
+        "show",
+        "<",
+        "T",
+        ":",
+        "Display",
+        ">",
+        "(",
+        "x",
+        ":",
+        "T",
+        ")",
+        "{",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "fn",
+            "let",
+            "impl"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "show",
+            "x",
+            "print_it",
+            "value"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "T",
+            "Display",
+            "Debug",
+            "String"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "<",
+            ">",
+            "(",
+            ")",
+            ":",
+            "{",
+            "}",
+            "->",
+            ";"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "The bound T: Display means this function only accepts types that implement the Display trait. Trying to call show with a type that doesn't implement Display causes a compile error."
+    },
+    {
+      "id": "rust-m15-c3",
+      "language": "rust",
+      "module": 15,
+      "position": 3,
+      "title": "Trait object reference",
+      "prompt": "Declare a variable a that holds a reference to a trait object of type Animal, assigned from a reference to an existing variable called dog",
+      "hint_concept": "Trait objects use the dyn keyword to indicate dynamic dispatch. A reference to a trait object lets you call trait methods on any type that implements the trait.",
+      "hint_structural": "_ _ : _ _ _ = _ _ ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "a",
+        ":",
+        "&",
+        "dyn",
+        "Animal",
+        "=",
+        "&",
+        "dog",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "dyn",
+            "mut"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "a",
+            "dog",
+            "animal",
+            "cat"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Animal",
+            "Display",
+            "Dog"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            ":",
+            "&",
+            "=",
+            ";",
+            "<",
+            ">"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "The dyn keyword marks Animal as a trait object, meaning method calls are dispatched dynamically at runtime (via a vtable) instead of statically. This lets you store different concrete types behind the same trait reference."
+    },
+    {
+      "id": "rust-m15-c4",
+      "language": "rust",
+      "module": 15,
+      "position": 4,
+      "title": "Generic struct",
+      "prompt": "Define a struct called Wrapper with a generic type parameter that has a single field called value",
+      "hint_concept": "Structs can be generic too. Declare the type parameter in angle brackets after the struct name, then use it as the type of any field.",
+      "hint_structural": "_ _ < _ > { _ : _ , }",
+      "fragment_type": "type_def",
+      "answer": [
+        "struct",
+        "Wrapper",
+        "<",
+        "T",
+        ">",
+        "{",
+        "value",
+        ":",
+        "T",
+        ",",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "struct",
+            "enum",
+            "impl"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Wrapper",
+            "T",
+            "i32",
+            "Point"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "value",
+            "data",
+            "item"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "<",
+            ">",
+            "{",
+            "}",
+            ":",
+            ",",
+            ";"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Wrapper<T> can hold a value of any type. When you create Wrapper { value: 42 }, T becomes i32. When you create Wrapper { value: \"hi\" }, T becomes &str. The compiler generates code for each concrete type."
+    },
+    {
+      "id": "rust-m15-c5",
+      "language": "rust",
+      "module": 15,
+      "position": 5,
+      "title": "Implement on a generic struct",
+      "prompt": "Write the impl block header for the generic Wrapper struct, declaring and using its type parameter",
+      "hint_concept": "When implementing methods on a generic struct, the type parameter must be declared on the impl block itself and then used on the struct name — just like lifetimes on structs.",
+      "hint_structural": "_ < _ > _ < _ > { }",
+      "fragment_type": "type_def",
+      "answer": [
+        "impl",
+        "<",
+        "T",
+        ">",
+        "Wrapper",
+        "<",
+        "T",
+        ">",
+        "{",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "impl",
+            "struct",
+            "fn"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Wrapper",
+            "T",
+            "Point",
+            "Excerpt"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "<",
+            ">",
+            "{",
+            "}",
+            "(",
+            ")",
+            ":"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "The impl<T> declares the type parameter, and Wrapper<T> uses it. This means the methods inside will work for any Wrapper, regardless of what type T is."
+    },
+    {
+      "id": "rust-m16-c1",
+      "language": "rust",
+      "module": 16,
+      "position": 1,
+      "title": "Destructure a tuple",
+      "prompt": "Unpack a tuple containing two numbers into separate variables x and y in a single binding",
+      "hint_concept": "You can destructure a tuple by placing a pattern with variable names in parentheses on the left side of the assignment, matching the structure of the tuple.",
+      "hint_structural": "_ ( _ , _ ) = ( _ , _ ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "(",
+        "x",
+        ",",
+        "y",
+        ")",
+        "=",
+        "(",
+        "1",
+        ",",
+        "2",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "x",
+            "y",
+            "a",
+            "b"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            ",",
+            "=",
+            ";",
+            ":"
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "1",
+            "2",
+            "0",
+            "3"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Pattern matching lets you take apart data structures in a single step. The (x, y) on the left mirrors the shape of the (1, 2) tuple on the right, binding x to 1 and y to 2."
+    },
+    {
+      "id": "rust-m16-c2",
+      "language": "rust",
+      "module": 16,
+      "position": 2,
+      "title": "Destructure a struct",
+      "prompt": "Unpack a struct variable called point of type Point into its x and y fields as local variables",
+      "hint_concept": "Struct destructuring uses the struct name followed by curly braces with field names. Each field name becomes a local variable bound to that field's value.",
+      "hint_structural": "_ _ { _ , _ } = _ ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "Point",
+        "{",
+        "x",
+        ",",
+        "y",
+        "}",
+        "=",
+        "point",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut",
+            "struct"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Point",
+            "Wrapper",
+            "Person"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "x",
+            "y",
+            "point",
+            "a",
+            "b"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            ",",
+            "=",
+            ";",
+            "(",
+            ")"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Struct destructuring mirrors the struct's field names. Writing Point { x, y } is shorthand for Point { x: x, y: y } — each field is bound to a local variable with the same name."
+    },
+    {
+      "id": "rust-m16-c3",
+      "language": "rust",
+      "module": 16,
+      "position": 3,
+      "title": "If let pattern",
+      "prompt": "Use a conditional pattern match to extract the inner value from an Option called value, only running code when it contains something",
+      "hint_concept": "There's a concise way to match a single pattern without a full match block. It combines an if with a let binding and a pattern.",
+      "hint_structural": "_ _ _ ( _ ) = _ { }",
+      "fragment_type": "statement",
+      "answer": [
+        "if",
+        "let",
+        "Some",
+        "(",
+        "x",
+        ")",
+        "=",
+        "value",
+        "{",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "if",
+            "let",
+            "match",
+            "else"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Some",
+            "None",
+            "Ok"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "x",
+            "value",
+            "result",
+            "n"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            "=",
+            "{",
+            "}",
+            ";"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "if let is syntactic sugar for a match with one arm. It's cleaner than a full match when you only care about one variant. The code block runs only when value matches Some(x)."
+    },
+    {
+      "id": "rust-m16-c4",
+      "language": "rust",
+      "module": 16,
+      "position": 4,
+      "title": "While let loop",
+      "prompt": "Loop as long as popping from a variable called stack yields a value, extracting each popped element for use inside the loop body",
+      "hint_concept": "Like if let, there's a loop variant that keeps looping as long as the pattern matches. It's perfect for draining containers that return Option values.",
+      "hint_structural": "_ _ _ ( _ ) = _ . _ ( ) { }",
+      "fragment_type": "statement",
+      "answer": [
+        "while",
+        "let",
+        "Some",
+        "(",
+        "x",
+        ")",
+        "=",
+        "stack",
+        ".",
+        "pop",
+        "(",
+        ")",
+        "{",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "while",
+            "let",
+            "for",
+            "loop"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Some",
+            "None",
+            "Ok"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "x",
+            "stack",
+            "pop",
+            "item",
+            "push"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            "=",
+            ".",
+            "{",
+            "}",
+            ";"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "while let runs the loop body as long as the pattern matches. When stack.pop() returns None (the stack is empty), the pattern fails and the loop ends. No explicit break needed."
+    },
+    {
+      "id": "rust-m16-c5",
+      "language": "rust",
+      "module": 16,
+      "position": 5,
+      "title": "Match guard",
+      "prompt": "Write a match expression on x with a guarded arm that runs when the matched value is positive, and a catch-all arm for everything else",
+      "hint_concept": "Match arms can have additional conditions called guards. They go after the pattern with an if keyword, adding an extra check before the arm fires.",
+      "hint_structural": "_ _ { _ _ _ > _ => { } _ => { } }",
+      "fragment_type": "statement",
+      "answer": [
+        "match",
+        "x",
+        "{",
+        "n",
+        "if",
+        "n",
+        ">",
+        "0",
+        "=>",
+        "{",
+        "}",
+        "_",
+        "=>",
+        "{",
+        "}",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "match",
+            "if",
+            "let",
+            "else"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "x",
+            "n",
+            "value",
+            "y"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            "=>",
+            ">",
+            "<",
+            "_",
+            "(",
+            ")"
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "0",
+            "1",
+            "5"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "The if n > 0 is a match guard — an extra condition after the pattern. The arm only fires if both the pattern matches AND the guard is true. The _ arm catches everything else."
+    },
+    {
+      "id": "rust-m17-c1",
+      "language": "rust",
+      "module": 17,
+      "position": 1,
+      "title": "String slice from String",
+      "prompt": "Borrow an entire String variable s as a string slice, storing it in a variable with an explicit type annotation",
+      "hint_concept": "You can borrow a String as a string slice by taking a reference to it. The string slice type is written as a reference to the primitive string type.",
+      "hint_structural": "_ _ : _ _ = _ _ ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "slice",
+        ":",
+        "&",
+        "str",
+        "=",
+        "&",
+        "s",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "slice",
+            "s",
+            "x",
+            "text"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "str",
+            "String",
+            "i32"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            ":",
+            "&",
+            "=",
+            ";",
+            "."
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "A &str is a borrowed view into string data. When you write &s where s is a String, Rust automatically coerces it to a &str covering the entire string. This is called deref coercion."
+    },
+    {
+      "id": "rust-m17-c2",
+      "language": "rust",
+      "module": 17,
+      "position": 2,
+      "title": "Convert to String",
+      "prompt": "Convert a string literal into an owned String using a method call",
+      "hint_concept": "String literals are &str (borrowed). To get an owned String you can use, there's a method available on &str that creates a new heap-allocated String from the slice.",
+      "hint_structural": "_ _ = _ . _ ( ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "s",
+        "=",
+        "\"hello\"",
+        ".",
+        "to_string",
+        "(",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "s",
+            "to_string",
+            "clone",
+            "x"
+          ]
+        },
+        {
+          "group": "strings",
+          "tokens": [
+            "\"hello\"",
+            "\"world\"",
+            "\"rust\""
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "=",
+            ".",
+            "(",
+            ")",
+            ";",
+            "&"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "to_string() creates a new heap-allocated String from a &str. String::from(\"hello\") does the same thing. The key difference: &str is borrowed and fixed-size, while String is owned and growable."
+    },
+    {
+      "id": "rust-m17-c3",
+      "language": "rust",
+      "module": 17,
+      "position": 3,
+      "title": "Format strings together",
+      "prompt": "Combine two string variables called first and last into a single String with a space between them, using a formatting macro",
+      "hint_concept": "There's a macro that works like println! but returns a String instead of printing. Use a format template with two placeholders separated by a space.",
+      "hint_structural": "_ _ = _ ( _ , _ , _ ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "full",
+        "=",
+        "format!",
+        "(",
+        "\"{} {}\"",
+        ",",
+        "first",
+        ",",
+        "last",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
+          "group": "macros",
+          "tokens": [
+            "format!",
+            "println!",
+            "print!"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "full",
+            "first",
+            "last",
+            "name",
+            "result"
+          ]
+        },
+        {
+          "group": "strings",
+          "tokens": [
+            "\"{} {}\"",
+            "\"{}\"",
+            "\"hello\""
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "=",
+            "(",
+            ")",
+            ",",
+            ";",
+            "&",
+            "."
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "format!() works exactly like println!() but returns a String instead of printing to stdout. It's the cleanest way to concatenate strings with formatting in Rust."
+    },
+    {
+      "id": "rust-m17-c4",
+      "language": "rust",
+      "module": 17,
+      "position": 4,
+      "title": "Check for a substring",
+      "prompt": "Test whether the string variable s includes the text rust anywhere inside it",
+      "hint_concept": "Strings have a method that checks whether a given substring exists anywhere within the string. It returns a boolean value.",
+      "hint_structural": "_ . _ ( _ )",
+      "fragment_type": "expression",
+      "answer": [
+        "s",
+        ".",
+        "contains",
+        "(",
+        "\"rust\"",
+        ")"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "identifiers",
+          "tokens": [
+            "s",
+            "contains",
+            "push_str",
+            "find"
+          ]
+        },
+        {
+          "group": "strings",
+          "tokens": [
+            "\"rust\"",
+            "\"hello\"",
+            "\" world\""
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            ".",
+            "(",
+            ")",
+            ";",
+            "&"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "contains() searches the string for the given pattern and returns true if found. It works with &str, char, or any type that implements the Pattern trait."
+    },
+    {
+      "id": "rust-m17-c5",
+      "language": "rust",
+      "module": 17,
+      "position": 5,
+      "title": "Append to a String",
+      "prompt": "Append the text \" world\" onto the end of a mutable String variable s",
+      "hint_concept": "Strings have a method that appends a string slice to the end of the String, growing it in place. The String must be mutable.",
+      "hint_structural": "_ . _ ( _ ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "s",
+        ".",
+        "push_str",
+        "(",
+        "\" world\"",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "identifiers",
+          "tokens": [
+            "s",
+            "push_str",
+            "push",
+            "contains"
+          ]
+        },
+        {
+          "group": "strings",
+          "tokens": [
+            "\" world\"",
+            "\"hello\"",
+            "\"rust\""
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            ".",
+            "(",
+            ")",
+            ";",
+            "&"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "push_str() appends a &str to the end of a String. There's also push() for appending a single char. Both require the String to be declared with let mut."
+    },
+    {
+      "id": "rust-m18-c1",
+      "language": "rust",
+      "module": 18,
+      "position": 1,
+      "title": "Declare a module",
+      "prompt": "Define an inline module called utils with an empty body",
+      "hint_concept": "Modules are declared with a keyword followed by the module name and curly braces. They create a new namespace for organizing code.",
+      "hint_structural": "_ _ { }",
+      "fragment_type": "statement",
+      "answer": [
+        "mod",
+        "utils",
+        "{",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "mod",
+            "use",
+            "pub"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "utils",
+            "helper",
+            "main"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            "(",
+            ")",
+            ";"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "mod creates a new module namespace. Items inside are private by default — only accessible within the module and its children. Use pub to expose items to the outside."
+    },
+    {
+      "id": "rust-m18-c2",
+      "language": "rust",
+      "module": 18,
+      "position": 2,
+      "title": "Public function",
+      "prompt": "Define a function called helper that is visible outside its module, with an empty body and no parameters",
+      "hint_concept": "By default, everything in Rust is private. To make a function accessible from outside its module, add a visibility modifier before the function keyword.",
+      "hint_structural": "_ _ _ ( ) { }",
+      "fragment_type": "fn_def",
+      "answer": [
+        "pub",
+        "fn",
+        "helper",
+        "(",
+        ")",
+        "{",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "pub",
+            "fn",
+            "mod",
+            "let"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "helper",
+            "utils",
+            "main",
+            "work"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            "{",
+            "}",
+            ";"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "pub makes the function visible to code outside its module. Without pub, the function can only be called from within the same module or its child modules."
+    },
+    {
+      "id": "rust-m18-c3",
+      "language": "rust",
+      "module": 18,
+      "position": 3,
+      "title": "Use a standard library item",
+      "prompt": "Bring the HashMap type from the standard library's collections module into scope",
+      "hint_concept": "The use keyword imports items from other modules into the current scope, so you can refer to them by their short name instead of the full path.",
+      "hint_structural": "_ _ :: _ :: _ ;",
+      "fragment_type": "statement",
+      "answer": [
+        "use",
+        "std",
+        "::",
+        "collections",
+        "::",
+        "HashMap",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "use",
+            "mod",
+            "pub"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "std",
+            "collections",
+            "result",
+            "thread"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "HashMap",
+            "Vec",
+            "String"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "::",
+            ";",
+            "{",
+            "}",
+            ","
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "use brings items into scope so you can use their short names. After this statement, you can write HashMap::new() instead of std::collections::HashMap::new()."
+    },
+    {
+      "id": "rust-m18-c4",
+      "language": "rust",
+      "module": 18,
+      "position": 4,
+      "title": "Import from parent module",
+      "prompt": "Bring a function called helper from the parent module into the current scope",
+      "hint_concept": "To refer to items in the parent module, Rust provides a special path keyword that means 'one level up'. Combine it with use to import the item.",
+      "hint_structural": "_ _ :: _ ;",
+      "fragment_type": "statement",
+      "answer": [
+        "use",
+        "super",
+        "::",
+        "helper",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "use",
+            "super",
+            "self",
+            "crate"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "helper",
+            "utils",
+            "main",
+            "work"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "::",
+            ";",
+            ".",
+            ","
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "super refers to the parent module, like .. in file paths. use super::helper imports the helper function from the module one level up in the module tree."
+    },
+    {
+      "id": "rust-m18-c5",
+      "language": "rust",
+      "module": 18,
+      "position": 5,
+      "title": "Re-export an item",
+      "prompt": "Re-export a type called Config from a submodule called utils within the current module, making it publicly accessible",
+      "hint_concept": "Combining pub with use creates a re-export. This makes an item from a nested path available as if it were defined at the current level, simplifying the public API.",
+      "hint_structural": "_ _ _ :: _ :: _ ;",
+      "fragment_type": "statement",
+      "answer": [
+        "pub",
+        "use",
+        "self",
+        "::",
+        "utils",
+        "::",
+        "Config",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "pub",
+            "use",
+            "self",
+            "super",
+            "mod"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "utils",
+            "Config",
+            "helper",
+            "result"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "::",
+            ";",
+            ",",
+            "{",
+            "}"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "pub use re-exports an item, making it available at the current module's level. Users of your library can access Config directly instead of navigating through the utils submodule."
+    },
+    {
+      "id": "rust-m19-c1",
+      "language": "rust",
+      "module": 19,
+      "position": 1,
+      "title": "Assert equality",
+      "prompt": "Check at runtime that the variable x equals the number 5, panicking if they differ",
+      "hint_concept": "There's a macro that takes two values and panics with a helpful diff message if they aren't equal. It's commonly used in tests.",
+      "hint_structural": "_ ( _ , _ ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "assert_eq!",
+        "(",
+        "x",
+        ",",
+        "5",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "macros",
+          "tokens": [
+            "assert_eq!",
+            "assert!",
+            "dbg!"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "x",
+            "y",
+            "result"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            ",",
+            ";",
+            "="
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "5",
+            "0",
+            "42"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "assert_eq! compares two values and panics with a detailed message if they're not equal. It's the workhorse of Rust testing — every #[test] function uses it."
+    },
+    {
+      "id": "rust-m19-c2",
+      "language": "rust",
+      "module": 19,
+      "position": 2,
+      "title": "Vec from a macro",
+      "prompt": "Create a vector containing the numbers 1, 2, and 3 using the shorthand macro syntax",
+      "hint_concept": "There's a macro that creates a Vec and fills it with initial values in one step. It uses square brackets instead of parentheses.",
+      "hint_structural": "_ _ = _ [ _ , _ , _ ] ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "v",
+        "=",
+        "vec!",
+        "[",
+        "1",
+        ",",
+        "2",
+        ",",
+        "3",
+        "]",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
+          "group": "macros",
+          "tokens": [
+            "vec!",
+            "println!",
+            "format!"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "v",
+            "x",
+            "list"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "=",
+            "[",
+            "]",
+            ",",
+            ";",
+            "(",
+            ")"
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "1",
+            "2",
+            "3",
+            "0",
+            "5"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "vec! is a convenience macro that creates a Vec and pushes each value into it. vec![1, 2, 3] is equivalent to creating an empty Vec and calling push three times."
+    },
+    {
+      "id": "rust-m19-c3",
+      "language": "rust",
+      "module": 19,
+      "position": 3,
+      "title": "Placeholder with todo!",
+      "prompt": "Define a function called work with an empty parameter list that uses a placeholder macro to mark its body as unfinished",
+      "hint_concept": "There's a macro that serves as a placeholder for code you haven't written yet. It compiles but panics at runtime, making it perfect for sketching out function signatures.",
+      "hint_structural": "_ _ ( ) { _ ( ) ; }",
+      "fragment_type": "fn_def",
+      "answer": [
+        "fn",
+        "work",
+        "(",
+        ")",
+        "{",
+        "todo!",
+        "(",
+        ")",
+        ";",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "fn",
+            "let",
+            "pub"
+          ]
+        },
+        {
+          "group": "macros",
+          "tokens": [
+            "todo!",
+            "println!",
+            "dbg!"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "work",
+            "main",
+            "helper"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            "{",
+            "}",
+            ";",
+            "->",
+            ":"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "todo!() compiles successfully but panics at runtime with a 'not yet implemented' message. It's perfect for stubbing out functions while you work on the rest of your code."
+    },
+    {
+      "id": "rust-m19-c4",
+      "language": "rust",
+      "module": 19,
+      "position": 4,
+      "title": "Format into a String",
+      "prompt": "Create a new String that combines the text x = with the value of variable x, using a formatting macro",
+      "hint_concept": "There's a macro that works like println! but returns a String instead of printing. Use a format template with a placeholder.",
+      "hint_structural": "_ _ = _ ( _ , _ ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "s",
+        "=",
+        "format!",
+        "(",
+        "\"x = {}\"",
+        ",",
+        "x",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
+          "group": "macros",
+          "tokens": [
+            "format!",
+            "println!",
+            "print!"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "s",
+            "x",
+            "result",
+            "name"
+          ]
+        },
+        {
+          "group": "strings",
+          "tokens": [
+            "\"x = {}\"",
+            "\"{}\"",
+            "\"hello\""
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "=",
+            "(",
+            ")",
+            ",",
+            ";",
+            "&",
+            "."
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "format!() returns a new String with the formatted result. It supports all the same format specifiers as println! — placeholders like {}, {:?}, {:.2}, etc."
+    },
+    {
+      "id": "rust-m19-c5",
+      "language": "rust",
+      "module": 19,
+      "position": 5,
+      "title": "Assert a condition",
+      "prompt": "Verify at runtime that the variable x is positive, panicking if it's not",
+      "hint_concept": "There's a macro that takes a single boolean expression and panics if it evaluates to false. It's simpler than assert_eq! when you just need to check a condition.",
+      "hint_structural": "_ ( _ > _ ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "assert!",
+        "(",
+        "x",
+        ">",
+        "0",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "macros",
+          "tokens": [
+            "assert!",
+            "assert_eq!",
+            "dbg!"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "x",
+            "y",
+            "result"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            ">",
+            "<",
+            "==",
+            ";"
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "0",
+            "1",
+            "5"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "assert!() takes a boolean expression and panics if it's false. Unlike assert_eq!, it checks any condition — equality, inequality, comparisons, or complex boolean logic."
+    },
+    {
+      "id": "rust-m20-c1",
+      "language": "rust",
+      "module": 20,
+      "position": 1,
+      "title": "Implement Drop",
+      "prompt": "Write the Drop trait implementation for a struct called Custom, with an empty drop method",
+      "hint_concept": "The Drop trait has a single method that takes a mutable reference to self. It's called automatically when a value goes out of scope.",
+      "hint_structural": "_ _ _ _ { _ _ ( _ _ _ ) { } }",
+      "fragment_type": "type_def",
+      "answer": [
+        "impl",
+        "Drop",
+        "for",
+        "Custom",
+        "{",
+        "fn",
+        "drop",
+        "(",
+        "&",
+        "mut",
+        "self",
+        ")",
+        "{",
+        "}",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "impl",
+            "for",
+            "fn",
+            "mut",
+            "self",
+            "struct"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Drop",
+            "Custom",
+            "Display",
+            "Debug"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "drop",
+            "new",
+            "clone"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "{",
+            "}",
+            "(",
+            ")",
+            "&",
+            ";",
+            ":"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "The Drop trait lets you run custom cleanup code when a value goes out of scope. The drop method receives &mut self and is called automatically — you never call it directly. Use std::mem::drop() to drop early."
+    },
+    {
+      "id": "rust-m20-c2",
+      "language": "rust",
+      "module": 20,
+      "position": 2,
+      "title": "Replace a value",
+      "prompt": "Swap the contents of a mutable variable x with the value 0, getting back the original value, using the standard library's memory replacement function",
+      "hint_concept": "The std::mem module has a function that replaces a value behind a mutable reference with a new one and returns the old value. It's useful when you need to take ownership of a field.",
+      "hint_structural": "_ :: _ :: _ ( _ _ _ , _ )",
+      "fragment_type": "expression",
+      "answer": [
+        "std",
+        "::",
+        "mem",
+        "::",
+        "replace",
+        "(",
+        "&",
+        "mut",
+        "x",
+        ",",
+        "0",
+        ")"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "mut",
+            "let",
+            "ref"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "std",
+            "mem",
+            "replace",
+            "x",
+            "swap",
+            "drop"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "::",
+            "(",
+            ")",
+            "&",
+            ",",
+            "=",
+            ";"
+          ]
+        },
+        {
+          "group": "numbers",
+          "tokens": [
+            "0",
+            "1",
+            "5"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "std::mem::replace swaps a value behind a mutable reference with a new one, returning the old value. It's a safe way to take ownership of a value you only have a mutable reference to."
+    },
+    {
+      "id": "rust-m20-c3",
+      "language": "rust",
+      "module": 20,
+      "position": 3,
+      "title": "Copy-on-write string",
+      "prompt": "Create a Cow string slice that borrows a string literal, avoiding allocation until mutation is needed",
+      "hint_concept": "Cow (Clone on Write) can hold either borrowed or owned data. Use the Borrowed variant to start with a reference — it only allocates a new String if you later need to mutate.",
+      "hint_structural": "_ _ : _ < _ > = _ :: _ ( _ ) ;",
+      "fragment_type": "statement",
+      "answer": [
+        "let",
+        "s",
+        ":",
+        "Cow",
+        "<",
+        "str",
+        ">",
+        "=",
+        "Cow",
+        "::",
+        "Borrowed",
+        "(",
+        "\"hello\"",
+        ")",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "let",
+            "mut"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "s",
+            "Borrowed",
+            "x",
+            "Owned"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Cow",
+            "str",
+            "String",
+            "Box"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            ":",
+            "<",
+            ">",
+            "=",
+            "::",
+            "(",
+            ")",
+            ";",
+            "&",
+            "."
+          ]
+        },
+        {
+          "group": "strings",
+          "tokens": [
+            "\"hello\"",
+            "\"world\"",
+            "\"rust\""
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "Cow<str> can hold either a &str (Borrowed) or a String (Owned). Starting with Borrowed avoids heap allocation. If you later call to_mut(), it clones into an owned String only when necessary."
+    },
+    {
+      "id": "rust-m20-c4",
+      "language": "rust",
+      "module": 20,
+      "position": 4,
+      "title": "Type alias",
+      "prompt": "Create a type alias called Num that is a shorthand for the 32-bit integer type",
+      "hint_concept": "Type aliases create a new name for an existing type. They're declared with a keyword followed by the new name, an equals sign, and the existing type.",
+      "hint_structural": "_ _ = _ ;",
+      "fragment_type": "statement",
+      "answer": [
+        "type",
+        "Num",
+        "=",
+        "i32",
+        ";"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "type",
+            "let",
+            "struct"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Num",
+            "i32",
+            "f64",
+            "String"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "=",
+            ";",
+            ":",
+            "<",
+            ">"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "type creates an alias — Num and i32 are fully interchangeable. Type aliases are most useful for shortening long generic types like Result<T, Box<dyn Error>>."
+    },
+    {
+      "id": "rust-m20-c5",
+      "language": "rust",
+      "module": 20,
+      "position": 5,
+      "title": "impl Trait parameter",
+      "prompt": "Define a function called greet that accepts any parameter type that can be converted into a String, using impl Trait syntax in the parameter position",
+      "hint_concept": "Instead of angle-bracket generics, you can write impl TraitName directly in a parameter's type position. This is syntactic sugar for a generic with a trait bound.",
+      "hint_structural": "_ _ ( _ : _ _ < _ > ) { }",
+      "fragment_type": "fn_def",
+      "answer": [
+        "fn",
+        "greet",
+        "(",
+        "name",
+        ":",
+        "impl",
+        "Into",
+        "<",
+        "String",
+        ">",
+        ")",
+        "{",
+        "}"
+      ],
+      "answer_variants": [],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "chips": [
+        {
+          "group": "keywords",
+          "tokens": [
+            "fn",
+            "impl",
+            "let",
+            "pub"
+          ]
+        },
+        {
+          "group": "identifiers",
+          "tokens": [
+            "greet",
+            "name",
+            "show",
+            "x"
+          ]
+        },
+        {
+          "group": "types",
+          "tokens": [
+            "Into",
+            "String",
+            "Display",
+            "T"
+          ]
+        },
+        {
+          "group": "symbols",
+          "tokens": [
+            "(",
+            ")",
+            ":",
+            "<",
+            ">",
+            "{",
+            "}",
+            ";",
+            "->"
+          ]
+        }
+      ],
+      "xp": 20,
+      "explanation": "impl Into<String> means the parameter accepts any type that implements the Into<String> trait. This includes &str, String, and other convertible types. It's cleaner than writing fn greet<T: Into<String>>(name: T)."
     }
   ]
 }
