@@ -15,9 +15,11 @@ use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 
 // ── Configuration ──
+// Values loaded from environment variables at compile time.
+// Set SUPABASE_URL and SUPABASE_ANON_KEY in .env (not committed to git).
 
-pub const SUPABASE_URL: &str = "https://dynffktqahqfelfriwfm.supabase.co";
-pub const SUPABASE_ANON_KEY: &str = "PLACEHOLDER_ANON_KEY";
+pub const SUPABASE_URL: &str = env!("SUPABASE_URL");
+pub const SUPABASE_ANON_KEY: &str = env!("SUPABASE_ANON_KEY");
 const JWT_STORAGE_KEY: &str = "supabase_jwt";
 const REFRESH_TOKEN_STORAGE_KEY: &str = "supabase_refresh_token";
 
