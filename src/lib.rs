@@ -3,3 +3,4 @@ pub mod engine;
 pub mod validator;
 pub mod state;
 pub mod services;
+pub mod component_logic;

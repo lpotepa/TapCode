@@ -28,7 +28,8 @@ pub fn TokenPicker(props: PickerProps) -> Element {
             role: "region",
             aria_label: "Token picker — tap to add tokens",
 
-            for group in props.chip_groups.iter() {
+            // Skip empty groups — they should not render in the picker
+            for group in props.chip_groups.iter().filter(|g| !g.tokens.is_empty()) {
                 {
                     let is_dimmed = props.group_states.iter()
                         .find(|s| s.group_name == group.name)
@@ -54,6 +55,9 @@ pub fn TokenPicker(props: PickerProps) -> Element {
 
                                 for token in group.tokens.iter() {
                                     {
+                                        // Global chip index — NOT reset per group.
+                                        // Ensures staggered entrance animation cascades
+                                        // smoothly across all groups top-to-bottom.
                                         chip_index += 1;
                                         let is_used = props.used_tokens.contains(token);
 

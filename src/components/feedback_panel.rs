@@ -8,6 +8,14 @@ pub struct FeedbackPanelProps {
     pub on_try_again: EventHandler<()>,
 }
 
+// TODO: Auto-advance timer (Ticket 11)
+// When feedback is Correct, start a 3-second auto-advance timer that calls on_next.
+// Cancel the timer if the user manually taps "Next" or navigates away.
+// Implementation options:
+//   - WASM: gloo_timers::callback::Timeout::new(3000, move || on_next.call(()))
+//   - Native: use_coroutine + tokio::time::sleep(Duration::from_secs(3))
+// Store the timer handle in a Signal<Option<TimerHandle>> and clear it in on_next.
+
 #[component]
 pub fn FeedbackPanel(props: FeedbackPanelProps) -> Element {
     match &props.feedback {
@@ -16,6 +24,8 @@ pub fn FeedbackPanel(props: FeedbackPanelProps) -> Element {
         FeedbackKind::Correct { xp_awarded, explanation } => {
             let xp = *xp_awarded;
             let explanation = explanation.clone();
+
+            // TODO: Start 3s auto-advance timer here (see module-level comment)
 
             rsx! {
                 div {

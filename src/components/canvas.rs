@@ -1,5 +1,6 @@
 use dioxus::prelude::*;
 use crate::models::*;
+use crate::component_logic::canvas::compute_indent_styles;
 
 #[derive(Props, Clone, PartialEq)]
 pub struct CanvasProps {
@@ -17,6 +18,9 @@ pub struct CanvasProps {
 pub fn CodeCanvas(props: CanvasProps) -> Element {
     let is_empty = props.tokens.is_empty() && props.ghost_hint.is_none();
 
+    // Compute indentation styles based on brace depth
+    let indent_styles = compute_indent_styles(&props.tokens);
+
     rsx! {
         div {
             class: "canvas",
@@ -24,6 +28,7 @@ pub fn CodeCanvas(props: CanvasProps) -> Element {
             aria_label: "Code canvas — assembled tokens",
 
             if props.show_diff {
+                // Diff mode: read-only display, no token tap handlers
                 if let Some(ref diff) = props.diff {
                     for (i, d) in diff.iter().enumerate() {
                         match d {
@@ -65,19 +70,34 @@ pub fn CodeCanvas(props: CanvasProps) -> Element {
                     }
                 }
             } else {
-                // Normal token display
+                // Normal token display with indentation
                 for (i, (token, css_class)) in props.tokens.iter().enumerate() {
-                    span {
-                        class: "canvas-token {css_class}",
-                        key: "token-{i}",
-                        role: "button",
-                        aria_label: "{token} at position {i} — tap to backtrack",
-                        tabindex: 0,
-                        onclick: {
-                            let idx = i;
-                            move |_| props.on_token_tap.call(idx)
-                        },
-                        "{token}"
+                    {
+                        let indent = indent_styles.get(i)
+                            .cloned()
+                            .unwrap_or_else(|| "margin-left: 0rem".to_string());
+
+                        rsx! {
+                            span {
+                                class: "canvas-token {css_class}",
+                                key: "token-{i}",
+                                style: "{indent}",
+                                role: "button",
+                                aria_label: "{token} at position {i} — tap to backtrack",
+                                tabindex: 0,
+                                onclick: {
+                                    let idx = i;
+                                    let show_diff = props.show_diff;
+                                    move |_| {
+                                        // Guard: do not fire tap in diff mode
+                                        if !show_diff {
+                                            props.on_token_tap.call(idx);
+                                        }
+                                    }
+                                },
+                                "{token}"
+                            }
+                        }
                     }
                 }
 

@@ -3,6 +3,7 @@ mod engine;
 mod validator;
 mod state;
 mod route;
+mod component_logic;
 mod components;
 mod screens;
 mod services;

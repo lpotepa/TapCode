@@ -31,6 +31,9 @@ desktop = ["dioxus/desktop"]
 mobile = ["dioxus/mobile"]
 server = ["dioxus/server", "dep:tokio"]
 
+[dev-dependencies]
+tokio = { version = "1", features = ["rt", "macros"] }
+
 [profile.release]
 opt-level = "z"
 lto = true

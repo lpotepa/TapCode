@@ -1,6 +1,15 @@
 use dioxus::prelude::*;
 use crate::models::HintTier;
 
+// TODO: Keyboard shortcuts (Ticket 11, web-only)
+// On web (#[cfg(target_arch = "wasm32")]), attach a document "keydown" listener:
+//   - 1-9: select chip at that index within the active/visible group
+//   - Enter: call on_check (if can_check is true)
+//   - Backspace: call on_undo
+//   - Tab: move focus between chip groups
+// Only active when feedback == FeedbackKind::None.
+// Implementation: use web_sys::EventListener on document, wire to EventHandlers.
+
 #[derive(Props, Clone, PartialEq)]
 pub struct ActionBarProps {
     pub can_check: bool,
