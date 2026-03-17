@@ -1,30 +1,37 @@
 # TapCode
 
-Mobile-first programming language learning app. Users build code by tapping token chips instead of typing. Rust is the launch language.
+Mobile-first programming language learning app. Users build code by tapping token chips instead of typing. Rust is the launch language with 100 challenges across 20 modules covering beginner to advanced concepts.
+
+## Project status
+
+The app compiles and runs on web (`dx serve --platform web`). Core engine, validation pipeline, and full Rust curriculum are implemented with 79 unit tests + 2 integration tests (100 rustc compilations). UI renders via Dioxus 0.7 with a custom "Cosmic Code" dark theme.
+
+**What's working:** onboarding flow, lesson screen with token assembly, contextual chip highlighting, answer validation with diff, feedback panels, hint system, XP/streak tracking, home/profile/module map/compose/paywall screens, confetti celebrations, module completion, full 100-challenge Rust curriculum verified by real `rustc`.
+
+**What's not yet wired:** Supabase backend (traits defined, no live calls), real haptics (trait defined, no-op on web), push notifications, IAP/Stripe payments, service worker offline caching.
 
 ## Tech stack
 
-- **Framework:** Dioxus 0.6 (Rust UI framework — compiles to iOS, Android, web, desktop from one codebase)
+- **Framework:** Dioxus 0.7 (Rust UI framework — compiles to iOS, Android, web, desktop)
 - **Language:** Rust
 - **UI syntax:** RSX (JSX-like macro for Rust)
-- **State management:** Dioxus signals (`Signal<T>`, `Memo<T>`) — fine-grained reactivity like SolidJS
-- **Styling:** TailwindCSS via Dioxus built-in Tailwind support
-- **Backend:** Supabase (Postgres + Auth + PostgREST)
-- **HTTP client:** reqwest with `json` + `wasm` features
+- **State management:** Dioxus signals (`Signal<T>`) with `use_context_provider`/`use_context`
+- **Styling:** Custom CSS design system (`assets/main.css`) — no Tailwind dependency
+- **CSS loading:** `document::Stylesheet { href: asset!("/assets/main.css") }` in RSX (Dioxus 0.7 pattern)
+- **Backend:** Supabase (Postgres + Auth + PostgREST) — not yet connected
+- **HTTP client:** reqwest with `json` feature; `getrandom` with `js` feature for WASM
 - **Serialization:** serde + serde_json
-- **Web output:** WASM static site on Cloudflare Pages
-- **Animations:** CSS transitions for simple interactions; `use_coroutine` + `Signal<Vec<Particle>>` at 60fps for particle effects
+- **Web output:** WASM via `dx serve --platform web`
+- **Animations:** CSS keyframe animations with custom properties for timing tokens
 
-## Platform targets
+## Build commands
 
-| Platform | Feature flag | Build command | v1 scope |
-|----------|-------------|---------------|----------|
-| iOS | `mobile` | `dx serve --platform ios` | Yes |
-| Android | `mobile` | `dx serve --platform android` | Yes |
-| Web | `web` | `dx serve --platform web` | Yes |
-| Desktop | `desktop` | `dx serve --platform desktop` | No |
-
-Production builds: `dx bundle`. Mobile binaries < 5 MB. Web WASM + HTML + CSS < 300 KB gzipped.
+```bash
+dx serve --platform web        # Dev server with hot-reload
+cargo test                     # 79 unit tests (engine + validator)
+cargo test --test challenge_compilation  # Compile all 100 challenges with rustc
+cargo build --target wasm32-unknown-unknown --features web  # WASM build check
+```
 
 ## Cargo features
 
@@ -37,124 +44,120 @@ mobile  = ["dioxus/mobile"]
 server  = ["dioxus/server", "dep:tokio"]
 ```
 
+WASM requires `getrandom = { features = ["js"] }` and `uuid = { features = ["js"] }` in `[target.'cfg(target_arch = "wasm32")'.dependencies]`.
+
+## Project structure
+
+```
+src/
+  main.rs              # Entry point: launches App, provides global state, mounts Router
+  lib.rs               # Library crate (for integration tests to import)
+  models.rs            # All data types: LanguagePack, Challenge, ValidationResult, etc.
+  engine.rs            # Language-agnostic engine: registry, validation, state machine, helpers
+  validator.rs         # Challenge verification pipeline: CompilerAdapter trait + registry
+  state.rs             # AppState: global state with XP, streak, progress, language pack
+  route.rs             # Dioxus Router: Landing → Onboarding or Home, all screen routes
+  components/          # Reusable UI components
+    chip.rs            # TokenChip — tappable token with category color + animation
+    canvas.rs          # CodeCanvas — assembled tokens with syntax highlighting + diff mode
+    picker.rs          # TokenPicker — grouped chip grid with contextual highlighting
+    action_bar.rs      # Check / Undo / Hint buttons
+    feedback_panel.rs  # Slide-up panel for Correct / Wrong feedback
+    xp_display.rs      # XP counter with bounce animation
+    progress_bar.rs    # Segmented progress bar
+    streak.rs          # 7-day dot strip with pulsing ring
+    confetti.rs        # Particle burst celebration
+    nav_shell.rs       # Bottom navigation bar
+  screens/             # Full-page screens composed from components
+    home.rs            # Streak display + Continue CTA + module list
+    lesson.rs          # Core challenge loop: prompt → tap → check → feedback
+    module_map.rs      # Challenge list per module + Free Compose entry
+    profile.rs         # XP, streak stats, badges, account section
+    compose.rs         # Sandbox mode: validate syntax, no correct answer
+    onboarding.rs      # Splash → language select → skill check → first challenge
+    paywall.rs         # Pricing screen (no dark patterns, back button works)
+    module_complete.rs # Full-screen celebration with badge drop
+  services/
+    platform.rs        # Trait abstractions: HapticEngine, SecureStorage
+assets/
+  main.css             # Full design system: colors, animations, components, responsive
+  data/
+    rust_pack.json     # Complete Rust language pack (100 challenges, 20 modules)
+tests/
+  challenge_compilation.rs  # Integration test: compiles every challenge with real rustc
+```
+
 ## Architecture
 
 ### Core principle: language-agnostic engine
 
-The app is a generic **token assembly engine**. It has zero language-specific logic. All language knowledge lives in **language packs** (data, not code). Adding a new language = adding a new language pack JSON bundle. No recompile needed.
+The app has **zero language-specific logic**. Two parallel registries drive everything:
 
-### Language pack contents
+1. **`LanguagePackRegistry`** — loads language pack JSON data (challenges, chips, rules)
+2. **`AdapterRegistry`** — loads compiler adapters for challenge verification
 
-Each language pack provides:
-- Metadata (ID, display name, version, primary color hue, icon, tagline)
-- Token category definitions (keywords, types, symbols, identifiers, etc. with chip colors)
-- Contextual state machine (which chip groups highlight after which token sequences)
-- Syntax highlighter config (token-to-color mappings for code canvas)
-- Module tree (ordered modules, each with ordered challenge IDs)
-- Challenge bundle (all challenge JSON objects)
-- Compiler adapter config (for validation pipeline)
+Adding a new language requires:
+- One JSON file (language pack with challenges, chip categories, context rules)
+- One struct implementing `CompilerAdapter` trait
+- Two lines of registration code
+- Zero changes to UI, engine, orchestrator, or tests
 
-### Token categories (universal across languages)
-
-| Category | Role |
-|----------|------|
-| Keywords | Language-reserved words (`fn`, `let`, `mut`) |
-| Macros/decorators | Meta constructs (`println!`, `vec!`) |
-| Types | Type names and constructors (`i32`, `String`, `Vec<T>`) |
-| String literals | Quoted values (`"Hello"`) |
-| Symbols & punctuation | Structural characters (`{`, `}`, `;`, `->`) |
-| Identifiers/vars | User-defined names (`x`, `count`, `name`) |
-| Numbers | Numeric literals (`42`, `3.14`) |
-
-### State management pattern
-
-- **Global state** (XP, streak, unlocked modules): `use_context` from root provider
-- **Screen state** (assembled tokens, current lesson, feedback): component-local `use_signal`
-- **Optimistic updates**: mutate local signal immediately, write to Supabase async via background `use_coroutine`
-- **Offline queue**: `Signal<Vec<PendingMutation>>` — flushes when connectivity restored. Serialized to file (mobile) or `localStorage` (web) to survive restarts
-
-### Routing
+### Language pack registry (`engine.rs`)
 
 ```rust
-#[derive(Routable, Clone)]
-enum Route {
-    #[route("/")]              Home {},
-    #[route("/lesson/:id")]    Lesson { id: String },
-    #[route("/module/:id")]    ModuleMap { id: String },
-    #[route("/profile")]       Profile {},
-    #[route("/compose/:module_id")] FreeCompose { module_id: String },
+// Build from embedded JSON — adding a language = adding one line
+pub fn build_default_registry() -> LanguagePackRegistry {
+    LanguagePackRegistry::from_embedded(&[
+        ("rust", include_str!("../assets/data/rust_pack.json")),
+        // ("go", include_str!("../assets/data/go_pack.json")),
+    ])
 }
 ```
 
-## Supabase
+Each `LanguagePack` contains: metadata, token categories (7 per language), contextual state machine rules, syntax highlight config, module tree, and challenges with scaffolds.
 
-**Project ref:** `dynffktqahqfelfriwfm`
-
-### Authentication
-
-- Anonymous session on first launch (no signup form)
-- JWT stored in platform secure storage (Keychain/Keystore/localStorage)
-- Optional upgrade to named account (email/OAuth) merges anonymous progress
-
-### Database schema
-
-```sql
--- one row per user
-create table user_state (
-  id             uuid primary key references auth.users,
-  created_at     timestamptz default now(),
-  total_xp       int default 0,
-  current_streak int default 0,
-  longest_streak int default 0,
-  last_active    date
-);
-
--- per-language progress
-create table language_progress (
-  id               uuid primary key default gen_random_uuid(),
-  user_id          uuid references user_state,
-  language_id      text not null,
-  xp               int default 0,
-  active_module    int default 1,
-  unlocked_modules int[] default '{1}',
-  unique (user_id, language_id)
-);
-
--- every attempt at a challenge
-create table challenge_attempts (
-  id           uuid primary key default gen_random_uuid(),
-  user_id      uuid references user_state,
-  challenge_id text not null,
-  language_id  text not null,
-  correct      boolean not null,
-  attempt_num  int not null,
-  attempted_at timestamptz default now()
-);
-
--- one row per calendar day the user was active
-create table streak_log (
-  user_id uuid references user_state,
-  day     date not null,
-  primary key (user_id, day)
-);
-```
-
-RLS enabled on all tables: `user_id = auth.uid()` — users read/write own rows only.
-
-### Supabase client pattern
+### Compiler adapter registry (`validator.rs`)
 
 ```rust
-struct SupabaseClient {
-    base_url: String,
-    anon_key: String,
-    jwt: Signal<Option<String>>,
-    http: reqwest::Client,
+// Trait — each language implements this
+pub trait CompilerAdapter: Send + Sync {
+    fn language_id(&self) -> &str;
+    fn file_extension(&self) -> &str;
+    fn compiler_flags(&self) -> Vec<String>;
+    fn wrap_fragment(&self, fragment: &str, ft: &FragmentType, scaffold: &str) -> Option<String>;
+    fn validate_program_structure(&self, program: &str) -> Result<(), String>;
+    fn run_command(&self) -> &str;
+    fn timeout_seconds(&self) -> u32;
+}
+
+// Registry — adding a language = one line
+pub fn default_registry() -> AdapterRegistry {
+    let mut r = AdapterRegistry::new();
+    r.register(Box::new(RustAdapter::new()));
+    // r.register(Box::new(GoAdapter::new()));
+    r
 }
 ```
 
-Communicates via PostgREST REST API + Auth REST endpoints using reqwest.
+The `RustAdapter` splits scaffolds into outer (module-level: `use`, `struct`, `trait`) and inner (fn-level: `let` bindings) so fragments compile in correct scope.
 
-## Challenge schema
+### Contextual state machine
+
+Pure function: `evaluate_context(tokens, rules, groups) → chip_group_states`. Rules live in the language pack JSON, not code. After each tap, determines which chip groups highlight (1.0 opacity) or dim (0.4 opacity).
+
+### Challenge validation pipeline
+
+Three layers, all language-agnostic:
+
+| Layer | What it checks | When it runs |
+|-------|---------------|-------------|
+| **Static validation** | Tokens in chips, no prompt leaks, hints exist, IDs valid, adapter exists | `cargo test` (unit tests) |
+| **Structural validation** | Wrapped program passes `validate_program_structure()` | `cargo test` (unit tests) |
+| **Compiler verification** | Every answer compiles with the real compiler (rustc, go build, etc.) | `cargo test --test challenge_compilation` |
+
+The integration test iterates ALL registered languages automatically. Adding Go = zero changes to the test.
+
+### Challenge schema
 
 ```json
 {
@@ -162,147 +165,141 @@ Communicates via PostgREST REST API + Auth REST endpoints using reqwest.
   "language": "rust",
   "module": 2,
   "position": 3,
-  "title": "Reassign a mutable variable",
-  "prompt": "Reassign the variable x to the value 10",
-  "hint_concept": "...",
-  "hint_structural": "_ = _;",
+  "title": "Reassign a value",
+  "prompt": "Change the value of x to 10 (assume x was declared as mutable)",
+  "hint_concept": "Reassigning doesn't need the declaration keyword — just name, equals, value.",
+  "hint_structural": "_ = _ ;",
   "fragment_type": "statement",
   "answer": ["x", "=", "10", ";"],
   "answer_variants": [],
   "expected": { "exit_code": 0, "stdout": "", "stderr": "" },
+  "scaffold": "let mut x = 0;",
   "chips": [
     { "group": "identifiers", "tokens": ["x", "y", "count"] },
-    { "group": "values",      "tokens": ["10", "0", "42"] },
-    { "group": "symbols",     "tokens": ["=", ";", ":"] },
-    { "group": "keywords",    "tokens": ["let", "mut"] }
+    { "group": "numbers", "tokens": ["10", "0", "42"] },
+    { "group": "symbols", "tokens": ["=", ";", ":"] },
+    { "group": "keywords", "tokens": ["let", "mut"] }
   ],
   "xp": 20,
-  "validation": { "status": "verified", ... }
+  "explanation": "Reassignment uses = without let. Only works if declared with let mut."
 }
 ```
 
+Key fields:
+- **`scaffold`**: Rust code prepended to make the fragment compile (imports, type defs, variable setup). The adapter places module-level items before `fn main` and variable bindings inside it.
+- **`prompt`**: Must NEVER contain the answer code. Describe the goal, not the syntax.
+- **`hint_structural`**: Uses `_` blanks, never reveals actual tokens.
+- **`fragment_type`**: `expression`, `statement`, `fn_def`, `type_def`, `program` — determines how the adapter wraps it.
+- **`chips`**: Must contain ALL answer tokens plus 1-3 distractors per group.
+
 Challenge IDs namespaced by language: `rust-m2-c3`, `go-m1-c1`.
 
-Fragment types: `expression`, `statement`, `fn_def`, `type_def`, `program`.
+## Rust curriculum (100 challenges, 20 modules)
 
-## Challenge validation pipeline
-
-Compiler adapters (one per language, Docker image) verify every challenge answer compiles and produces expected output before publish. Language-agnostic orchestrator selects adapter by `challenge.language`.
-
-Rust adapter wraps fragments:
-- `expression`: `fn main() { let _ = {FRAGMENT}; }`
-- `statement`: `fn main() { {FRAGMENT} }`
-- `fn_def`: `{FRAGMENT}\nfn main() {}`
-- `program`: `{FRAGMENT}`
-
-Sandbox: no network, read-only FS except /tmp, 5s timeout, 512MB memory, single-use containers.
-
-CI blocks PRs if any challenge fails validation.
-
-## Rust curriculum (v1: modules 1-10)
-
-1. **First output** — `println!`, `print!`, `dbg!`, format args (5 challenges)
-2. **Variables and bindings** — `let`, `mut`, type annotations, shadowing (5 challenges)
-3. **Functions** — params, return types, implicit return, calling (5 challenges)
-4. **Control flow** — `if`/`else`, `loop`, `for`, `while`, `match` (5 challenges)
-5. **Ownership basics** — `String::new`, `String::from`, move, clone, borrow (5 challenges)
-6. **Structs** — define, instantiate, field access, `impl`, constructors (5 challenges)
-7. **Enums and match** — variants, data variants, `Option<T>`, `Result<T,E>` (5 challenges)
-8. **Error handling** — `unwrap`, `expect`, `?` operator, match on Result (5 challenges)
-9. **Traits intro** — derive Debug, impl Display, generics, custom traits (5 challenges)
-10. **Collections** — `Vec`, `push`, iteration, `HashMap`, `get` (5 challenges)
+| # | Module | Concepts | Free? |
+|---|--------|----------|-------|
+| 1 | First Output | `println!`, `print!`, `dbg!`, format args | Yes |
+| 2 | Variables & Bindings | `let`, `mut`, type annotations, shadowing | Yes |
+| 3 | Functions | params, return types, implicit return, calling | Yes |
+| 4 | Control Flow | `if`/`else`, `loop`/`break`, `for`, `while`, `match` | No |
+| 5 | Ownership Basics | `String::new`, `String::from`, move, clone, `&` borrow, `&mut` | No |
+| 6 | Structs | define, instantiate, field access, `impl`, `new()` constructor | No |
+| 7 | Enums & Match | variants, data variants, `Option<T>`, `Result<T,E>`, `if let` | No |
+| 8 | Error Handling | `unwrap`, `expect`, `?` operator, match Result, Result from main | No |
+| 9 | Traits | derive Debug, impl Display, trait bounds, custom traits, impl Trait | No |
+| 10 | Collections | `Vec`, `push`, for iteration, `HashMap`, `get` | No |
+| 11 | Closures & Iterators | closure syntax, capturing, `map`, `filter`, `collect` | No |
+| 12 | Lifetimes | `'a` annotations, struct lifetimes, multiple lifetimes, `'static` | No |
+| 13 | Smart Pointers | `Box`, `Rc`, `Rc::clone`, `RefCell`, `borrow_mut` | No |
+| 14 | Concurrency | `thread::spawn`, move closures, `Mutex`, `lock`, `Arc<Mutex<T>>` | No |
+| 15 | Generics & Trait Objects | generic fn, trait bounds, `dyn Trait`, generic structs, `impl<T>` | No |
+| 16 | Pattern Matching | destructure tuple/struct, `if let`, `while let`, match guards | No |
+| 17 | Strings & Slices | `&str` vs `String`, `to_string`, `format!`, `contains`, `push_str` | No |
+| 18 | Modules & Visibility | `mod`, `pub fn`, `use`, `super`, `pub use` re-exports | No |
+| 19 | Macros | `assert_eq!`, `vec!`, `todo!`, `format!`, `assert!` | No |
+| 20 | Advanced Ownership | `impl Drop`, `mem::replace`, `Cow`, type aliases, `impl Into` | No |
 
 Modules 1-3 are free. Module 4+ requires purchase.
+
+## Content authoring rules
+
+When creating or editing challenges:
+
+1. **Prompt must never leak the answer.** Describe the goal, not the syntax. BAD: "Write `println!("{}", x)`". GOOD: "Print the value of x using a format placeholder".
+2. **Every answer token must exist in the challenge's chip groups.** The validator catches this.
+3. **Include 1-3 distractor tokens per chip group** to make the challenge non-trivial.
+4. **`hint_structural` uses `_` blanks** — never the actual tokens.
+5. **`scaffold` provides compile context** — imports, type defs, variable declarations needed for the fragment to compile with `rustc`. Keep it minimal.
+6. **Run `cargo test --test challenge_compilation`** after any challenge edit. It must pass.
+7. **Challenge IDs follow `{language}-m{module}-c{position}`** format.
+8. **Every challenge needs `explanation`** (shown on correct answer) and both hint tiers.
+
+## Testing requirements
+
+All code follows strict RED/GREEN TDD. Every Linear ticket has comprehensive test scenarios.
+
+```bash
+cargo test                                    # 79 unit tests — fast, no external deps
+cargo test --test challenge_compilation       # 100 rustc compilations — ~9 seconds
+```
+
+Test coverage:
+- **Engine** (56 tests): language pack deserialization, registry, state machine (9 token sequences), validation (correct/wrong/variants), diff computation, XP calc, module helpers, hint tiers
+- **Validator** (23 tests): adapter trait + registry, scaffold splitting, static validation, pack-wide integrity (prompts, hints, explanations, IDs, wrapping)
+- **Compilation** (2 integration tests): every challenge + every variant compiles with real `rustc`
+
+## Design system
+
+Custom CSS at `assets/main.css` — "Cosmic Code" dark theme. No Tailwind dependency.
+
+- **Fonts:** Fira Code (code/chips), Sora (UI) via Google Fonts
+- **Background:** Deep space (`#07070f`) with subtle star-field radial gradients
+- **Chip colors:** 7 categories with neon hues + glow-on-hover (keyword=pink, macro=purple, type=cyan, string=green, symbol=amber, identifier=blue, number=orange)
+- **Panels:** Glassmorphism with `backdrop-filter: blur(20px)`
+- **All units relative** (rem/em) — zero hardcoded px for font sizes
+- **Animation tokens:** CSS custom properties (`--tap: 80ms`, `--panel-slide: 250ms`, etc.)
+- **Responsive:** vertical stack by default, two-column grid at 768px+
+- **Safe areas:** `env(safe-area-inset-*)` for iOS notch / Android gesture bar
+
+## State management
+
+- **Global state** (`AppState` via `use_context_provider`): XP, streak, progress, language pack
+- **Screen state**: component-local `use_signal` for assembled tokens, feedback, hint tier
+- **Routing**: `Landing` at `/` redirects to `/onboarding` or `/home` based on `is_onboarded`
+- **`NavShell`** renders inside route components (Home, ModuleMap, Profile), not globally
+
+## Platform abstraction (`services/platform.rs`)
+
+Traits for platform-specific APIs — implement per target, no `#[cfg]` in UI code:
+
+- `HapticEngine`: `light_tap()`, `success_pulse()`, `error_tap()`, `double_pulse()`, `medium_tap()`
+- `SecureStorage`: `set()`, `get()`, `delete()` — Keychain/Keystore/localStorage
+
+Currently: `NoOpHaptics` and `MemoryStorage` (web stubs).
+
+## Key design principles
+
+1. **No language-specific code in the core app** — everything driven by data (language packs + adapter trait)
+2. **Every challenge verified by real compiler** — not just structural checks
+3. **Never punishing** — wrong answers say "Not quite", streaks are about showing up
+4. **Prompts never leak answers** — describe the goal, not the code
+5. **Extensible by data, not code** — new language = JSON file + adapter struct, zero core changes
 
 ## Monetization
 
 - No ads ever
 - Lifetime: $9.99, Annual: $4.99/yr, Monthly: $1.99/mo
-- iOS/Android: In-App Purchase. Web: Stripe checkout (no monthly option on web in v1)
+- iOS/Android: In-App Purchase. Web: Stripe checkout (no monthly on web in v1)
+- Paywall after Module 3 completion. No dark patterns. Back button always works.
 
-## Core UX mechanics
+## Supabase
 
-### Token assembly
+**Project ref:** `dynffktqahqfelfriwfm`
 
-User taps chips to build code sequences. Tapping a chip appends to canvas. Tapping a placed token backtracks to that point. Dedicated undo button removes last token. "Check" compares against canonical answer(s).
-
-### Contextual chip behavior
-
-After each tap, a per-language state machine determines which chip groups highlight/dim. Rules live in the language pack. No hard-coded language logic in UI.
-
-### Answer validation (v1)
-
-Token sequence matching against canonical `answer` array. Multiple `answer_variants` supported for semantic equivalence. v2 adds WASM on-device compilation.
-
-### Wrong answer feedback
-
-Diff-style: green = correct position, red = wrong token, ghost = missing. Copy never says "Wrong" — uses "Not quite", "Almost", "Close".
-
-### Hint system
-
-- Tier 1 (concept): plain-language explanation, no code (-5 XP)
-- Tier 2 (structural): ghost overlay on canvas showing shape with blanks (-5 XP)
-- Third tap: skip option (no XP cost, added to revisit queue)
-- First hint per session per lesson is free
-
-### Progression
-
-- 20 XP per correct first-attempt, 10 XP per retry-correct
-- Daily streak: 1 challenge/day. One auto-freeze/week
-- Module badges on completion (always awarded, no performance gate)
-- Free compose mode unlocked per completed module
-
-## Animation timings
-
-| Moment | Duration |
-|--------|----------|
-| Chip tap (scale) | 80ms |
-| Token appears in canvas | 120ms |
-| Undo token | 100ms |
-| Correct answer (green pulse) | 480ms |
-| XP bounce | 300ms |
-| Confetti burst | 600ms |
-| Wrong answer diff flash | 300ms |
-| Feedback panel slide-up | 250ms |
-| Module badge drop | 1500ms |
-| Streak fill | 400ms |
-| Chip group dim/highlight | 150ms |
-
-Sound is off by default. Haptics use iOS patterns (`.light`, `.error`, success pulse, double pulse).
-
-## Accessibility
-
-- `aria_label` on all chip elements for VoiceOver/TalkBack
-- System dynamic type (relative units, not hardcoded px)
-- Color is never the sole state indicator — always paired with icon or text
-- Full VoiceOver/TalkBack traversal test required before App Store submission
-
-## Web-specific
-
-- Keyboard: 1-9 selects chips, Enter submits, Backspace undoes, Tab moves groups
-- Responsive: vertical stack (mobile) → two-column at 768px+
-- Service worker for offline after first load
-- Deep links: `tapcode.dev/rust/m2/c3` routes to specific challenges
-- Anonymous JWT in localStorage — loss = progress loss unless account upgraded
-- Hosted on Cloudflare Pages (static). Marketing site at root, app at `/app`
-
-## Mobile constraints (Dioxus)
-
-- Android: NDK + cargo-ndk cross-compilation setup required
-- Hot-patching Rust code is experimental; RSX/CSS hot-reload is stable
-- Haptics/system fonts/safe area insets require JNI (Android) or ObjC (iOS) calls — wrap behind platform abstraction trait
-- Test on real devices early (start at end of module 2 implementation)
-
-## Key design principles
-
-1. **No language-specific code in the core app** — everything is driven by language pack data
-2. **Optimistic UI** — local state updates instantly, network writes are async
-3. **Never punishing** — wrong answers are "Not quite", streaks are about showing up not perfection
-4. **Immediate competence** — first correct answer within 90 seconds of app open
-5. **Variable reward compression** — always a reward close in the future (tap → challenge → module)
+Schema, RLS, and client pattern defined but not yet connected. See `PRD.md` for full database schema.
 
 ## Version roadmap
 
-- **v1**: Modules 1-6, token assembly, streaks, XP, badges, iOS + Android + web simultaneous launch
-- **v1.5**: Modules 7-10, named accounts (email/OAuth), Supabase Realtime leaderboard, share URLs, free compose, second language pack
-- **v2**: WASM on-device compilation, user-generated challenges, community packs, spaced repetition review
+- **v1**: 20 modules, token assembly, streaks, XP, badges, iOS + Android + web
+- **v1.5**: Named accounts, Supabase Realtime leaderboard, share URLs, second language pack
+- **v2**: WASM on-device compilation, user-generated challenges, community packs
