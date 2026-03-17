@@ -13,9 +13,21 @@ pub fn HomeScreen() -> Element {
     let next_id = s.get_next_challenge_id();
     let all_complete = next_id.is_none();
 
+    let revisit_count = s.revisit_count();
+
     rsx! {
         div {
             class: "app-content",
+
+            // Offline banner
+            if let Some(banner_text) = s.offline_banner_text() {
+                div {
+                    class: "offline-banner",
+                    role: "status",
+                    aria_label: "Offline status",
+                    "{banner_text}"
+                }
+            }
 
             // Header
             div {
@@ -60,6 +72,29 @@ pub fn HomeScreen() -> Element {
                                 }
                             },
                             "Continue →"
+                        }
+                    }
+                    // Revisit queue nudge
+                    if revisit_count > 0 {
+                        {
+                            let suffix = if revisit_count != 1 { "s" } else { "" };
+                            rsx! {
+                                div {
+                                    class: "stat-card p-lg mt-md",
+                                    aria_label: "Revisit skipped challenges",
+                                    div { class: "flex items-center gap-sm",
+                                        span { class: "text-lg", "\u{23ED}\u{FE0F}" }
+                                        div {
+                                            div { class: "text-sm font-semibold",
+                                                "{revisit_count} challenge{suffix} to revisit"
+                                            }
+                                            div { class: "text-xs text-secondary",
+                                                "Skipped challenges are waiting for you"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 } else {

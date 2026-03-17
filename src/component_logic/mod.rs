@@ -7,4 +7,5 @@
 // ══════════════════════════════════════════════════════════════
 
 pub mod canvas;
+pub mod keyboard;
 pub mod picker;

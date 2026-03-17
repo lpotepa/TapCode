@@ -11,6 +11,8 @@ mod services;
 use dioxus::prelude::*;
 use state::AppState;
 use route::Route;
+use services::platform::{HapticEngine, NoOpHaptics, SecureStorage, MemoryStorage};
+use std::sync::Arc;
 
 fn main() {
     dioxus::launch(App);
@@ -20,6 +22,11 @@ fn main() {
 fn App() -> Element {
     // Initialize global state
     use_context_provider(|| Signal::new(AppState::new()));
+
+    // Platform abstraction — inject trait-object providers so components
+    // never need #[cfg()] for platform differences.
+    use_context_provider(|| Arc::new(NoOpHaptics) as Arc<dyn HapticEngine>);
+    use_context_provider(|| Arc::new(MemoryStorage::new()) as Arc<dyn SecureStorage>);
 
     rsx! {
         // Load stylesheet via Dioxus 0.7 asset system

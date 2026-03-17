@@ -1,8 +1,10 @@
 use dioxus::prelude::*;
+use crate::state::AppState;
 use crate::route::Route;
 
 #[component]
 pub fn PaywallScreen() -> Element {
+    let mut state = use_context::<Signal<AppState>>();
     let nav = navigator();
 
     rsx! {
@@ -86,6 +88,11 @@ pub fn PaywallScreen() -> Element {
                     // Annual — featured
                     button {
                         class: "pricing-card pricing-card-featured",
+                        onclick: move |_| {
+                            // Ticket 22: Unlock all modules (real IAP/Stripe comes later)
+                            state.write().unlock_all_modules();
+                            let _ = nav.push(Route::Home {});
+                        },
                         div { class: "pricing-badge", "Best Value" }
                         div { class: "pricing-amount", "€4.99" }
                         div { class: "pricing-period", "per year" }
@@ -94,6 +101,10 @@ pub fn PaywallScreen() -> Element {
                     // Lifetime
                     button {
                         class: "pricing-card",
+                        onclick: move |_| {
+                            state.write().unlock_all_modules();
+                            let _ = nav.push(Route::Home {});
+                        },
                         div { class: "pricing-amount", "€9.99" }
                         div { class: "pricing-period", "lifetime · one-time" }
                     }
@@ -101,6 +112,10 @@ pub fn PaywallScreen() -> Element {
                     // Monthly
                     button {
                         class: "pricing-card",
+                        onclick: move |_| {
+                            state.write().unlock_all_modules();
+                            let _ = nav.push(Route::Home {});
+                        },
                         div { class: "pricing-amount", "€1.99" }
                         div { class: "pricing-period", "per month" }
                     }

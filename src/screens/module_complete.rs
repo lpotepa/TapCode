@@ -20,7 +20,12 @@ pub fn ModuleCompleteScreen(props: ModuleCompleteProps) -> Element {
     let next_module = s.pack.modules.iter().find(|m| m.id == props.module_id + 1);
     let module_xp = done as u32 * 20; // Approximate
 
-    let should_show_paywall = props.module_id == 3; // Paywall after module 3
+    // Ticket 20: Real stats from state
+    let accuracy = s.accuracy_percent();
+    let hints_used = s.hints_used_this_session;
+    let is_last_module = next_module.is_none();
+
+    let should_show_paywall = s.should_show_paywall(props.module_id);
 
     rsx! {
         div {
@@ -53,7 +58,7 @@ pub fn ModuleCompleteScreen(props: ModuleCompleteProps) -> Element {
                 style: "max-width: 20rem; grid-template-columns: repeat(3, 1fr); animation: fadeInUp 0.5s ease-out 1.2s both;",
 
                 div { class: "stat-card",
-                    div { class: "stat-value", "87%" }
+                    div { class: "stat-value", "{accuracy}%" }
                     div { class: "stat-label", "Accuracy" }
                 }
                 div { class: "stat-card",
@@ -61,7 +66,7 @@ pub fn ModuleCompleteScreen(props: ModuleCompleteProps) -> Element {
                     div { class: "stat-label", "Challenges" }
                 }
                 div { class: "stat-card",
-                    div { class: "stat-value", "1" }
+                    div { class: "stat-value", "{hints_used}" }
                     div { class: "stat-label", "Hints" }
                 }
             }
@@ -79,7 +84,14 @@ pub fn ModuleCompleteScreen(props: ModuleCompleteProps) -> Element {
                 class: "mt-xl w-full flex-col gap-sm",
                 style: "max-width: 20rem; animation: fadeInUp 0.5s ease-out 1.6s both;",
 
-                if let Some(next) = next_module {
+                if is_last_module {
+                    div { class: "text-center text-lg font-bold mb-xs",
+                        "You've completed all available modules!"
+                    }
+                    div { class: "text-center text-sm text-muted mb-lg",
+                        "More content coming soon."
+                    }
+                } else if let Some(next) = next_module {
                     div { class: "text-center text-sm text-secondary mb-sm",
                         "Next up: Module {next.id}"
                     }

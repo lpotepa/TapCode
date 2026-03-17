@@ -1495,6 +1495,34 @@ body::before {
   color: var(--text-primary);
 }
 
+/* ─── Offline Banner (Ticket 13) ─── */
+
+.offline-banner {
+  background: var(--warning);
+  color: var(--text-inverse);
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-md);
+  text-align: center;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin: var(--space-sm) var(--space-lg) 0;
+}
+
+/* ─── Session Warning (Ticket 25) ─── */
+
+.session-warning {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(7, 7, 15, 0.9);
+  padding: var(--space-xl);
+  text-align: center;
+}
+
 /* ─── Screen-size safe area padding helpers ─── */
 
 .safe-top { padding-top: env(safe-area-inset-top, 0); }

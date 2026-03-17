@@ -5,6 +5,7 @@ use crate::engine;
 use crate::components::*;
 use crate::components::picker::ChipGroupDisplay;
 use crate::models::*;
+use crate::validator::AdapterRegistry;
 
 #[derive(Props, Clone, PartialEq)]
 pub struct ComposeProps {
@@ -20,6 +21,28 @@ pub fn ComposeScreen(props: ComposeProps) -> Element {
 
     let module_id: u32 = props.module_id.parse().unwrap_or(1);
     let s = state.read();
+
+    // Access guard: module must be complete to use Free Compose
+    if !s.is_module_complete(module_id) {
+        return rsx! {
+            div {
+                class: "app-content flex items-center justify-center",
+                div {
+                    class: "text-center",
+                    div { class: "text-2xl mb-md", "\u{1F512}" }
+                    div { class: "text-lg font-semibold mb-sm", "Module {module_id} Locked" }
+                    div { class: "text-sm text-secondary mb-lg",
+                        "Complete all challenges in this module to unlock Free Compose."
+                    }
+                    button {
+                        class: "btn btn-primary btn-wide",
+                        onclick: move |_| { let _ = nav.push(Route::Home {}); },
+                        "\u{2190} Back Home"
+                    }
+                }
+            }
+        };
+    }
 
     // Gather all chips from this module and earlier
     let mut all_groups: Vec<ChipGroupDisplay> = Vec::new();
@@ -124,12 +147,15 @@ pub fn ComposeScreen(props: ComposeProps) -> Element {
                         class: "btn btn-secondary",
                         disabled: assembled.read().is_empty(),
                         onclick: move |_| {
-                            // Simple validation: check if it ends with ; or }
-                            let tokens = assembled.read();
-                            let valid = tokens.last()
-                                .map(|(t, _)| t == ";" || t == "}" || t == ")")
-                                .unwrap_or(false);
-                            valid_state.set(Some(valid));
+                            let adapter_reg = AdapterRegistry::default_registry();
+                            if let Some(adapter) = adapter_reg.get(&state.read().active_language) {
+                                let tokens = assembled.read();
+                                let fragment = tokens.iter().map(|(t, _)| t.as_str()).collect::<Vec<_>>().join(" ");
+                                let valid = adapter.wrap_fragment(&fragment, &FragmentType::Statement, "")
+                                    .map(|p| adapter.validate_program_structure(&p).is_ok())
+                                    .unwrap_or(false);
+                                valid_state.set(Some(valid));
+                            }
                         },
                         "Validate"
                     }

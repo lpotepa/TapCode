@@ -12,7 +12,7 @@ pub fn ProfileScreen() -> Element {
         .map(|m| m.challenge_ids.len())
         .sum();
     let completed = s.progress.completed_challenges.len();
-    let accuracy = if completed > 0 { 87 } else { 0 }; // Placeholder
+    let accuracy = s.accuracy_percent();
 
     let completed_modules: Vec<_> = s.pack.modules.iter()
         .filter(|m| s.is_module_complete(m.id))

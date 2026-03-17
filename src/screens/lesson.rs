@@ -5,6 +5,7 @@ use crate::models::*;
 use crate::engine::{self, validate_answer, get_challenge_by_id, get_token_category, xp_for_attempt};
 use crate::components::*;
 use crate::components::picker::ChipGroupDisplay;
+use crate::component_logic::keyboard::{KeyAction, resolve_key_action};
 
 #[derive(Props, Clone, PartialEq)]
 pub struct LessonProps {
@@ -29,6 +30,9 @@ pub fn LessonScreen(props: LessonProps) -> Element {
     let mut ghost_hint: Signal<Option<Vec<String>>> = use_signal(|| None);
     let mut show_module_complete: Signal<bool> = use_signal(|| false);
 
+    // Keyboard action signal (Ticket 23): set in onkeydown, dispatched before render
+    let mut pending_key_action: Signal<Option<KeyAction>> = use_signal(|| None);
+
     let s = state.read();
     let challenge = get_challenge_by_id(&s.pack, &props.id);
 
@@ -36,12 +40,12 @@ pub fn LessonScreen(props: LessonProps) -> Element {
         return rsx! {
             div { class: "app-content flex items-center justify-center",
                 div { class: "text-center",
-                    div { class: "text-2xl mb-md", "🔍" }
+                    div { class: "text-2xl mb-md", "\u{1F50D}" }
                     div { class: "text-lg", "Challenge not found" }
                     button {
                         class: "btn btn-secondary mt-lg",
                         onclick: move |_| { let _ = nav.push(Route::Home {}); },
-                        "← Back Home"
+                        "\u{2190} Back Home"
                     }
                 }
             }
@@ -76,7 +80,7 @@ pub fn LessonScreen(props: LessonProps) -> Element {
 
     // ── Callbacks ──
 
-    let challenge_for_tap = challenge.clone();
+    let _challenge_for_tap = challenge.clone();
     let on_chip_tap = move |token: String| {
         if *show_diff.read() {
             show_diff.set(false);
@@ -84,6 +88,11 @@ pub fn LessonScreen(props: LessonProps) -> Element {
         }
         if *feedback.read() != FeedbackKind::None {
             return;
+        }
+
+        // Ticket 21: Clear ghost hint overlay when user starts tapping after viewing structural hint
+        if ghost_hint.read().is_some() {
+            ghost_hint.set(None);
         }
 
         let css = get_token_category(&state.read().pack, &token)
@@ -94,7 +103,7 @@ pub fn LessonScreen(props: LessonProps) -> Element {
     };
 
     let challenge_for_check = challenge.clone();
-    let on_check = move |()| {
+    let mut on_check = move |()| {
         let user_tokens: Vec<String> = assembled.read().iter().map(|(t, _)| t.clone()).collect();
         let result = validate_answer(&user_tokens, &challenge_for_check);
 
@@ -108,6 +117,7 @@ pub fn LessonScreen(props: LessonProps) -> Element {
                 state.write().add_xp(xp);
                 state.write().complete_challenge(&challenge_for_check.id);
                 state.write().fill_streak_today();
+                state.write().record_attempt(true);
 
                 feedback.set(FeedbackKind::Correct {
                     xp_awarded: xp,
@@ -115,6 +125,7 @@ pub fn LessonScreen(props: LessonProps) -> Element {
                 });
             }
             ValidationResult::Wrong(diff) => {
+                state.write().record_attempt(false);
                 show_diff.set(true);
                 diff_data.set(Some(diff.clone()));
                 feedback.set(FeedbackKind::Wrong {
@@ -126,7 +137,7 @@ pub fn LessonScreen(props: LessonProps) -> Element {
     };
 
     let challenge_for_next = challenge.clone();
-    let on_next = move |()| {
+    let mut on_next = move |()| {
         show_confetti.set(false);
         xp_bouncing.set(false);
         xp_float.set(None);
@@ -158,16 +169,17 @@ pub fn LessonScreen(props: LessonProps) -> Element {
         }
     };
 
-    let on_try_again = move |()| {
+    let mut on_try_again = move |()| {
         feedback.set(FeedbackKind::None);
-        show_diff.set(false);
-        diff_data.set(None);
-        assembled.write().clear();
+        // Ticket 18: Clear confetti on try again (belt-and-suspenders)
+        show_confetti.set(false);
+        // Ticket 19: Keep show_diff=true and diff_data intact so user sees what's wrong.
+        // Keep assembled tokens — user taps wrong token to backtrack from there.
         let current = *attempt_num.read();
         attempt_num.set(current + 1);
     };
 
-    let on_undo = move |()| {
+    let mut on_undo = move |()| {
         if *feedback.read() != FeedbackKind::None { return; }
         assembled.write().pop();
         if *show_diff.read() {
@@ -180,6 +192,11 @@ pub fn LessonScreen(props: LessonProps) -> Element {
     let on_hint = move |()| {
         let current = hint_tier.read().clone();
         let next = current.next();
+
+        // Ticket 21: Deduct XP for hints (first per session is free, handled inside deduct_hint_xp)
+        if next == HintTier::Concept || next == HintTier::Structural {
+            state.write().deduct_hint_xp();
+        }
 
         match &next {
             HintTier::Concept => {
@@ -216,9 +233,35 @@ pub fn LessonScreen(props: LessonProps) -> Element {
 
     let can_check = !assembled.read().is_empty() && *feedback.read() == FeedbackKind::None;
 
+    // Dispatch pending keyboard action (Ticket 23)
+    // The signal is set in onkeydown, then consumed here on the next render cycle.
+    if let Some(action) = pending_key_action.take() {
+        match action {
+            KeyAction::Check => {
+                if can_check {
+                    on_check(());
+                }
+            }
+            KeyAction::Undo => on_undo(()),
+            KeyAction::Next => on_next(()),
+            KeyAction::TryAgain => on_try_again(()),
+            KeyAction::None => {}
+        }
+    }
+
     rsx! {
         div {
             class: "lesson-layout",
+            tabindex: 0,
+            onkeydown: move |evt: Event<KeyboardData>| {
+                let key = evt.data().key().to_string();
+                let has_feedback = *feedback.read() != FeedbackKind::None;
+                let feedback_is_correct = matches!(&*feedback.read(), FeedbackKind::Correct { .. });
+                let action = resolve_key_action(&key, has_feedback, feedback_is_correct);
+                if action != KeyAction::None {
+                    pending_key_action.set(Some(action));
+                }
+            },
 
             // ── Header ──
             div {
@@ -231,7 +274,7 @@ pub fn LessonScreen(props: LessonProps) -> Element {
                             class: "btn btn-ghost btn-icon",
                             aria_label: "Back to home",
                             onclick: move |_| { let _ = nav.push(Route::Home {}); },
-                            "←"
+                            "\u{2190}"
                         }
                         div {
                             div { class: "text-sm font-semibold", "{module_title}" }
@@ -272,6 +315,11 @@ pub fn LessonScreen(props: LessonProps) -> Element {
                         // Backtrack: remove everything after this index
                         let mut tokens = assembled.write();
                         tokens.truncate(idx + 1);
+                        // Ticket 19: Clear diff when user starts editing after a wrong answer
+                        if *show_diff.read() {
+                            show_diff.set(false);
+                            diff_data.set(None);
+                        }
                     },
                 }
 
@@ -286,7 +334,7 @@ pub fn LessonScreen(props: LessonProps) -> Element {
                             if *attempt_num.read() <= 1 { "Free" } else { "-5 XP" }
                         }
 
-                        div { class: "text-sm font-semibold text-warning mb-sm", "💡 Hint" }
+                        div { class: "text-sm font-semibold text-warning mb-sm", "\u{1F4A1} Hint" }
                         p { class: "text-sm text-secondary", "{challenge.hint_concept}" }
                         button {
                             class: "btn btn-ghost btn-sm mt-md",
