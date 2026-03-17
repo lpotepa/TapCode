@@ -1,0 +1,9 @@
+[application]
+name = "TapCode"
+default_platform = "web"
+
+[web.app]
+title = "TapCode — Learn to Code by Tapping"
+
+[web.watcher]
+watch_path = ["src", "assets"]

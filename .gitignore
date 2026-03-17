@@ -1,0 +1,11 @@
+/target
+/dist
+/out
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+.env
+.env.local
+*.log
+.mcp.json

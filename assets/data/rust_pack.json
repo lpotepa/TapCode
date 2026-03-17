@@ -1,0 +1,327 @@
+{
+  "metadata": {
+    "id": "rust",
+    "display_name": "Rust",
+    "version": "1.0.0",
+    "status": "available",
+    "primary_hue": "#f5a623",
+    "icon": "🦀",
+    "tagline": "Systems programming. Memory safe."
+  },
+  "categories": [
+    { "name": "keywords", "display_name": "Keywords", "css_class": "chip-keyword", "tokens": ["let", "mut", "fn", "if", "else", "loop", "for", "while", "match", "in", "break", "return", "struct", "impl", "enum", "pub", "use", "mod", "self", "trait", "where", "async", "await", "move", "ref", "type", "const", "static", "unsafe", "dyn", "crate", "super"] },
+    { "name": "macros", "display_name": "Macros", "css_class": "chip-macro", "tokens": ["println!", "print!", "dbg!", "vec!", "format!", "todo!", "unimplemented!", "assert!", "assert_eq!", "panic!", "eprintln!"] },
+    { "name": "types", "display_name": "Types", "css_class": "chip-type", "tokens": ["i32", "i64", "u32", "u64", "f32", "f64", "bool", "char", "String", "str", "&str", "Vec", "Option", "Result", "Some", "None", "Ok", "Err", "Box", "HashMap", "usize", "isize", "u8", "i8"] },
+    { "name": "strings", "display_name": "Strings", "css_class": "chip-string", "tokens": ["\"Hello, Rust!\"", "\"Hello\"", "\"world\"", "\"{}\"", "\"{} {}\"", "\"name: {}\"", "\"value: {}\"", "\"error\"", "\"msg\"", "\"x = {}\""] },
+    { "name": "symbols", "display_name": "Symbols", "css_class": "chip-symbol", "tokens": ["{", "}", "(", ")", ";", ":", "::", "->", "=>", ",", ".", "&", "*", "=", "==", "!=", "<", ">", "<=", ">=", "+", "-", "/", "%", "&&", "||", "!", "..", "..=", "?", "#", "[", "]", "_", "|"] },
+    { "name": "identifiers", "display_name": "Names", "css_class": "chip-identifier", "tokens": ["x", "y", "z", "n", "i", "s", "a", "b", "name", "count", "result", "value", "item", "main", "new", "add", "get", "len", "push", "clone", "to_string", "from", "into", "unwrap", "expect", "is_some", "is_none", "map", "filter", "collect"] },
+    { "name": "numbers", "display_name": "Numbers", "css_class": "chip-number", "tokens": ["0", "1", "2", "3", "5", "10", "42", "100", "0.0", "3.14", "255", "1024"] }
+  ],
+  "context_rules": [
+    { "after_tokens": ["fn"], "highlight_groups": ["identifiers"], "dim_groups": ["keywords", "macros", "types", "strings", "numbers"] },
+    { "after_tokens": ["let"], "highlight_groups": ["identifiers", "keywords"], "dim_groups": ["macros", "types", "strings"] },
+    { "after_tokens": ["let", "mut"], "highlight_groups": ["identifiers"], "dim_groups": ["keywords", "macros", "types", "strings"] },
+    { "after_tokens": [":"], "highlight_groups": ["types"], "dim_groups": ["keywords", "macros", "strings", "identifiers", "numbers"] },
+    { "after_tokens": ["->"], "highlight_groups": ["types"], "dim_groups": ["keywords", "macros", "strings", "identifiers", "numbers"] },
+    { "after_tokens": ["="], "highlight_groups": ["identifiers", "numbers", "strings", "macros", "types"], "dim_groups": ["keywords"] },
+    { "after_tokens": ["("], "highlight_groups": ["identifiers", "numbers", "strings", "types", "symbols"], "dim_groups": ["keywords"] },
+    { "after_tokens": ["{"], "highlight_groups": ["keywords", "identifiers", "macros", "types"], "dim_groups": [] },
+    { "after_tokens": ["println!"], "highlight_groups": ["symbols"], "dim_groups": ["keywords", "types", "identifiers", "numbers"] },
+    { "after_tokens": ["println!", "("], "highlight_groups": ["strings", "identifiers", "numbers"], "dim_groups": ["keywords", "types", "macros"] },
+    { "after_tokens": [","], "highlight_groups": ["identifiers", "numbers", "strings", "types"], "dim_groups": ["keywords"] }
+  ],
+  "syntax_colors": {
+    "keywords": "token-keyword",
+    "macros": "token-macro",
+    "types": "token-type",
+    "strings": "token-string",
+    "symbols": "token-symbol",
+    "identifiers": "token-identifier",
+    "numbers": "token-number"
+  },
+  "modules": [
+    {
+      "id": 1,
+      "title": "First Output",
+      "description": "Print text to the console with println!, print!, and dbg!",
+      "challenge_ids": ["rust-m1-c1", "rust-m1-c2", "rust-m1-c3", "rust-m1-c4", "rust-m1-c5"],
+      "is_free": true
+    },
+    {
+      "id": 2,
+      "title": "Variables & Bindings",
+      "description": "Declare variables with let, use mut, type annotations, and shadowing",
+      "challenge_ids": ["rust-m2-c1", "rust-m2-c2", "rust-m2-c3", "rust-m2-c4", "rust-m2-c5"],
+      "is_free": true
+    },
+    {
+      "id": 3,
+      "title": "Functions",
+      "description": "Define functions with params, return types, and implicit returns",
+      "challenge_ids": ["rust-m3-c1", "rust-m3-c2", "rust-m3-c3", "rust-m3-c4", "rust-m3-c5"],
+      "is_free": true
+    },
+    {
+      "id": 4,
+      "title": "Control Flow",
+      "description": "if/else, loop, for, while, and match expressions",
+      "challenge_ids": ["rust-m4-c1", "rust-m4-c2", "rust-m4-c3", "rust-m4-c4", "rust-m4-c5"],
+      "is_free": false
+    },
+    {
+      "id": 5,
+      "title": "Ownership Basics",
+      "description": "String, move semantics, clone, and borrowing",
+      "challenge_ids": ["rust-m5-c1", "rust-m5-c2", "rust-m5-c3", "rust-m5-c4", "rust-m5-c5"],
+      "is_free": false
+    },
+    {
+      "id": 6,
+      "title": "Structs",
+      "description": "Define structs, instantiate them, access fields, and impl methods",
+      "challenge_ids": ["rust-m6-c1", "rust-m6-c2", "rust-m6-c3", "rust-m6-c4", "rust-m6-c5"],
+      "is_free": false
+    }
+  ],
+  "challenges": [
+    {
+      "id": "rust-m1-c1",
+      "language": "rust",
+      "module": 1,
+      "position": 1,
+      "title": "Hello, Rust!",
+      "prompt": "Print the text Hello, Rust! to the console",
+      "hint_concept": "In Rust, println! is a macro that prints text followed by a newline. Note the ! — that marks it as a macro, not a regular function.",
+      "hint_structural": "_ ( _ ) ;",
+      "fragment_type": "statement",
+      "answer": ["println!", "(", "\"Hello, Rust!\"", ")", ";"],
+      "answer_variants": [],
+      "expected": { "exit_code": 0, "stdout": "Hello, Rust!\n", "stderr": "" },
+      "chips": [
+        { "group": "macros", "tokens": ["println!"] },
+        { "group": "symbols", "tokens": ["(", ")", ";"] },
+        { "group": "strings", "tokens": ["\"Hello, Rust!\""] }
+      ],
+      "xp": 20,
+      "explanation": "println! is a macro — note the !. Macros in Rust are expanded at compile time. The parentheses wrap the arguments, and the semicolon ends the statement."
+    },
+    {
+      "id": "rust-m1-c2",
+      "language": "rust",
+      "module": 1,
+      "position": 2,
+      "title": "Format a variable",
+      "prompt": "Print the value of x to the console using a format placeholder",
+      "hint_concept": "Use {} inside a string as a placeholder. After the string, add a comma and the variable whose value fills the placeholder.",
+      "hint_structural": "_ ( _ , _ ) ;",
+      "fragment_type": "statement",
+      "answer": ["println!", "(", "\"{}\"", ",", "x", ")", ";"],
+      "answer_variants": [],
+      "expected": { "exit_code": 0, "stdout": "", "stderr": "" },
+      "chips": [
+        { "group": "macros", "tokens": ["println!", "print!"] },
+        { "group": "symbols", "tokens": ["(", ")", ";", ","] },
+        { "group": "strings", "tokens": ["\"{}\"", "\"Hello\""] },
+        { "group": "identifiers", "tokens": ["x", "y"] }
+      ],
+      "xp": 20,
+      "explanation": "The {} placeholder in the format string gets replaced by the value of x at runtime. You can have multiple {} placeholders with multiple comma-separated values."
+    },
+    {
+      "id": "rust-m1-c3",
+      "language": "rust",
+      "module": 1,
+      "position": 3,
+      "title": "Two format arguments",
+      "prompt": "Print the values of both a and b on the same line, separated by a space",
+      "hint_concept": "You can use multiple {} placeholders in one format string. Each one is filled in order by the comma-separated values that follow.",
+      "hint_structural": "_ ( _ , _ , _ ) ;",
+      "fragment_type": "statement",
+      "answer": ["println!", "(", "\"{} {}\"", ",", "a", ",", "b", ")", ";"],
+      "answer_variants": [],
+      "expected": { "exit_code": 0, "stdout": "", "stderr": "" },
+      "chips": [
+        { "group": "macros", "tokens": ["println!", "dbg!"] },
+        { "group": "symbols", "tokens": ["(", ")", ";", ","] },
+        { "group": "strings", "tokens": ["\"{} {}\"", "\"{}\""] },
+        { "group": "identifiers", "tokens": ["a", "b", "x"] }
+      ],
+      "xp": 20,
+      "explanation": "Each {} is filled in order: the first {} gets a, the second {} gets b. Rust checks at compile time that the number of placeholders matches the number of arguments."
+    },
+    {
+      "id": "rust-m1-c4",
+      "language": "rust",
+      "module": 1,
+      "position": 4,
+      "title": "Print without newline",
+      "prompt": "Output the text Hello to the console without adding a newline at the end",
+      "hint_concept": "There's a variant of the print macro that doesn't add a newline. It works the same way, just with a slightly different name.",
+      "hint_structural": "_ ( _ ) ;",
+      "fragment_type": "statement",
+      "answer": ["print!", "(", "\"Hello\"", ")", ";"],
+      "answer_variants": [],
+      "expected": { "exit_code": 0, "stdout": "Hello", "stderr": "" },
+      "chips": [
+        { "group": "macros", "tokens": ["print!", "println!"] },
+        { "group": "symbols", "tokens": ["(", ")", ";"] },
+        { "group": "strings", "tokens": ["\"Hello\"", "\"world\""] }
+      ],
+      "xp": 20,
+      "explanation": "print! is the no-newline version of println!. The output stays on the same line, which is useful for building up output incrementally."
+    },
+    {
+      "id": "rust-m1-c5",
+      "language": "rust",
+      "module": 1,
+      "position": 5,
+      "title": "Debug a value",
+      "prompt": "Use the debug macro to inspect the current value of x",
+      "hint_concept": "There's a macro designed for quick debugging that prints the expression, its value, and the file/line — all to stderr.",
+      "hint_structural": "_ ( _ ) ;",
+      "fragment_type": "statement",
+      "answer": ["dbg!", "(", "x", ")", ";"],
+      "answer_variants": [["dbg!", "(", "&", "x", ")", ";"]],
+      "expected": { "exit_code": 0, "stdout": "", "stderr": "" },
+      "chips": [
+        { "group": "macros", "tokens": ["dbg!", "println!"] },
+        { "group": "symbols", "tokens": ["(", ")", ";", "&"] },
+        { "group": "identifiers", "tokens": ["x", "y", "count"] }
+      ],
+      "xp": 20,
+      "explanation": "dbg! outputs to stderr with file:line info — perfect for debugging. Unlike println!, it returns the value it wraps, so you can use it inline."
+    },
+    {
+      "id": "rust-m2-c1",
+      "language": "rust",
+      "module": 2,
+      "position": 1,
+      "title": "Declare a variable",
+      "prompt": "Create an immutable variable called x that holds the number 42",
+      "hint_concept": "Variables in Rust are immutable by default. You declare them with a keyword followed by the name, an equals sign, and the value.",
+      "hint_structural": "_ _ = _ ;",
+      "fragment_type": "statement",
+      "answer": ["let", "x", "=", "42", ";"],
+      "answer_variants": [],
+      "expected": { "exit_code": 0, "stdout": "", "stderr": "" },
+      "chips": [
+        { "group": "keywords", "tokens": ["let", "mut"] },
+        { "group": "identifiers", "tokens": ["x", "y", "count"] },
+        { "group": "symbols", "tokens": ["=", ";", ":"] },
+        { "group": "numbers", "tokens": ["42", "0", "10"] }
+      ],
+      "xp": 20,
+      "explanation": "let creates a new variable binding. Variables in Rust are immutable by default — you can't reassign x after this unless you use mut."
+    },
+    {
+      "id": "rust-m2-c2",
+      "language": "rust",
+      "module": 2,
+      "position": 2,
+      "title": "Mutable variable",
+      "prompt": "Declare a variable x that can be changed later, starting at 0",
+      "hint_concept": "To make a variable reassignable, you need an extra keyword between the declaration keyword and the variable name.",
+      "hint_structural": "_ _ _ = _ ;",
+      "fragment_type": "statement",
+      "answer": ["let", "mut", "x", "=", "0", ";"],
+      "answer_variants": [],
+      "expected": { "exit_code": 0, "stdout": "", "stderr": "" },
+      "chips": [
+        { "group": "keywords", "tokens": ["let", "mut", "fn"] },
+        { "group": "identifiers", "tokens": ["x", "y"] },
+        { "group": "symbols", "tokens": ["=", ";", ":"] },
+        { "group": "numbers", "tokens": ["0", "1", "42"] }
+      ],
+      "xp": 20,
+      "explanation": "mut marks a variable as mutable. Rust makes you opt into mutability explicitly — this helps catch accidental mutations."
+    },
+    {
+      "id": "rust-m2-c3",
+      "language": "rust",
+      "module": 2,
+      "position": 3,
+      "title": "Reassign a value",
+      "prompt": "Change the value of x to 10 (assume x was declared as mutable)",
+      "hint_concept": "Reassigning doesn't need the declaration keyword again — just the variable name, equals, and the new value.",
+      "hint_structural": "_ = _ ;",
+      "fragment_type": "statement",
+      "answer": ["x", "=", "10", ";"],
+      "answer_variants": [],
+      "expected": { "exit_code": 0, "stdout": "", "stderr": "" },
+      "chips": [
+        { "group": "identifiers", "tokens": ["x", "y", "count"] },
+        { "group": "symbols", "tokens": ["=", ";", ":"] },
+        { "group": "numbers", "tokens": ["10", "0", "42"] },
+        { "group": "keywords", "tokens": ["let", "mut"] }
+      ],
+      "xp": 20,
+      "explanation": "Reassignment uses = without let. This only works if x was declared with let mut. Trying to reassign an immutable variable causes a compile error."
+    },
+    {
+      "id": "rust-m2-c4",
+      "language": "rust",
+      "module": 2,
+      "position": 4,
+      "title": "Type annotation",
+      "prompt": "Declare a variable x and explicitly specify that its type is a 32-bit integer, with value 5",
+      "hint_concept": "You can tell the compiler the exact type of a variable by placing a colon and the type name between the variable name and the equals sign.",
+      "hint_structural": "_ _ _ _ = _ ;",
+      "fragment_type": "statement",
+      "answer": ["let", "x", ":", "i32", "=", "5", ";"],
+      "answer_variants": [],
+      "expected": { "exit_code": 0, "stdout": "", "stderr": "" },
+      "chips": [
+        { "group": "keywords", "tokens": ["let", "mut"] },
+        { "group": "identifiers", "tokens": ["x", "y"] },
+        { "group": "symbols", "tokens": [":", "=", ";"] },
+        { "group": "types", "tokens": ["i32", "u32", "f64"] },
+        { "group": "numbers", "tokens": ["5", "0", "42"] }
+      ],
+      "xp": 20,
+      "explanation": "The : i32 is a type annotation. Rust can usually infer types, but explicit annotations are useful when the type isn't obvious or you want to be specific."
+    },
+    {
+      "id": "rust-m2-c5",
+      "language": "rust",
+      "module": 2,
+      "position": 5,
+      "title": "Shadow a variable",
+      "prompt": "Declare a brand new x with value 100, shadowing any previous x in this scope",
+      "hint_concept": "You can declare a new variable with the same name as an existing one. The new declaration shadows the old one in the current scope.",
+      "hint_structural": "_ _ = _ ;",
+      "fragment_type": "statement",
+      "answer": ["let", "x", "=", "100", ";"],
+      "answer_variants": [],
+      "expected": { "exit_code": 0, "stdout": "", "stderr": "" },
+      "chips": [
+        { "group": "keywords", "tokens": ["let", "mut"] },
+        { "group": "identifiers", "tokens": ["x", "y", "z"] },
+        { "group": "symbols", "tokens": ["=", ";"] },
+        { "group": "numbers", "tokens": ["100", "42", "0"] }
+      ],
+      "xp": 20,
+      "explanation": "Shadowing creates a completely new variable that happens to share the name. Unlike mut, shadowing lets you change the type too."
+    },
+    {
+      "id": "rust-m3-c1",
+      "language": "rust",
+      "module": 3,
+      "position": 1,
+      "title": "Empty function",
+      "prompt": "Define the program's entry point function — it takes no arguments and returns nothing",
+      "hint_concept": "Every Rust program starts from a specific function. You declare functions with a keyword, then the name, parentheses for parameters, and curly braces for the body.",
+      "hint_structural": "_ _ ( ) { }",
+      "fragment_type": "fn_def",
+      "answer": ["fn", "main", "(", ")", "{", "}"],
+      "answer_variants": [],
+      "expected": { "exit_code": 0, "stdout": "", "stderr": "" },
+      "chips": [
+        { "group": "keywords", "tokens": ["fn", "let", "pub"] },
+        { "group": "identifiers", "tokens": ["main", "add", "get"] },
+        { "group": "symbols", "tokens": ["(", ")", "{", "}", ";"] }
+      ],
+      "xp": 20,
+      "explanation": "fn declares a function. main is special — it's the entry point of every Rust program. The empty () means no parameters, and {} is the empty body."
+    }
+  ]
+}
